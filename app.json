@@ -25,6 +25,31 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/PFEncoreSansPro-Light.ttf",
+            "./assets/fonts/SFCompactDisplay-Bold.ttf",
+            "./assets/fonts/SFCompactDisplay-Light.ttf",
+            "./assets/fonts/SFCompactDisplay-Regular.ttf",
+            "./assets/fonts/SFCompactDisplay-SemiBold.ttf",
+            "./assets/fonts/SFCompactText-Light.ttf",
+            "./assets/fonts/SFProText-SemiBold.ttf",
+            "./assets/fonts/SFUIDisplay-Bold.ttf",
+            "./assets/fonts/SFUIDisplay-Light.ttf",
+            "./assets/fonts/SFUIDisplay-Medium.ttf",
+            "./assets/fonts/SFUIDisplay-Regular.ttf",
+            "./assets/fonts/SFUIDisplay-SemiBold.ttf",
+            "./assets/fonts/SFUIText-Bold.ttf",
+            "./assets/fonts/SFUIText-Light.ttf",
+            "./assets/fonts/SFUIText-Medium.ttf",
+            "./assets/fonts/SFUIText-Regular.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }
