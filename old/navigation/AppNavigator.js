@@ -1,12 +1,13 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator, TransitionPresets,} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
-//import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BackArrowIcon from '../../assets/oldImg/BackArrow.png';
 import HomeIcon from '../../assets/oldImg/Home.png';
 import BackImage from '../components/buttons/BackImage';
 import RegistrationOrLoginScreen from '../screens/RegistrationOrLoginScreen';
+import SignInScreen from "../screens/SignInScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
 const {tabBarLabelStyle, headerStyle, ...styles} = StyleSheet.create({
     tabBarLabelStyle: {
@@ -92,8 +93,18 @@ function TabNavigator() {
                 tabBarInactiveTintColor: '#747E90',
                 tabBarLabelStyle,
                 //tabBarStyle: { paddingBottom: bottom + 4 },
-                ...TransitionPresets.ScaleFromCenterAndroid,
             }}>
+            <TabStack.Screen
+                name="RegistrationOrLoginScreen"
+                component={RegistrationOrLoginScreen}
+                options={{
+                    title: '',
+                    tabBarLabel: 'Главная',
+                    tabBarIcon: ({color: tintColor}) => (
+                        <Image style={[styles.homeIcon, {tintColor}]} source={HomeIcon}/>
+                    ),
+                }}
+            />
             <TabStack.Screen
                 name="RegistrationOrLoginScreen"
                 component={RegistrationOrLoginScreen}
@@ -109,12 +120,12 @@ function TabNavigator() {
     );
 }
 
-const AppStack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
     return (
-            <AppStack.Navigator
-                initialRouteName="RegistrationOrLoginScreen"
+            <Stack.Navigator
+                initialRouteName="WelcomeScreen"
                 screenOptions={{
                     gestureEnabled: false,
                     headerBackImage: () => (
@@ -125,19 +136,28 @@ export default function AppNavigator() {
                     headerStyle,
                     headerTitleAlign: 'center',
                     headerTitleStyle: styles.appHeaderTitleStyle,
-                    ...TransitionPresets.ScaleFromCenterAndroid,
                 }}>
-                <AppStack.Screen
+                <Stack.Screen
                     name={'TabNavigator'}
                     component={TabNavigator}
                     options={{headerShown: false}}
                 />
-                <AppStack.Screen
+                <Stack.Screen
                     name={'RegistrationOrLoginScreen'}
                     component={RegistrationOrLoginScreen}
                     options={{headerShown: false}}
                 />
+                <Stack.Screen
+                    name={'SignInScreen'}
+                    component={SignInScreen}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name={'WelcomeScreen'}
+                    component={WelcomeScreen}
+                    options={{headerShown: false}}
+                />
 
-            </AppStack.Navigator>
+            </Stack.Navigator>
     );
 }

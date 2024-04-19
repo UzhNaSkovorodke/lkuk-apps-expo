@@ -1,13 +1,24 @@
+import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from "@react-navigation/native";
+import {NavigationContainer} from '@react-navigation/native';
 import RegistrationOrLoginScreen from "./old/screens/RegistrationOrLoginScreen";
 import {useFonts} from "expo-font";
+import SignInScreen from "./old/screens/SignInScreen";
+import {Provider} from "react-redux";
+import shared from "stonehedge-shared";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import AppNavigator from "./old/navigation/AppNavigator";
 
 const Tab = createBottomTabNavigator();
 
+
+const Stack = createNativeStackNavigator();
+
+
 export default function App() {
-    const [fontsLoaded, fontError] =  useFonts({
+    const [fontsLoaded, fontError] = useFonts({
             'SFUIDisplay-Light': require('./assets/fonts/SFUIDisplay-Light.ttf'),
             'SFUIDisplay-Regular': require('./assets/fonts/SFUIDisplay-Regular.ttf'),
             'SFUIDisplay-Bold': require('./assets/fonts/SFUIDisplay-Bold.ttf'),
@@ -31,7 +42,9 @@ export default function App() {
 
     return (
         <NavigationContainer>
-           <RegistrationOrLoginScreen />
+            <Provider store={shared.store}>
+                <AppNavigator />
+            </Provider>
         </NavigationContainer>
     );
 }
