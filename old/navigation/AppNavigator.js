@@ -4,6 +4,7 @@ import {StyleSheet, Image} from 'react-native';
 
 import BackArrowIcon from '../../assets/oldImg/BackArrow.png';
 import StoneHedge from '../../assets/oldImg/StoneHedge.png'
+import HomeIcon from '../../assets/oldImg/Home.png'
 
 import BackImage from '../components/buttons/BackImage';
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen';
@@ -14,6 +15,7 @@ import SwitcherScreen from "../screens/StartScreens/SwitcherScreen";
 import SignInScreen from "../screens/StartScreens/SignInScreen";
 import GreetingScreen from "../screens/StartScreens/GreetingScreen";
 import PinCodeScreen from "../screens/StartScreens/PinCodeScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 const {tabBarLabelStyle, headerStyle, ...styles} = StyleSheet.create({
     headerStyle: {
@@ -99,9 +101,15 @@ export default function AppNavigator() {
             }
             />
             <Stack.Screen
-                name={'HomeScreen'}
-                component={SignInScreen}
-                options={{headerShown: false}}
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{
+                    title: '',
+                    tabBarLabel: 'Главная',
+                    tabBarIcon: ({ color: tintColor }) => (
+                        <Image style={[styles.homeIcon, { tintColor }]} source={HomeIcon} />
+                    ),
+                }}
             />
         </Stack.Navigator>
     );

@@ -1,21 +1,11 @@
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import RegistrationOrLoginScreen from "./old/screens/StartScreens/RegistrationOrLoginScreen";
 import {useFonts} from "expo-font";
-import SignInScreen from "./old/screens/StartScreens/SignInScreen";
 import {Provider} from "react-redux";
 import shared from "stonehedge-shared";
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import AppNavigator from "./old/navigation/AppNavigator";
-
-const Tab = createBottomTabNavigator();
-
-
-const Stack = createNativeStackNavigator();
-
 
 export default function App() {
     const [fontsLoaded, fontError] = useFonts({
@@ -43,7 +33,7 @@ export default function App() {
     return (
         <NavigationContainer>
             <Provider store={shared.store}>
-                <AppNavigator />
+                <AppNavigator/>
             </Provider>
         </NavigationContainer>
     );

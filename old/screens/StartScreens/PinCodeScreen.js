@@ -141,11 +141,15 @@ class PinCodeScreen extends React.Component {
         BackHandler.exitApp();
     };
     componentDidMount() {
+        SecureStore.deleteItemAsync('login');
+        SecureStore.deleteItemAsync('password');
+        SecureStore.deleteItemAsync('PinCode');
  //TODO сделать проверку чтобы если пин в сторе null или undefined то пин стирается с другими данными
+
 
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         SecureStore.getItemAsync('PinCode').then(isHas => {
-            if (isHas) {
+            if (isHas["_k"]) {
                 TouchId.isSupported().then(type => {
                     if (type === 'TouchID' || type === true) {
                         this.setState({ isTouchId: true }, () => this.onTouchIdPressed());
@@ -161,11 +165,16 @@ class PinCodeScreen extends React.Component {
                     });
                 });
             } else {
+                SecureStore.deleteItemAsync('PinCode');
                 this.setState({ modePinCode: 'create' });
                 this.props.navigation.setParams({
                     header: 'create',
                 });
             }
+        }).catch(() => {
+            SecureStore.deleteItemAsync('login');
+            SecureStore.deleteItemAsync('password');
+            SecureStore.deleteItemAsync('PinCode');
         });
     }
     componentWillUnmount() {

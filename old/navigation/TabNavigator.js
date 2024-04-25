@@ -11,6 +11,8 @@ import Filter from '../../assets/oldImg/Filter.png'
 
 import RegistrationOrLoginScreen from "../screens/StartScreens/RegistrationOrLoginScreen";
 import {Fonts} from "../utils/Fonts";
+import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -101,7 +103,7 @@ function TabNavigator() {
             }}>
             <Tab.Screen
                 name="HomeScreen"
-                component={RegistrationOrLoginScreen}
+                component={HomeScreen}
                 options={{
                     title: '',
                     tabBarLabel: 'Главная',
@@ -150,7 +152,7 @@ function TabNavigator() {
             />
             <Tab.Screen
                 name="ProfileScreen"
-                component={RegistrationOrLoginScreen}
+                component={ProfileScreen}
                 options={{
                     title: 'Профиль',
                     tabBarLabel: 'Профиль',

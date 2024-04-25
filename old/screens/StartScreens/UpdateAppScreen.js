@@ -131,9 +131,9 @@ const UpdateAppScreen = ({fetchConfig, navigation}) => {
           Версия: {config.lastBuild}
         </Text>
         <Text style={styles.contrastText}>Основные изменения:</Text>
-        <ScrollView style={styles.scroll}>
-          <Text>{config.lastBuildDescription}</Text>
-        </ScrollView>
+        {/*<ScrollView style={styles.scroll}>*/}
+        {/*  <Text>{config.lastBuildDescription}</Text>*/}
+        {/*</ScrollView>*/}
         <View style={styles.buttonContainer}>
           <DefaultButton
             style={{ marginTop: 15 }}
