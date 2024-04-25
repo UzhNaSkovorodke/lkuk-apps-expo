@@ -10,15 +10,15 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 
-import Image1 from '../../assets/oldImg/WelcomeScreen/FirstWelcomeDefault.png';
-import FirstWelcomeIphoneX from '../../assets/oldImg/WelcomeScreen/FirstWelcomeIphoneX.png';
-import Image4 from '../../assets/oldImg/WelcomeScreen/ForthWelcomeDefault.png';
-import ForthWelcomeIphoneX from '../../assets/oldImg/WelcomeScreen/ForthWelcomeIphoneX.png';
-import Image2 from '../../assets/oldImg/WelcomeScreen/SecondWelcomeDefault.png';
-import SecondWelcomeIphoneX from '../../assets/oldImg/WelcomeScreen/SecondWelcomeIphoneX.png';
-import Image3 from '../../assets/oldImg/WelcomeScreen/ThirdWelcomeDefault.png';
-import ThirdWelcomeIphoneX from '../../assets/oldImg/WelcomeScreen/ThirdWelcomeIphoneX.png';
-import Timer from '../utils/Timer';
+import Image1 from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeDefault.png';
+import FirstWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeIphoneX.png';
+import Image4 from '../../../assets/oldImg/WelcomeScreen/ForthWelcomeDefault.png';
+import ForthWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/ForthWelcomeIphoneX.png';
+import Image2 from '../../../assets/oldImg/WelcomeScreen/SecondWelcomeDefault.png';
+import SecondWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/SecondWelcomeIphoneX.png';
+import Image3 from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeDefault.png';
+import ThirdWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeIphoneX.png';
+import Timer from '../../utils/Timer';
 
 const { width, height } = Dimensions.get('window');
 const { height: screenHeight } = Dimensions.get('screen');

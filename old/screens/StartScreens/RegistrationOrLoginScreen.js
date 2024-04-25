@@ -1,10 +1,11 @@
 import React from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import Stnhdg from '../../assets/oldImg/Stnhdg.png';
-import DefaultButton from '../components/buttons/DefaultButton';
-import {Fonts} from '../utils/Fonts';
+import Stnhdg from '../../../assets/oldImg/Stnhdg.png';
+import DefaultButton from '../../components/buttons/DefaultButton';
+import {Fonts} from '../../utils/Fonts';
 import {connect} from 'react-redux';
 import shared from 'stonehedge-shared';
+import * as SecureStore from "expo-secure-store";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -52,29 +53,28 @@ class RegistrationOrLoginScreen extends React.Component {
                         style={{marginBottom: height > 600 ? 27 : 12}}
                         textStyle={styles.textButton}
                         onPress={async () => {
-                            navigation.navigate('SignInScreen');
-                            // try {
-                            //   const { navigation, auth, fetchProfile } = this.props;
-                            //   //const login = await RNSecureStorage.get('login');
-                            //   //const password = await RNSecureStorage.get('password');
-                            //
-                            //   if (login !== undefined && password !== undefined) {
-                            //     auth({ login, password })
-                            //       .then(() => fetchProfile())
-                            //       .then(res => {
-                            //         const fio =
-                            //           (res.payload.data.profile &&
-                            //             res.payload.data.profile.fio) ||
-                            //           '';
-                            //         navigation.navigate('PinCodeScreen', { fio });
-                            //       })
-                            //       .catch(navigation.navigate('SignInScreen'));
-                            //   } else {
-                            //     navigation.navigate('SignInScreen');
-                            //   }
-                            // } catch {
-                            //   navigation.navigate('SignInScreen');
-                            // }
+                            try {
+                              const { navigation, auth, fetchProfile } = this.props;
+                                const login = await SecureStore.getItemAsync('login')
+                                const password = await SecureStore.getItemAsync('password')
+
+                              if (login !== undefined && password !== undefined) {
+                                auth({ login, password })
+                                  .then(() => fetchProfile())
+                                  .then(res => {
+                                    // const fio =
+                                    //   (res.payload.data.profile &&
+                                    //     res.payload.data.profile.fio) ||
+                                    //   '';
+                                    // navigation.navigate('PinCodeScreen', { fio });
+                                  })
+                                  .catch(navigation.navigate('SignInScreen'));
+                              } else {
+                                navigation.navigate('SignInScreen');
+                              }
+                            } catch {
+                              navigation.navigate('SignInScreen');
+                            }
                         }}
                         text="Войти"
                     />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Animated, Easing, View } from 'react-native';
 import SpinLoader from '../../../assets/oldImg/SpinLoader.png';
 
-export default class SpinnerScreen extends Component {
+export default class Spinner extends Component {
   constructor() {
     super();
 
