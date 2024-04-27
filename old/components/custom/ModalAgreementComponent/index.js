@@ -1,10 +1,11 @@
+import AttentionIcon from '../../../../assets/oldImg/Attention.png'
 import PropTypes from 'prop-types'
+import Modal from 'react-native-modalbox'
+
 import React, { useState } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modalbox'
 import { connect } from 'react-redux'
 
-import AttentionIcon from '../../../../assets/oldImg/Attention.png'
 import styles from './styles'
 
 const ModalAgreementComponent = ({ onAcceptClicked, message, onClose }) => {
@@ -25,8 +26,7 @@ const ModalAgreementComponent = ({ onAcceptClicked, message, onClose }) => {
                 style={styles.modal}
                 backdrop
                 position="center"
-                useNativeDriver
-            >
+                useNativeDriver>
                 <View style={styles.wrapper}>
                     <Image style={styles.image} tintColor="black" source={AttentionIcon} />
                     <View style={styles.descriptionWrapper}>
@@ -41,8 +41,7 @@ const ModalAgreementComponent = ({ onAcceptClicked, message, onClose }) => {
                             onPress={() => {
                                 onAcceptClicked()
                                 closeModal()
-                            }}
-                        >
+                            }}>
                             <Text style={styles.acceptText}>Принять</Text>
                         </TouchableOpacity>
                     </View>

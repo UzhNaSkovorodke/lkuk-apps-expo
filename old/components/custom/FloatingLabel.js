@@ -1,8 +1,8 @@
+import { Fonts } from '../../utils/Fonts'
 import PropTypes from 'prop-types'
+
 import React, { Component } from 'react'
 import { Animated, Platform, StyleSheet, Text } from 'react-native'
-
-import { Fonts } from '../../utils/Fonts'
 
 const styles = StyleSheet.create({
     labelText: {
@@ -45,14 +45,17 @@ class FloatingLabel extends Component {
             Animated.timing(this.state.top, {
                 toValue: this.posTop,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
             Animated.timing(this.state.fontSize, {
                 toValue: this.fontSmall,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
             Animated.timing(this.state.textColor, {
                 toValue: 1,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
         ]).start()
     }
@@ -62,14 +65,17 @@ class FloatingLabel extends Component {
             Animated.timing(this.state.top, {
                 toValue: this.posBottom,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
             Animated.timing(this.state.fontSize, {
                 toValue: this.fontLarge,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
             Animated.timing(this.state.textColor, {
                 toValue: 0,
                 duration: this.props.duration,
+                useNativeDriver: false,
             }),
         ]).start()
     }
@@ -98,8 +104,7 @@ class FloatingLabel extends Component {
                 ]}
                 onPress={() => {
                     this.props.focusHandler()
-                }}
-            >
+                }}>
                 {label}
                 {required}
             </Animated.Text>

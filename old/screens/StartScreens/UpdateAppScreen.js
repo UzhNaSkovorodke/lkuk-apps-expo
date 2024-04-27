@@ -1,14 +1,13 @@
+import Warning from '../../../assets/oldImg/Warning.png'
+import { version } from '../../../package.json'
+import DefaultButton from '../../components/buttons/DefaultButton'
+import Spinner from '../../components/custom/Spinner'
+import { Fonts } from '../../utils/Fonts'
+import shared from 'stonehedge-shared'
+
 import React, { useState, useEffect } from 'react'
 import { Image, Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
-
-import Warning from '../../../assets/oldImg/Warning.png'
-import { version } from '../../../package.json'
-
-import { Fonts } from '../../utils/Fonts'
-import DefaultButton from '../../components/buttons/DefaultButton'
-import Spinner from '../../components/custom/Spinner'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -121,9 +120,9 @@ const UpdateAppScreen = ({ fetchConfig, navigation }) => {
             </View>
             <Text style={styles.contrastText}>Версия: {config.lastBuild}</Text>
             <Text style={styles.contrastText}>Основные изменения:</Text>
-            {/*<ScrollView style={styles.scroll}>*/}
-            {/*  <Text>{config.lastBuildDescription}</Text>*/}
-            {/*</ScrollView>*/}
+            <ScrollView style={styles.scroll}>
+                <Text>{config.lastBuildDescription}</Text>
+            </ScrollView>
             <View style={styles.buttonContainer}>
                 <DefaultButton
                     style={{ marginTop: 15 }}

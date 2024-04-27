@@ -1,6 +1,6 @@
 import { PermissionsAndroid, Platform } from 'react-native'
-import store from 'stonehedge-shared/src/store'
 import actions from 'stonehedge-shared/src/actions'
+import store from 'stonehedge-shared/src/store'
 
 export const invokePermissionWriteExternalStorageDialog = async () => {
     if (Platform.OS === 'ios') {

@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
-
 import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
+import shared from 'stonehedge-shared'
+
+import React, { useEffect } from 'react'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     container: {
@@ -46,8 +45,6 @@ const GreetingScreen = ({
     fetchEventTypes,
     fetchFundsFlowTypes,
 }) => {
-    const isFocused = useIsFocused()
-
     const loadAllDict = () => {
         Promise.all([
             fetchProjects(),

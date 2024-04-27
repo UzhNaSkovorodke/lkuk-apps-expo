@@ -1,8 +1,9 @@
+import constants from '../constants/Uri'
 import moment from 'moment/locale/ru'
 import { Platform } from 'react-native'
 
-import constants from '../constants/Uri'
 import { invokePermissionWriteExternalStorageDialog } from './Permissions'
+
 //import reportError from './ReportError';
 
 export const APPEAL_STATE_TYPES = {

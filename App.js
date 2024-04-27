@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { StyleSheet } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
+import * as React from 'react'
+import { StyleSheet } from 'react-native'
 import { Provider } from 'react-redux'
 import shared from 'stonehedge-shared'
 

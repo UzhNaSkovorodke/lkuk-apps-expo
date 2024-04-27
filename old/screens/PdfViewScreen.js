@@ -1,12 +1,14 @@
+import { Fonts } from '../utils/Fonts'
+import reportError from '../utils/ReportError'
+import { downloadFile } from '../utils/Utils'
+import shared from 'stonehedge-shared'
+
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
-import Spinner from '../components/custom/Spinner'
+
 import ModalRoot, { openAgreementModal } from '../components/custom/RootModalsComponent'
-import { Fonts } from '../utils/Fonts'
-import { downloadFile } from '../utils/Utils'
-//import reportError from '../utils/ReportError';
+import Spinner from '../components/custom/Spinner'
 
 const styles = StyleSheet.create({
     downloadButtonWrapper: {
@@ -84,8 +86,7 @@ class PdfViewScreen extends React.Component {
                 fileReader.readAsDataURL(blob)
             })
             .catch((error) => {
-                console.log(error)
-                //reportError(error, 'PDFView/componentDidMount');
+                reportError(error, 'PDFView/componentDidMount')
                 setError([{ message: 'Извините, невозможно открыть данный файл.' }])
                 navigation.goBack()
             })

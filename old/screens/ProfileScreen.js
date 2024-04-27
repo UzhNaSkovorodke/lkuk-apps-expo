@@ -1,16 +1,19 @@
-import React from 'react'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import * as ImagePicker from 'expo-image-picker'
-import EditProfileImage from '../../assets/oldImg/EditProfileImage.png'
-import { connect } from 'react-redux'
-import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
-import CommentLabel from '../components/custom/CommentLabel'
 import uri from '../constants/Uri'
 import { Fonts } from '../utils/Fonts'
+import * as ImagePicker from 'expo-image-picker'
+import * as SecureStore from 'expo-secure-store'
+import shared from 'stonehedge-shared'
+
+import React from 'react'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { connect } from 'react-redux'
+
+import EditProfileImage from '../../assets/oldImg/EditProfileImage.png'
+
+import DefaultButton from '../components/buttons/DefaultButton'
+import CommentLabel from '../components/custom/CommentLabel'
 import Spinner from '../components/custom/Spinner'
 import SplitLine from '../components/custom/SplitLine'
-import DefaultButton from '../components/buttons/DefaultButton'
 
 const styles = StyleSheet.create({
     container: {
@@ -241,8 +244,7 @@ class ProfileScreen extends React.Component {
                     </View>
                     <TouchableOpacity
                         style={styles.editProfileImageButton}
-                        onPress={this.selectProfileImage}
-                    >
+                        onPress={this.selectProfileImage}>
                         <Image style={styles.editImageIcon} source={EditProfileImage} />
                     </TouchableOpacity>
                 </View>
@@ -264,8 +266,7 @@ class ProfileScreen extends React.Component {
                 ) : (
                     <TouchableOpacity
                         style={styles.editProfileImageButton}
-                        onPress={this.selectProfileImage}
-                    >
+                        onPress={this.selectProfileImage}>
                         <Image style={styles.editImageIcon} source={EditProfileImage} />
                     </TouchableOpacity>
                 )}
@@ -290,8 +291,7 @@ class ProfileScreen extends React.Component {
                             phoneNumber: profile.phoneNumber,
                             profileEmail: profile.email,
                         })
-                    }}
-                >
+                    }}>
                     <Text style={styles.editProfileText}>Редактировать профиль</Text>
                 </TouchableOpacity>
             </View>
@@ -334,8 +334,7 @@ class ProfileScreen extends React.Component {
                                 fileLink: uri.privacyPolicyFileLink,
                                 title: 'Политика Конфиденциальности',
                             })
-                        }
-                    >
+                        }>
                         <Text style={styles.profileExitText}>Политика конфиденциальности</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -345,14 +344,12 @@ class ProfileScreen extends React.Component {
                                 fileLink: uri.rulesFileLink,
                                 title: 'Правила участия в программе',
                             })
-                        }
-                    >
+                        }>
                         <Text style={styles.profileExitText}>Правила участия в программе</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.profileExitButton}
-                        onPress={this.onLogOutButtonPress}
-                    >
+                        onPress={this.onLogOutButtonPress}>
                         <Text style={styles.profileExitText}>Выйти из профиля</Text>
                     </TouchableOpacity>
                 </View>

@@ -1,17 +1,18 @@
+import { Fonts } from '../utils/Fonts'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 import { Image, StyleSheet, TouchableOpacity } from 'react-native'
 
-import HomeIcon from '../../assets/oldImg/Home.png'
-import EstateIcon from '../../assets/oldImg/Estate.png'
 import AppealsIcon from '../../assets/oldImg/Appeals.png'
-import ProfileIcon from '../../assets/oldImg/Profile.png'
+import EstateIcon from '../../assets/oldImg/Estate.png'
 import Filter from '../../assets/oldImg/Filter.png'
+import HomeIcon from '../../assets/oldImg/Home.png'
+import ProfileIcon from '../../assets/oldImg/Profile.png'
 
-import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
-import { Fonts } from '../utils/Fonts'
 import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -98,8 +99,7 @@ function TabNavigator() {
                 tabBarLabelStyle,
                 tabBarStyle: { paddingBottom: bottom + 4 },
                 //...TransitionPresets.ScaleFromCenterAndroid,
-            }}
-        >
+            }}>
             <Tab.Screen
                 name="HomeScreen"
                 component={HomeScreen}
@@ -138,8 +138,7 @@ function TabNavigator() {
                                 // navigate('AppealsFilterScreen', {
                                 //     filter: params?.filter || {},
                                 // })
-                            }
-                        >
+                            }>
                             <Image style={styles.filter} source={Filter} />
                         </TouchableOpacity>
                     ),

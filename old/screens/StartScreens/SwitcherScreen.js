@@ -1,11 +1,12 @@
+import Spinner from '../../components/custom/Spinner'
+import reportError from '../../utils/ReportError'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as SecureStore from 'expo-secure-store'
+import shared from 'stonehedge-shared'
+
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
-import Spinner from '../../components/custom/Spinner'
-import * as SecureStore from 'expo-secure-store'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import reportError from '../../utils/ReportError'
 
 const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
     useEffect(() => {
@@ -41,7 +42,7 @@ const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
     }
     const onCheckFirstLaunch = async () => {
         AsyncStorage.getItem('logged').then((isLogin) =>
-            navigation.navigate(isLogin ? 'WelcomeScreen' : 'RegistrationOrLoginScreen')
+            navigation.navigate(isLogin ? 'WelcomeScreen' : 'WelcomeScreen')
         )
     }
 

@@ -1,5 +1,5 @@
-import ModalRootContext from './context'
 import RootModalsComponent from './RootModalsComponent'
+import ModalRootContext from './context'
 
 const onCloseModal = (modalRootContext, modalTimeStamp) => {
     const { modalRootState, setModalsRootArray } = modalRootContext

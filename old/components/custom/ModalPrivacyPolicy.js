@@ -1,12 +1,12 @@
-import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import HTMLView from 'react-native-htmlview'
-import Modal from 'react-native-modalbox'
-import { connect } from 'react-redux'
-
 import AttentionIcon from '../../../assets/oldImg/Attention.png'
 import uri from '../../constants/Uri'
 import { Fonts } from '../../utils/Fonts'
+import HTMLView from 'react-native-htmlview'
+import Modal from 'react-native-modalbox'
+
+import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     modal: {
@@ -92,8 +92,7 @@ const ModalPrivacyPolicy = ({ onAcceptClicked, modalRef }) => {
                 backdrop
                 ref={modalRef}
                 position="center"
-                useNativeDriver={true}
-            >
+                useNativeDriver={true}>
                 <View style={styles.wrapper}>
                     <Image style={styles.image} tintColor="black" source={AttentionIcon} />
                     <HTMLView
@@ -110,8 +109,7 @@ const ModalPrivacyPolicy = ({ onAcceptClicked, modalRef }) => {
                             onPress={() => {
                                 onAcceptClicked()
                                 closeModal()
-                            }}
-                        >
+                            }}>
                             <Text style={styles.acceptText}>Принять</Text>
                         </TouchableOpacity>
                     </View>

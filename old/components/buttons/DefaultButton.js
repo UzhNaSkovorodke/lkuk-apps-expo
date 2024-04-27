@@ -1,8 +1,8 @@
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-//import ShadowBox from 'react-native-simple-shadow-view';
 import { Fonts } from '../../utils/Fonts'
 import SpinLoader from '../custom/Spinner'
+
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -67,16 +67,14 @@ export default class DefaultButton extends React.Component {
                         wrapperStyle,
                     ]}
                     onPress={onPress}
-                    disabled={disabled || isShowLoader}
-                >
+                    disabled={disabled || isShowLoader}>
                     <View style={styles.wrapper}>
                         <Text
                             style={[
                                 disabled ? styles.disabledTextColor : styles.defaultTextColor,
                                 styles.defaultText,
                                 textStyle,
-                            ]}
-                        >
+                            ]}>
                             {text}
                         </Text>
                     </View>

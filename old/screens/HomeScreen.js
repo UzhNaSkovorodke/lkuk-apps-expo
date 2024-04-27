@@ -1,4 +1,12 @@
+import { APPEAL_SELECTION_TYPES, APPEAL_TYPES } from '../constants/AppealTypes'
+import commonStyles from '../styles/CommonStyles'
+import { Fonts } from '../utils/Fonts'
+import reportError from '../utils/ReportError'
+import { filterAvailableProjectAppealTypes } from '../utils/Utils'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Notifications from 'expo-notifications'
+import shared from 'stonehedge-shared'
+
 import React from 'react'
 import {
     AppState,
@@ -11,22 +19,16 @@ import {
     TouchableHighlight,
     View,
 } from 'react-native'
-
-import * as Notifications from 'expo-notifications'
 import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
+
 import BuildingAppealIcon from '../../assets/oldImg/BuildingDeveloper.png'
 import GuestsIcon from '../../assets/oldImg/Guests.png'
 import MakeAppealIcon from '../../assets/oldImg/MakeAppeal.png'
 import NewsIcon from '../../assets/oldImg/News.jpg'
 import TaxiIcon from '../../assets/oldImg/Taxi.png'
+
 import ButtonWithIcon from '../components/buttons/ButtonWithIcon'
 import SplitLine from '../components/custom/SplitLine'
-import commonStyles from '../styles/CommonStyles'
-import { Fonts } from '../utils/Fonts'
-// import reportError from '../utils/ReportError';
-import { filterAvailableProjectAppealTypes } from '../utils/Utils'
-import { APPEAL_SELECTION_TYPES, APPEAL_TYPES } from '../constants/AppealTypes'
 
 const styles = StyleSheet.create({
     scrollView: {
@@ -57,12 +59,6 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.DisplayBold,
         fontSize: 18,
         marginHorizontal: 6,
-    },
-    newsPlaceholder: {
-        width: '100%',
-        height: 150,
-        marginBottom: 10,
-        backgroundColor: '#DEE0E5',
     },
     newsText: {
         color: '#111111',
@@ -103,19 +99,12 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width - 32,
         marginLeft: 6,
     },
-    placeholder: {
-        backgroundColor: '#DEE0E5',
-        borderRadius: 3,
-    },
     wrapperPadding: {
         padding: 16,
     },
     oneNewsButton: {
         flex: 1,
         borderRadius: 3,
-    },
-    placeholderLine: {
-        backgroundColor: '#DEE0E5',
     },
 })
 
@@ -176,7 +165,7 @@ class HomeScreen extends React.Component {
             //await messaging().requestPermission()
             await this.getToken()
         } catch (error) {
-            // reportError(error, 'Home/requestPermission/Notifications');
+            reportError(error, 'Home/requestPermission/Notifications')
             // User has rejected permissions
         }
     }
@@ -262,10 +251,10 @@ class HomeScreen extends React.Component {
             updateNotification({ notificationId: response.notificationId })
             navigation.navigate('NewsScreen', { title, id: newsId })
         } else {
-            // reportError(
-            //     'Ошибка сервера или такой push notification не поддерживается',
-            //     'Home/requestPermission/Notifications',
-            // );
+            reportError(
+                'Ошибка сервера или такой push notification не поддерживается',
+                'Home/requestPermission/Notifications'
+            )
         }
     }
 
@@ -356,7 +345,12 @@ class HomeScreen extends React.Component {
     renderNews = () => {
         const { news, needUpdate } = this.state
         return (
-            <FlatList
+            // <>
+            //     {news.map((elem, index) => {
+            //
+            //     })}
+            // </>
+            <View
                 style={styles.flatlist}
                 keyExtractor={this.keyExtractor}
                 extraData={needUpdate}
@@ -379,8 +373,7 @@ class HomeScreen extends React.Component {
                             title: news.item.title,
                             id: news.item.newsId,
                         })
-                    }
-                >
+                    }>
                     <>
                         <Image
                             style={styles.newsImage}
@@ -403,10 +396,7 @@ class HomeScreen extends React.Component {
 
     renderPlaceholderNews = () => (
         <View style={styles.wrapper}>
-            {/*<Placeholder style={styles.placeholder} Animation={ShineOverlay}>*/}
-            {/*    <PlaceholderMedia style={styles.newsPlaceholder}/>*/}
-            {/*    <PlaceholderLine width={90} style={styles.placeholderLine}/>*/}
-            {/*</Placeholder>*/}
+            <View style={styles.placeholder}></View>
         </View>
     )
 
@@ -424,53 +414,52 @@ class HomeScreen extends React.Component {
                     } else {
                         this.setState({ needUpdate: false })
                     }
-                }}
-            >
-                {/*<View style={[commonStyles.container, styles.container]}>*/}
-                {/*    <View style={styles.wrapper}>*/}
-                {/*        <ButtonWithIcon*/}
-                {/*            label="Счета"*/}
-                {/*            description="Нажмите, чтобы посмотреть и оплатить"*/}
-                {/*            source={GuestsIcon}*/}
-                {/*            imageStyle={styles.guestsIcon}*/}
-                {/*            onPress={this.onPaymentsButtonPress}*/}
-                {/*        />*/}
-                {/*        <ButtonWithIcon*/}
-                {/*            label="Заказать пропуск"*/}
-                {/*            description="Для гостя, такси или доставки"*/}
-                {/*            source={TaxiIcon}*/}
-                {/*            imageStyle={styles.taxiIcon}*/}
-                {/*            onPress={this.onPassOrderButtonPress}*/}
-                {/*        />*/}
-                {/*        {this.hasUKAppeals && (*/}
-                {/*            <ButtonWithIcon*/}
-                {/*                label="Обратиться в УК"*/}
-                {/*                description="Нажмите, чтобы обратиться"*/}
-                {/*                source={MakeAppealIcon}*/}
-                {/*                imageStyle={styles.makeAppealIcon}*/}
-                {/*                onPress={this.onContactManageCompanyButtonPress(*/}
-                {/*                    APPEAL_SELECTION_TYPES.MANAGE_COMPANY,*/}
-                {/*                )}*/}
-                {/*            />*/}
-                {/*        )}*/}
-                {/*        {this.hasDevAppeals && (*/}
-                {/*            <ButtonWithIcon*/}
-                {/*                label="Обратиться к застройщику"*/}
-                {/*                description="Нажмите, чтобы выбрать тип обращения"*/}
-                {/*                source={BuildingAppealIcon}*/}
-                {/*                imageStyle={styles.buildingAppealIcon}*/}
-                {/*                onPress={this.onContactManageCompanyButtonPress(*/}
-                {/*                    APPEAL_SELECTION_TYPES.BUILDING_COMPANY,*/}
-                {/*                )}*/}
-                {/*            />*/}
-                {/*        )}*/}
-                {/*    </View>*/}
+                }}>
+                <View style={[commonStyles.container, styles.container]}>
+                    <View style={styles.wrapper}>
+                        <ButtonWithIcon
+                            label="Счета"
+                            description="Нажмите, чтобы посмотреть и оплатить"
+                            source={GuestsIcon}
+                            imageStyle={styles.guestsIcon}
+                            onPress={this.onPaymentsButtonPress}
+                        />
+                        <ButtonWithIcon
+                            label="Заказать пропуск"
+                            description="Для гостя, такси или доставки"
+                            source={TaxiIcon}
+                            imageStyle={styles.taxiIcon}
+                            onPress={this.onPassOrderButtonPress}
+                        />
+                        {this.hasUKAppeals && (
+                            <ButtonWithIcon
+                                label="Обратиться в УК"
+                                description="Нажмите, чтобы обратиться"
+                                source={MakeAppealIcon}
+                                imageStyle={styles.makeAppealIcon}
+                                onPress={this.onContactManageCompanyButtonPress(
+                                    APPEAL_SELECTION_TYPES.MANAGE_COMPANY
+                                )}
+                            />
+                        )}
+                        {this.hasDevAppeals && (
+                            <ButtonWithIcon
+                                label="Обратиться к застройщику"
+                                description="Нажмите, чтобы выбрать тип обращения"
+                                source={BuildingAppealIcon}
+                                imageStyle={styles.buildingAppealIcon}
+                                onPress={this.onContactManageCompanyButtonPress(
+                                    APPEAL_SELECTION_TYPES.BUILDING_COMPANY
+                                )}
+                            />
+                        )}
+                    </View>
 
-                {/*    <SplitLine style={styles.splitLine}/>*/}
+                    <SplitLine style={styles.splitLine} />
 
-                {/*    <Text style={styles.containerText}>Лента новостей</Text>*/}
-                {/*    {isEndLoadingNews ? this.renderNews() : this.renderPlaceholderNews()}*/}
-                {/*</View>*/}
+                    {/*<Text style={styles.containerText}>Лента новостей</Text>*/}
+                    {/*{isEndLoadingNews ? this.renderNews() : this.renderPlaceholderNews()}*/}
+                </View>
             </ScrollView>
         )
     }

@@ -57,20 +57,20 @@ export default class NumButton extends React.Component {
                     onPressIn={this.onPressin}
                     delayPressIn={0}
                     onPressOut={this.onPressout}
-                    onPress={() => onPress(numValue)}
-                >
+                    onPress={() => onPress(numValue)}>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Text
                             style={[
                                 styles.blueButtonNumber,
                                 buttonIsTouched && { color: '#FFFFFF' },
-                            ]}
-                        >
+                            ]}>
                             {numValue}
                         </Text>
                         <Text
-                            style={[styles.blueButtonText, buttonIsTouched && { color: '#FFFFFF' }]}
-                        >
+                            style={[
+                                styles.blueButtonText,
+                                buttonIsTouched && { color: '#FFFFFF' },
+                            ]}>
                             {wordValue}
                         </Text>
                     </View>

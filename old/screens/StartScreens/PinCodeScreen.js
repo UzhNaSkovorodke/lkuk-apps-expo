@@ -1,16 +1,17 @@
-import React from 'react'
-import { BackHandler } from 'react-native'
-import { Dimensions, Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
-import TouchId from 'react-native-touch-id'
-import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
 import DeleteImage from '../../../assets/oldImg/DeleteButton.png'
 import FaceIdIcon from '../../../assets/oldImg/FaceId.png'
 import TouchIdIcon from '../../../assets/oldImg/TouchIdIcon.png'
 import NumButton from '../../components/buttons/NumButton'
 import { Fonts } from '../../utils/Fonts'
 import * as SecureStore from 'expo-secure-store'
-import DefaultButton from '../../components/buttons/DefaultButton'
+import TouchId from 'react-native-touch-id'
+import shared from 'stonehedge-shared'
+
+import React from 'react'
+import { BackHandler } from 'react-native'
+import { Dimensions, Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { connect } from 'react-redux'
+
 const { width } = Dimensions.get('window')
 const buttonSize = width / 5.2
 const spaceTop = width / 25
@@ -132,9 +133,9 @@ class PinCodeScreen extends React.Component {
         BackHandler.exitApp()
     }
     componentDidMount() {
-        SecureStore.deleteItemAsync('login')
-        SecureStore.deleteItemAsync('password')
-        SecureStore.deleteItemAsync('PinCode')
+        // SecureStore.deleteItemAsync('login')
+        // SecureStore.deleteItemAsync('password')
+        // SecureStore.deleteItemAsync('PinCode')
         //TODO сделать проверку чтобы если пин в сторе null или undefined то пин стирается с другими данными
 
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
@@ -449,11 +450,7 @@ class PinCodeScreen extends React.Component {
     }
 
     render() {
-        const { header } = this.props.route.params
-
-        return header === undefined ? (
-            <View />
-        ) : (
+        return (
             <View style={styles.mainContainer}>
                 <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
                     {this.renderHeader()}
@@ -462,10 +459,6 @@ class PinCodeScreen extends React.Component {
                     {this.renderButtons()}
                     {this.renderBottom()}
                 </View>
-                <DefaultButton
-                    onPress={() => this.props.navigation.navigate('HomeScreen')}
-                    text={'Свалить'}
-                />
             </View>
         )
     }

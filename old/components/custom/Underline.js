@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+
 import React, { Component } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 
@@ -35,6 +36,7 @@ class Underline extends Component {
         Animated.timing(lineLength, {
             toValue: this.wrapperWidth,
             duration: this.props.duration,
+            useNativeDriver: true,
         }).start()
     }
 
@@ -43,6 +45,7 @@ class Underline extends Component {
         Animated.timing(lineLength, {
             toValue: 0,
             duration: this.props.duration,
+            useNativeDriver: true,
         }).start()
     }
 

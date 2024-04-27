@@ -1,7 +1,7 @@
+import { Fonts } from '../../utils/Fonts'
+
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-
-import { Fonts } from '../../utils/Fonts'
 
 const styles = StyleSheet.create({
     wrapper: {

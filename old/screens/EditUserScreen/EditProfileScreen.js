@@ -1,10 +1,10 @@
+import DefaultButton from '../../components/buttons/DefaultButton'
+import TextField from '../../components/custom/TextField'
+import shared from 'stonehedge-shared'
+
 import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
-import shared from 'stonehedge-shared'
-
-import TextField from '../components/custom/TextField'
-import DefaultButton from '../components/buttons/DefaultButton'
 
 const styles = StyleSheet.create({
     mainWrapper: {

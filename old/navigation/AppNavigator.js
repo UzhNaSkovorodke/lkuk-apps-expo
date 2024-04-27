@@ -1,23 +1,29 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 
 import BackArrowIcon from '../../assets/oldImg/BackArrow.png'
-import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 import HomeIcon from '../../assets/oldImg/Home.png'
+import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 
-import BackImage from '../components/buttons/BackImage'
-import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
-import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
-import TabNavigator from './TabNavigator'
-import UpdateAppScreen from '../screens/StartScreens/UpdateAppScreen'
-import SwitcherScreen from '../screens/StartScreens/SwitcherScreen'
-import SignInScreen from '../screens/StartScreens/SignInScreen'
-import GreetingScreen from '../screens/StartScreens/GreetingScreen'
-import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
+import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
+import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
+import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
 import HomeScreen from '../screens/HomeScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
-import EditProfileScreen from '../screens/EditProfileScreen'
+import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
+import GreetingScreen from '../screens/StartScreens/GreetingScreen'
+import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
+import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
+import SignInScreen from '../screens/StartScreens/SignInScreen'
+import SwitcherScreen from '../screens/StartScreens/SwitcherScreen'
+import UpdateAppScreen from '../screens/StartScreens/UpdateAppScreen'
+import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
+
+import BackImage from '../components/buttons/BackImage'
+
+import TabNavigator from './TabNavigator'
 
 const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
     headerStyle: {
@@ -43,8 +49,7 @@ export default function AppNavigator() {
                 headerStyle,
                 headerTitleAlign: 'center',
                 headerTitleStyle: styles.appHeaderTitleStyle,
-            }}
-        >
+            }}>
             <Stack.Screen
                 name={'TabNavigator'}
                 component={TabNavigator}
@@ -116,6 +121,21 @@ export default function AppNavigator() {
                 name={'EditProfileScreen'}
                 component={EditProfileScreen}
                 options={{ title: 'Изменить профиль' }}
+            />
+            <Stack.Screen
+                name={'PasswordChangeScreen'}
+                component={PasswordChangeScreen}
+                options={{ title: 'Изменить пароль' }}
+            />
+            <Stack.Screen
+                name={'PasswordRecoveryScreen'}
+                component={PasswordRecoveryScreen}
+                options={{ title: 'Восстановление пароля' }}
+            />
+            <Stack.Screen
+                name={'SelectPassOrderScreen'}
+                component={SelectPassOrderScreen}
+                options={{ title: 'Заказать пропуск' }}
             />
         </Stack.Navigator>
     )

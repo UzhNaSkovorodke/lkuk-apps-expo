@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-
 import { Fonts } from '../../../utils/Fonts'
+
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     modal: {

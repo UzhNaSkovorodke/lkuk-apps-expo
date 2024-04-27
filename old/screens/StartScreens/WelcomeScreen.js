@@ -1,9 +1,3 @@
-import React, { Component } from 'react'
-import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
-import ProgressBarAnimated from 'react-native-progress-bar-animated'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Swiper from 'react-native-swiper'
-
 import Image1 from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeDefault.png'
 import FirstWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeIphoneX.png'
 import Image4 from '../../../assets/oldImg/WelcomeScreen/ForthWelcomeDefault.png'
@@ -13,6 +7,12 @@ import SecondWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/SecondWel
 import Image3 from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeDefault.png'
 import ThirdWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeIphoneX.png'
 import Timer from '../../utils/Timer'
+import ProgressBarAnimated from 'react-native-progress-bar-animated'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Swiper from 'react-native-swiper'
+
+import React, { Component } from 'react'
+import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 const { height: screenHeight } = Dimensions.get('screen')
@@ -158,22 +158,18 @@ export default class WelcomeScreen extends Component {
                                 value={progress}
                             />
                         </View>
-                    }
-                >
+                    }>
                     <View style={styles.slide}>
                         <TouchableOpacity
                             style={styles.wrapperImg}
                             activeOpacity={1}
-                            delayPressIn={0}
-                        >
+                            delayPressIn={0}>
                             <ImageBackground
                                 style={styles.image}
-                                source={isLongScreen ? FirstWelcomeIphoneX : Image1}
-                            >
+                                source={isLongScreen ? FirstWelcomeIphoneX : Image1}>
                                 <TouchableOpacity
                                     style={styles.startButton}
-                                    onPress={this.onButtonClicked}
-                                >
+                                    onPress={this.onButtonClicked}>
                                     <Text style={styles.textStartButton}>Начать</Text>
                                 </TouchableOpacity>
                             </ImageBackground>
@@ -185,16 +181,13 @@ export default class WelcomeScreen extends Component {
                             activeOpacity={1}
                             delayPressIn={0}
                             style={styles.wrapperImg}
-                            delayPressOut={0}
-                        >
+                            delayPressOut={0}>
                             <ImageBackground
                                 style={styles.image}
-                                source={isLongScreen ? SecondWelcomeIphoneX : Image2}
-                            >
+                                source={isLongScreen ? SecondWelcomeIphoneX : Image2}>
                                 <TouchableOpacity
                                     style={styles.startButton}
-                                    onPress={this.onButtonClicked}
-                                >
+                                    onPress={this.onButtonClicked}>
                                     <Text style={styles.textStartButton}>Начать</Text>
                                 </TouchableOpacity>
                             </ImageBackground>
@@ -206,16 +199,13 @@ export default class WelcomeScreen extends Component {
                             activeOpacity={1}
                             delayPressIn={0}
                             style={styles.wrapperImg}
-                            delayPressOut={0}
-                        >
+                            delayPressOut={0}>
                             <ImageBackground
                                 style={styles.image}
-                                source={isLongScreen ? ThirdWelcomeIphoneX : Image3}
-                            >
+                                source={isLongScreen ? ThirdWelcomeIphoneX : Image3}>
                                 <TouchableOpacity
                                     style={styles.startButton}
-                                    onPress={this.onButtonClicked}
-                                >
+                                    onPress={this.onButtonClicked}>
                                     <Text style={styles.textStartButton}>Начать</Text>
                                 </TouchableOpacity>
                             </ImageBackground>
@@ -227,16 +217,13 @@ export default class WelcomeScreen extends Component {
                             activeOpacity={1}
                             style={styles.wrapperImg}
                             delayPressIn={0}
-                            delayPressOut={0}
-                        >
+                            delayPressOut={0}>
                             <ImageBackground
                                 style={styles.image}
-                                source={isLongScreen ? ForthWelcomeIphoneX : Image4}
-                            >
+                                source={isLongScreen ? ForthWelcomeIphoneX : Image4}>
                                 <TouchableOpacity
                                     style={styles.startButton}
-                                    onPress={this.onButtonClicked}
-                                >
+                                    onPress={this.onButtonClicked}>
                                     <Text style={styles.textStartButton}>Начать</Text>
                                 </TouchableOpacity>
                             </ImageBackground>
