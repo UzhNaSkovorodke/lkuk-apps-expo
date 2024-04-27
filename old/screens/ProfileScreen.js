@@ -1,18 +1,16 @@
-import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import EditProfileImage from '../../assets/oldImg/EditProfileImage.png';
-import {connect} from 'react-redux';
-import * as SecureStore from "expo-secure-store";
-
-import shared from 'stonehedge-shared';
-
-import CommentLabel from '../components/custom/CommentLabel';
-import uri from '../constants/Uri';
-import {Fonts} from '../utils/Fonts';
-import Spinner from "../components/custom/Spinner";
-import SplitLine from "../components/custom/SplitLine";
-import DefaultButton from "../components/buttons/DefaultButton";
+import React from 'react'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
+import EditProfileImage from '../../assets/oldImg/EditProfileImage.png'
+import { connect } from 'react-redux'
+import * as SecureStore from 'expo-secure-store'
+import shared from 'stonehedge-shared'
+import CommentLabel from '../components/custom/CommentLabel'
+import uri from '../constants/Uri'
+import { Fonts } from '../utils/Fonts'
+import Spinner from '../components/custom/Spinner'
+import SplitLine from '../components/custom/SplitLine'
+import DefaultButton from '../components/buttons/DefaultButton'
 
 const styles = StyleSheet.create({
     container: {
@@ -150,44 +148,44 @@ const styles = StyleSheet.create({
         marginTop: 6,
         marginBottom: 0,
     },
-});
+})
 
 class ProfileScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             isAvatarLoading: true,
-            profileAvatarUri: props.profile.avatar
-                ? `${uri.imagesProxyUrl}${props.profile.avatar}`
-                : '',
-        };
+            profileAvatarUri:
+                'https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1569.jpg',
+            // props.profile.avatar
+            // ? `${uri.imagesProxyUrl}${props.profile.avatar}`
+            // : '',
+        }
     }
 
     onPasswordChangeButtonPress = () => {
-        this.props.navigation.navigate('PasswordChangeScreen');
-    };
+        this.props.navigation.navigate('PasswordChangeScreen')
+    }
 
     onLogOutButtonPress = () => {
-        const {navigation, logoutProfile} = this.props;
-        SecureStore.deleteItemAsync('login');
-        SecureStore.deleteItemAsync('password');
-        SecureStore.deleteItemAsync('PinCode');
-        logoutProfile();
-        navigation.navigate('SignInScreen');
-    };
+        const { navigation, logoutProfile } = this.props
+        SecureStore.deleteItemAsync('login')
+        SecureStore.deleteItemAsync('password')
+        SecureStore.deleteItemAsync('PinCode')
+        logoutProfile()
+        navigation.navigate('SignInScreen')
+    }
 
     selectProfileImage = () => {
-        const {setError, editProfile} = this.props;
-        const {profileAvatarUri} = this.state;
+        const { setError, editProfile } = this.props
+        const { profileAvatarUri } = this.state
         const options = {
             title: 'Выберать фото',
             cancelButtonTitle: 'Отмена',
             takePhotoButtonTitle: 'Сделать снимок',
             chooseFromLibraryButtonTitle: 'Загрузить из галереи',
             cameraType: 'front',
-            customButtons: profileAvatarUri
-                ? [{name: 'deleteImage', title: 'Удалить'}]
-                : [],
+            customButtons: profileAvatarUri ? [{ name: 'deleteImage', title: 'Удалить' }] : [],
             permissionDenied: {
                 title: 'Доступ запрещен',
                 text: 'Чтобы иметь возможность делать снимки с помощью камеры и выбирать изображения из вашей библиотеки дайте доступ.',
@@ -197,42 +195,41 @@ class ProfileScreen extends React.Component {
             storageOptions: {
                 path: 'images',
             },
-        };
-        ImagePicker.showImagePicker(options, res => {
+        }
+        ImagePicker.showImagePicker(options, (res) => {
             if (res.error && res.error === 'Photo library permissions not granted') {
                 setError([
                     {
                         message:
                             'Доступ к фото запрещен. Дать доступ можно в настройках приложения.',
                     },
-                ]);
-                return;
+                ])
+                return
             }
             this.setState({
                 isAvatarLoading: true,
                 profileAvatarUri: undefined,
-            });
+            })
             editProfile({
                 fileContent: res.data || null,
                 fileName:
-                    res.customButton && res.customButton === 'deleteImage'
-                        ? null
-                        : res.fileName,
+                    res.customButton && res.customButton === 'deleteImage' ? null : res.fileName,
             }).then(() => {
                 this.setState({
                     profileAvatarUri: res.uri,
                     isAvatarLoading: false,
-                });
-            });
-        });
-    };
+                })
+            })
+        })
+    }
 
     renderImage = () => {
-        const {profile} = this.props;
-        const {profileAvatarUri, isAvatarLoading} = this.state;
+        const { profile } = this.props
+        const { profileAvatarUri, isAvatarLoading } = this.state
         const [lastName, firstName] = ((profile && profile.fio) || '')
             .replace(/[^a-zA-Zа-яА-Я\s]/g, '')
-            .split(' ');
+            .split(' ')
+
         if (profileAvatarUri === '') {
             return (
                 <View>
@@ -244,42 +241,41 @@ class ProfileScreen extends React.Component {
                     </View>
                     <TouchableOpacity
                         style={styles.editProfileImageButton}
-                        onPress={this.selectProfileImage}>
-                        <Image style={styles.editImageIcon} source={EditProfileImage}/>
+                        onPress={this.selectProfileImage}
+                    >
+                        <Image style={styles.editImageIcon} source={EditProfileImage} />
                     </TouchableOpacity>
                 </View>
-            );
+            )
         }
         return (
             <View>
                 <Image
                     style={styles.profileImage}
                     resizeMode="cover"
-                    source={{uri: profileAvatarUri}}
-                    onLoadEnd={() => this.setState({isAvatarLoading: false})}
-                    onLoadStart={() => this.setState({isAvatarLoading: true})}
+                    source={{ uri: profileAvatarUri }}
+                    onLoadEnd={() => this.setState({ isAvatarLoading: false })}
+                    onLoadStart={() => this.setState({ isAvatarLoading: true })}
                 />
                 {isAvatarLoading ? (
                     <View style={[styles.profileImage, styles.spinnerWrapper]}>
-                        <Spinner/>
+                        <Spinner />
                     </View>
                 ) : (
                     <TouchableOpacity
                         style={styles.editProfileImageButton}
-                        onPress={this.selectProfileImage}>
-                        <Image style={styles.editImageIcon} source={EditProfileImage}/>
+                        onPress={this.selectProfileImage}
+                    >
+                        <Image style={styles.editImageIcon} source={EditProfileImage} />
                     </TouchableOpacity>
                 )}
             </View>
-        );
-    };
+        )
+    }
 
     renderProfileFIO = () => {
-        const {navigation, profile} = this.props;
-        const [lastName, firstName, patronymic] = (
-            (profile && profile.fio) ||
-            ''
-        ).split(' ');
+        const { navigation, profile } = this.props
+        const [lastName, firstName, patronymic] = ((profile && profile.fio) || '').split(' ')
         return (
             <View>
                 <Text style={styles.fioText}>
@@ -293,38 +289,39 @@ class ProfileScreen extends React.Component {
                             profileFio: profile.fio,
                             phoneNumber: profile.phoneNumber,
                             profileEmail: profile.email,
-                        });
-                    }}>
+                        })
+                    }}
+                >
                     <Text style={styles.editProfileText}>Редактировать профиль</Text>
                 </TouchableOpacity>
             </View>
-        );
-    };
+        )
+    }
 
     renderContacts() {
-        const {profile} = this.props;
+        const { profile } = this.props
         return (
             <View style={styles.profileDataWrapper}>
-                <CommentLabel text="Телефон"/>
+                <CommentLabel text="Телефон" />
                 <Text style={styles.text}>{profile.phoneNumber || ''}</Text>
-                <SplitLine style={styles.splitLine2}/>
-                <CommentLabel text="Электронная почта"/>
+                <SplitLine style={styles.splitLine2} />
+                <CommentLabel text="Электронная почта" />
                 <Text style={styles.text}>{profile.email || ''}</Text>
-                <SplitLine style={styles.splitLine3}/>
+                <SplitLine style={styles.splitLine3} />
             </View>
-        );
+        )
     }
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row' }}>
                         {this.renderImage()}
                         {this.renderProfileFIO()}
                     </View>
-                    <SplitLine style={styles.splitLine}/>
+                    <SplitLine style={styles.splitLine} />
                     {this.renderContacts()}
                     <DefaultButton
                         onPress={this.onPasswordChangeButtonPress}
@@ -337,10 +334,9 @@ class ProfileScreen extends React.Component {
                                 fileLink: uri.privacyPolicyFileLink,
                                 title: 'Политика Конфиденциальности',
                             })
-                        }>
-                        <Text style={styles.profileExitText}>
-                            Политика конфиденциальности
-                        </Text>
+                        }
+                    >
+                        <Text style={styles.profileExitText}>Политика конфиденциальности</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.rulesText}
@@ -349,24 +345,24 @@ class ProfileScreen extends React.Component {
                                 fileLink: uri.rulesFileLink,
                                 title: 'Правила участия в программе',
                             })
-                        }>
-                        <Text style={styles.profileExitText}>
-                            Правила участия в программе
-                        </Text>
+                        }
+                    >
+                        <Text style={styles.profileExitText}>Правила участия в программе</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.profileExitButton}
-                        onPress={this.onLogOutButtonPress}>
+                        onPress={this.onLogOutButtonPress}
+                    >
                         <Text style={styles.profileExitText}>Выйти из профиля</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-        );
+        )
     }
 }
 
-export default connect(({profile}) => ({profile}), {
+export default connect(({ profile }) => ({ profile }), {
     logoutProfile: shared.actions.logout,
     editProfile: shared.actions.editProfile,
     setError: shared.actions.error,
-})(ProfileScreen);
+})(ProfileScreen)

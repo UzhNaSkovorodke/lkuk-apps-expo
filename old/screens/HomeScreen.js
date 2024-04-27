@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-//import messaging from '@react-native-firebase/messaging';
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import React from 'react'
 import {
     AppState,
     Dimensions,
@@ -11,24 +10,23 @@ import {
     Text,
     TouchableHighlight,
     View,
-} from 'react-native';
+} from 'react-native'
 
-
-import * as Notifications from 'expo-notifications';
-import {connect} from 'react-redux';
-import shared from 'stonehedge-shared';
-import BuildingAppealIcon from '../../assets/oldImg/BuildingDeveloper.png';
-import GuestsIcon from '../../assets/oldImg/Guests.png';
-import MakeAppealIcon from '../../assets/oldImg/MakeAppeal.png';
-import NewsIcon from '../../assets/oldImg/News.jpg';
-import TaxiIcon from '../../assets/oldImg/Taxi.png';
-import ButtonWithIcon from '../components/buttons/ButtonWithIcon';
-import SplitLine from '../components/custom/SplitLine';
-import commonStyles from '../styles/CommonStyles';
-import {Fonts} from '../utils/Fonts';
+import * as Notifications from 'expo-notifications'
+import { connect } from 'react-redux'
+import shared from 'stonehedge-shared'
+import BuildingAppealIcon from '../../assets/oldImg/BuildingDeveloper.png'
+import GuestsIcon from '../../assets/oldImg/Guests.png'
+import MakeAppealIcon from '../../assets/oldImg/MakeAppeal.png'
+import NewsIcon from '../../assets/oldImg/News.jpg'
+import TaxiIcon from '../../assets/oldImg/Taxi.png'
+import ButtonWithIcon from '../components/buttons/ButtonWithIcon'
+import SplitLine from '../components/custom/SplitLine'
+import commonStyles from '../styles/CommonStyles'
+import { Fonts } from '../utils/Fonts'
 // import reportError from '../utils/ReportError';
-import {filterAvailableProjectAppealTypes} from '../utils/Utils';
-import {APPEAL_SELECTION_TYPES, APPEAL_TYPES} from "../constants/AppealTypes";
+import { filterAvailableProjectAppealTypes } from '../utils/Utils'
+import { APPEAL_SELECTION_TYPES, APPEAL_TYPES } from '../constants/AppealTypes'
 
 const styles = StyleSheet.create({
     scrollView: {
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
         shadowColor: '#B7B7B7',
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        shadowOffset: {width: 0, height: 0},
+        shadowOffset: { width: 0, height: 0 },
     },
     guestsIcon: {
         width: 28,
@@ -119,7 +117,7 @@ const styles = StyleSheet.create({
     placeholderLine: {
         backgroundColor: '#DEE0E5',
     },
-});
+})
 
 class HomeScreen extends React.Component {
     hasDevAppeals =
@@ -127,97 +125,96 @@ class HomeScreen extends React.Component {
             projects: this.props.projects,
             appealTypesArray: this.props.appealTypesArray,
             appealType: APPEAL_TYPES.DEV,
-        })?.length > 0;
+        })?.length > 0
 
     hasUKAppeals =
         filterAvailableProjectAppealTypes({
             projects: this.props.projects,
             appealTypesArray: this.props.appealTypesArray,
             appealType: APPEAL_TYPES.UK,
-        })?.length > 0;
+        })?.length > 0
 
     constructor(props) {
-        super(props);
-        this.previewState = [];
-        this._unsubscribe = () => {
-        }
+        super(props)
+        this.previewState = []
+        this._unsubscribe = () => {}
         this.state = {
             news: [],
             needUpdate: false,
             isEndLoadingNews: false,
             allNewsIsLoaded: false,
-        };
+        }
 
-        this.getNews();
+        this.getNews()
     }
 
     async componentDidMount() {
         // Notifications.registerRemoteNotifications();
-        await this.checkPermission();
-        await this.createNotificationListeners();
-        AppState.addEventListener('change', this.handleAppStateChange);
+        await this.checkPermission()
+        await this.createNotificationListeners()
+        AppState.addEventListener('change', this.handleAppStateChange)
         this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.setState({isEndLoadingNews: false});
-            this.getNews(true);
-        });
+            this.setState({ isEndLoadingNews: false })
+            this.getNews(true)
+        })
     }
 
     componentWillUnmount() {
-        this._unsubscribe();
-        AppState.removeEventListener('change', this.handleAppStateChange);
+        this._unsubscribe()
     }
 
-    handleAppStateChange = nextAppState => {
+    handleAppStateChange = (nextAppState) => {
         if (nextAppState === 'active') {
-            this.setState({isEndLoadingNews: false});
-            this.getNews(true);
-            this.props.getNotifications();
+            this.setState({ isEndLoadingNews: false })
+            this.getNews(true)
+            this.props.getNotifications()
         }
-    };
+    }
 
     requestPermission = async () => {
         try {
-            //await messaging().requestPermission();
-            await this.getToken();
+            //await messaging().requestPermission()
+            await this.getToken()
         } catch (error) {
             // reportError(error, 'Home/requestPermission/Notifications');
             // User has rejected permissions
         }
-    };
+    }
 
     checkPermission = async () => {
-        //  const enabled = await messaging().hasPermission();
-        console.warn({enabled});
+        const enabled = false
+        //await messaging().hasPermission()
+
         if (enabled) {
-            await this.getToken();
+            await this.getToken()
         } else {
-            await this.requestPermission();
+            await this.requestPermission()
         }
-    };
+    }
 
     getToken = async () => {
-        const {editProfileFcmToken} = this.props;
+        const { editProfileFcmToken } = this.props
 
         // wasTokenResubscription -- костылёк, проверяем флаг, была ли совершена повторная подписка на пуш-уведомления
-        let wasNotificationResubscription = false;
+        let wasNotificationResubscription = false
 
         try {
             wasNotificationResubscription = await AsyncStorage.getItem(
-                'wasNotificationResubscription',
-            );
+                'wasNotificationResubscription'
+            )
 
             // const fcmToken = await messaging().getToken();
-            console.warn({fcmToken});
+            console.warn({ fcmToken })
             if (fcmToken) {
-                await editProfileFcmToken({enablePush: true, fcmToken});
+                await editProfileFcmToken({ enablePush: true, fcmToken })
                 if (!wasNotificationResubscription) {
-                    await AsyncStorage.setItem('wasNotificationResubscription', 'true');
+                    await AsyncStorage.setItem('wasNotificationResubscription', 'true')
                 }
             }
         } catch (error) {
             // reportError(error, 'Home/getToken');
         }
-    };
+    }
 
     createNotificationListeners = async () => {
         // Вызывается когда приложение открыто
@@ -246,123 +243,118 @@ class HomeScreen extends React.Component {
         //     'Home/createNotificationListeners/getInitialNotification',
         // ),
         //   );
-    };
+    }
 
-    handleNotification = notification => {
-        const {navigation, updateNotification, getNotifications} = this.props;
-        getNotifications();
-        const response = JSON.parse(notification.data).notification;
+    handleNotification = (notification) => {
+        const { navigation, updateNotification, getNotifications } = this.props
+        getNotifications()
+        const response = JSON.parse(notification.data).notification
         if (response.event !== undefined) {
-            const {eventTypeId, eventId} = response.event;
-            updateNotification({notificationId: response.notificationId});
-            this.checkEvent({eventTypeId, eventId, navigation});
+            const { eventTypeId, eventId } = response.event
+            updateNotification({ notificationId: response.notificationId })
+            this.checkEvent({ eventTypeId, eventId, navigation })
         } else if (response.bill !== undefined) {
-            const {billId, description} = response.bill;
-            updateNotification({notificationId: response.notificationId});
-            this.checkBill({billId, description, navigation});
+            const { billId, description } = response.bill
+            updateNotification({ notificationId: response.notificationId })
+            this.checkBill({ billId, description, navigation })
         } else if (response.news !== undefined) {
-            const {newsId, title} = response.news;
-            updateNotification({notificationId: response.notificationId});
-            navigation.navigate('NewsScreen', {title, id: newsId});
+            const { newsId, title } = response.news
+            updateNotification({ notificationId: response.notificationId })
+            navigation.navigate('NewsScreen', { title, id: newsId })
         } else {
             // reportError(
             //     'Ошибка сервера или такой push notification не поддерживается',
             //     'Home/requestPermission/Notifications',
             // );
         }
-    };
+    }
 
-    checkBill = ({billId, description, navigation}) => {
-        const {fetchBill} = this.props;
-        fetchBill({billId}).then(response => {
-            const {fileLink} = response.payload.data.getBill;
+    checkBill = ({ billId, description, navigation }) => {
+        const { fetchBill } = this.props
+        fetchBill({ billId }).then((response) => {
+            const { fileLink } = response.payload.data.getBill
             navigation.navigate('PdfViewScreen', {
                 fileLink,
                 title: `${description}`,
-            });
-        });
-    };
+            })
+        })
+    }
 
-    checkEvent = ({eventTypeId, eventId, navigation}) => {
+    checkEvent = ({ eventTypeId, eventId, navigation }) => {
         switch (eventTypeId) {
             case 1:
                 //navigation.navigate('MyEventsGuestPassOrderScreen', {eventId});
-                break;
+                break
             case 2:
                 //navigation.navigate('MyEventsTaxiPassOrderScreen', {eventId});
-                break;
+                break
             case 3:
                 // navigation.navigate('MyEventManagementCompanyAppealScreen', {
                 //     eventId,
                 // });
-                break;
+                break
 
             default:
-                break;
+                break
         }
-    };
+    }
 
     getNews = (isUpdateNews = false, count = 10) => {
-        const {setWarning, fetchAllNews} = this.props;
-        const {news} = this.state;
+        const { setWarning, fetchAllNews } = this.props
+        const { news } = this.state
         const endLoadingNews = () => {
-            this.setState({isEndLoadingNews: true});
+            this.setState({ isEndLoadingNews: true })
             if (this.state.news.length === 0) {
-                setWarning([{message: 'Список новостей пуст.'}]);
+                setWarning([{ message: 'Список новостей пуст.' }])
             }
-        };
+        }
 
-        fetchAllNews({page: (count / 10).toFixed(0) - 1, size: 10}) // page = 1, size = 10
-            .then(resp => resp.payload.data.getNews)
-            .then(data => {
+        fetchAllNews({ page: (count / 10).toFixed(0) - 1, size: 10 }) // page = 1, size = 10
+            .then((resp) => resp.payload.data.getNews)
+            .then((data) => {
                 if (
-                    Number(data.pagingOptions.pageTotal) ===
-                    Number((count / 10).toFixed(0)) &&
+                    Number(data.pagingOptions.pageTotal) === Number((count / 10).toFixed(0)) &&
                     (data.news.length > 0 || news.length > 0)
                 ) {
-                    this.setState({allNewsIsLoaded: true});
+                    this.setState({ allNewsIsLoaded: true })
                 }
 
                 if (isUpdateNews) {
-                    this.setState({news: data.news}, () => endLoadingNews());
+                    this.setState({ news: data.news }, () => endLoadingNews())
                 } else {
-                    this.setState({news: news.concat(data.news)}, () =>
-                        endLoadingNews(),
-                    );
+                    this.setState({ news: news.concat(data.news) }, () => endLoadingNews())
                 }
-            });
-    };
+            })
+    }
 
     loadAdditionallyNews = () => {
-        const {news, needUpdate, allNewsIsLoaded} = this.state;
-        const {setSuccess} = this.props;
+        const { news, needUpdate, allNewsIsLoaded } = this.state
+        const { setSuccess } = this.props
 
         if (allNewsIsLoaded) {
-            setSuccess([{message: 'Мы загрузили все новости.'}]);
-            this.setState({allNewsIsLoaded: false});
+            setSuccess([{ message: 'Мы загрузили все новости.' }])
+            this.setState({ allNewsIsLoaded: false })
         }
 
         if (needUpdate || news.length % 10 !== 0) {
-            return;
+            return
         }
 
-        this.setState({needUpdate: true});
-        this.getNews(false, news.length + 10);
-    };
+        this.setState({ needUpdate: true })
+        this.getNews(false, news.length + 10)
+    }
 
-    onPaymentsButtonPress = () =>
-        this.props.navigation.navigate('PaymentsScreen');
+    onPaymentsButtonPress = () => this.props.navigation.navigate('PaymentsScreen')
 
-    onPassOrderButtonPress = () =>
-        this.props.navigation.navigate('SelectPassOrderScreen');
+    onPassOrderButtonPress = () => this.props.navigation.navigate('SelectPassOrderScreen')
 
-    onContactManageCompanyButtonPress = mode => () =>
-        this.props.navigation.navigate('AppealSelectionScreen', {mode});
+    onContactManageCompanyButtonPress = (mode) => () =>
+        this.props.navigation.navigate('AppealSelectionScreen', { mode })
 
-    keyExtractor = item => item.newsId.toString();
+    keyExtractor = (item) => item.newsId.toString()
 
     renderNews = () => {
-        const {news, needUpdate} = this.state;
+        const { news, needUpdate } = this.state
         return (
             <FlatList
                 style={styles.flatlist}
@@ -371,11 +363,11 @@ class HomeScreen extends React.Component {
                 data={news}
                 renderItem={this.renderOneNews}
             />
-        );
-    };
+        )
+    }
 
     renderOneNews = (news, index) => {
-        const {navigation} = this.props;
+        const { navigation } = this.props
         return (
             <View style={styles.oneNews}>
                 <TouchableHighlight
@@ -387,15 +379,16 @@ class HomeScreen extends React.Component {
                             title: news.item.title,
                             id: news.item.newsId,
                         })
-                    }>
+                    }
+                >
                     <>
                         <Image
                             style={styles.newsImage}
                             source={
                                 news.item.previewPicture
                                     ? {
-                                        uri: `https://admin-lk.stonehedge.ru${news.item.previewPicture}`,
-                                    }
+                                          uri: `https://admin-lk.stonehedge.ru${news.item.previewPicture}`,
+                                      }
                                     : NewsIcon
                             }
                         />
@@ -405,8 +398,8 @@ class HomeScreen extends React.Component {
                     </>
                 </TouchableHighlight>
             </View>
-        );
-    };
+        )
+    }
 
     renderPlaceholderNews = () => (
         <View style={styles.wrapper}>
@@ -415,23 +408,24 @@ class HomeScreen extends React.Component {
             {/*    <PlaceholderLine width={90} style={styles.placeholderLine}/>*/}
             {/*</Placeholder>*/}
         </View>
-    );
+    )
 
-    isNearBottom = ({layoutMeasurement, contentOffset, contentSize}) =>
-        layoutMeasurement.height + contentOffset.y >= contentSize.height - 100;
+    isNearBottom = ({ layoutMeasurement, contentOffset, contentSize }) =>
+        layoutMeasurement.height + contentOffset.y >= contentSize.height - 100
 
     render() {
-        const {isEndLoadingNews} = this.state;
+        const { isEndLoadingNews } = this.state
         return (
             <ScrollView
                 style={styles.scrollView}
-                onScroll={({nativeEvent}) => {
+                onScroll={({ nativeEvent }) => {
                     if (this.isNearBottom(nativeEvent)) {
-                        this.loadAdditionallyNews();
+                        this.loadAdditionallyNews()
                     } else {
-                        this.setState({needUpdate: false});
+                        this.setState({ needUpdate: false })
                     }
-                }}>
+                }}
+            >
                 {/*<View style={[commonStyles.container, styles.container]}>*/}
                 {/*    <View style={styles.wrapper}>*/}
                 {/*        <ButtonWithIcon*/}
@@ -478,12 +472,12 @@ class HomeScreen extends React.Component {
                 {/*    {isEndLoadingNews ? this.renderNews() : this.renderPlaceholderNews()}*/}
                 {/*</View>*/}
             </ScrollView>
-        );
+        )
     }
 }
 
 export default connect(
-    ({notifications, dicts, projects}) => ({
+    ({ notifications, dicts, projects }) => ({
         notifications,
         appealTypesArray: dicts.appealTypes,
         projects: projects.list,
@@ -497,5 +491,5 @@ export default connect(
         updateNotification: shared.actions.updateNotification,
         incrementNotification: shared.actions.incrimentNotification,
         getNotifications: shared.actions.fetchNotifications,
-    },
-)(HomeScreen);
+    }
+)(HomeScreen)

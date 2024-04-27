@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import {useIsFocused} from '@react-navigation/native';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import shared from 'stonehedge-shared';
+import React, { useEffect } from 'react'
+import { useIsFocused } from '@react-navigation/native'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+import shared from 'stonehedge-shared'
 
-import StoneHedge from '../../../assets/oldImg/StoneHedge.png';
-import Spinner from '../../components/custom/Spinner';
-import {Fonts} from '../../utils/Fonts';
-//import reportError from '../utils/ReportError';
+import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
+import Spinner from '../../components/custom/Spinner'
+import { Fonts } from '../../utils/Fonts'
+import reportError from '../../utils/ReportError'
 
 const styles = StyleSheet.create({
     container: {
@@ -35,69 +35,68 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         tintColor: '#222221',
     },
-});
+})
 
 const GreetingScreen = ({
-                            route,
-                            navigation,
-                            fetchProjects,
-                            getNotifications,
-                            fetchAppealTypes,
-                            fetchEventTypes,
-                            fetchFundsFlowTypes,
-                        }) => {
-    const isFocused = useIsFocused();
+    route,
+    navigation,
+    fetchProjects,
+    getNotifications,
+    fetchAppealTypes,
+    fetchEventTypes,
+    fetchFundsFlowTypes,
+}) => {
+    const isFocused = useIsFocused()
 
-    const loadAllDicts = () => {
+    const loadAllDict = () => {
         Promise.all([
             fetchProjects(),
-            getNotifications({page: 0, showAll: false}),
+            getNotifications({ page: 0, showAll: false }),
             fetchAppealTypes(),
             fetchEventTypes(),
             fetchFundsFlowTypes(),
         ])
             .then(() => {
-                navigation.navigate('TabNavigator', {screen: 'HomeScreen'});
+                navigation.navigate('TabNavigator', { screen: 'HomeScreen' })
             })
-            .catch(error => {
-                console.log(error)
-                // reportError(error, 'GreetingScreen');
-                navigation.goBack();
-            });
-    };
+            .catch((error) => {
+                reportError(error, 'GreetingScreen')
+                navigation.goBack()
+            })
+    }
 
     useEffect(() => {
-        loadAllDicts();
-    }, [loadAllDicts]);
+        loadAllDict()
+    }, [loadAllDict])
 
     const getTimeTitle = () => {
-        const hours = new Date().getHours();
+        const hours = new Date().getHours()
 
         switch (true) {
             case hours >= 6 && hours < 12:
-                return 'Доброе утро,';
+                return 'Доброе утро,'
             case hours >= 12 && hours < 18:
-                return 'Добрый день,';
+                return 'Добрый день,'
             case hours >= 18 && hours < 24:
-                return 'Добрый вечер,';
+                return 'Добрый вечер,'
             case hours >= 0 && hours < 6:
-                return 'Доброй ночи,';
+                return 'Доброй ночи,'
             default:
-                return '';
+                return ''
         }
-    };
+    }
 
-    const {fio} = route.params;
+    const { fio } = route.params
 
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={StoneHedge}/>
+            <Image style={styles.image} source={StoneHedge} />
             <Text style={styles.helloText}>{getTimeTitle()}</Text>
             <Text style={styles.fioText}>{fio}</Text>
-            <Spinner/>
+            <Spinner />
         </View>
-    );
-};
+    )
+}
 
 export default connect(null, {
     fetchProjects: shared.actions.fetchProjects,
@@ -106,4 +105,4 @@ export default connect(null, {
     fetchEventTypes: shared.actions.fetchEventTypes,
     fetchFundsFlowTypes: shared.actions.fetchFundsFlowTypes,
     setError: shared.actions.error,
-})(GreetingScreen);
+})(GreetingScreen)

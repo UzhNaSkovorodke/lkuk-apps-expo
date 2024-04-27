@@ -1,7 +1,6 @@
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 import HomeIcon from '../../assets/oldImg/Home.png'
 import EstateIcon from '../../assets/oldImg/Estate.png'
@@ -9,15 +8,14 @@ import AppealsIcon from '../../assets/oldImg/Appeals.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 import Filter from '../../assets/oldImg/Filter.png'
 
-import RegistrationOrLoginScreen from "../screens/StartScreens/RegistrationOrLoginScreen";
-import {Fonts} from "../utils/Fonts";
-import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
+import { Fonts } from '../utils/Fonts'
+import HomeScreen from '../screens/HomeScreen'
+import ProfileScreen from '../screens/ProfileScreen'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
-
     const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
         tabBarLabelStyle: {
             fontFamily: Fonts.TextRegular,
@@ -82,9 +80,9 @@ function TabNavigator() {
             fontFamily: Fonts.DisplayCompactLight,
             fontSize: 12,
         },
-    });
+    })
 
-    const { bottom } = useSafeAreaInsets();
+    const { bottom } = useSafeAreaInsets()
     return (
         <Tab.Navigator
             initialRouteName="HomeScreen"
@@ -100,7 +98,8 @@ function TabNavigator() {
                 tabBarLabelStyle,
                 tabBarStyle: { paddingBottom: bottom + 4 },
                 //...TransitionPresets.ScaleFromCenterAndroid,
-            }}>
+            }}
+        >
             <Tab.Screen
                 name="HomeScreen"
                 component={HomeScreen}
@@ -119,10 +118,7 @@ function TabNavigator() {
                     title: 'Управление недвижимостью',
                     tabBarLabel: 'Недвижимость',
                     tabBarIcon: ({ color: tintColor }) => (
-                        <Image
-                            style={[styles.estateIcon, { tintColor }]}
-                            source={EstateIcon}
-                        />
+                        <Image style={[styles.estateIcon, { tintColor }]} source={EstateIcon} />
                     ),
                 }}
             />
@@ -133,18 +129,17 @@ function TabNavigator() {
                     title: 'Обращения',
                     tabBarLabel: 'Обращения',
                     tabBarIcon: ({ color: tintColor }) => (
-                        <Image
-                            style={[styles.appealsIcon, { tintColor }]}
-                            source={AppealsIcon}
-                        />
+                        <Image style={[styles.appealsIcon, { tintColor }]} source={AppealsIcon} />
                     ),
                     headerRight: () => (
                         <TouchableOpacity
-                            onPress={() => {}
+                            onPress={
+                                () => {}
                                 // navigate('AppealsFilterScreen', {
                                 //     filter: params?.filter || {},
                                 // })
-                            }>
+                            }
+                        >
                             <Image style={styles.filter} source={Filter} />
                         </TouchableOpacity>
                     ),
@@ -157,15 +152,12 @@ function TabNavigator() {
                     title: 'Профиль',
                     tabBarLabel: 'Профиль',
                     tabBarIcon: ({ color: tintColor }) => (
-                        <Image
-                            style={[styles.profileIcon, { tintColor }]}
-                            source={ProfileIcon}
-                        />
+                        <Image style={[styles.profileIcon, { tintColor }]} source={ProfileIcon} />
                     ),
                 }}
             />
         </Tab.Navigator>
-    );
+    )
 }
 
 export default TabNavigator

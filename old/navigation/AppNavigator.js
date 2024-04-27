@@ -1,32 +1,33 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
-import {StyleSheet, Image} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React from 'react'
+import { Image, StyleSheet } from 'react-native'
 
-import BackArrowIcon from '../../assets/oldImg/BackArrow.png';
+import BackArrowIcon from '../../assets/oldImg/BackArrow.png'
 import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 import HomeIcon from '../../assets/oldImg/Home.png'
 
-import BackImage from '../components/buttons/BackImage';
-import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen';
-import WelcomeScreen from "../screens/StartScreens/WelcomeScreen";
-import TabNavigator from "./TabNavigator";
-import UpdateAppScreen from "../screens/StartScreens/UpdateAppScreen";
-import SwitcherScreen from "../screens/StartScreens/SwitcherScreen";
-import SignInScreen from "../screens/StartScreens/SignInScreen";
-import GreetingScreen from "../screens/StartScreens/GreetingScreen";
-import PinCodeScreen from "../screens/StartScreens/PinCodeScreen";
-import HomeScreen from "../screens/HomeScreen";
+import BackImage from '../components/buttons/BackImage'
+import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
+import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
+import TabNavigator from './TabNavigator'
+import UpdateAppScreen from '../screens/StartScreens/UpdateAppScreen'
+import SwitcherScreen from '../screens/StartScreens/SwitcherScreen'
+import SignInScreen from '../screens/StartScreens/SignInScreen'
+import GreetingScreen from '../screens/StartScreens/GreetingScreen'
+import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
+import HomeScreen from '../screens/HomeScreen'
+import PdfViewScreen from '../screens/PdfViewScreen'
+import EditProfileScreen from '../screens/EditProfileScreen'
 
-const {tabBarLabelStyle, headerStyle, ...styles} = StyleSheet.create({
+const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
     headerStyle: {
         height: 56,
         backgroundColor: 'transparent',
         elevation: 0,
     },
-});
+})
 
-
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 export default function AppNavigator() {
     return (
@@ -35,23 +36,24 @@ export default function AppNavigator() {
             screenOptions={{
                 gestureEnabled: false,
                 headerBackImage: () => (
-                    <BackImage width={21.33} height={16} source={BackArrowIcon}/>
+                    <BackImage width={21.33} height={16} source={BackArrowIcon} />
                 ),
                 headerBackTitle: false,
                 headerBackTitleVisible: false,
                 headerStyle,
                 headerTitleAlign: 'center',
                 headerTitleStyle: styles.appHeaderTitleStyle,
-            }}>
+            }}
+        >
             <Stack.Screen
                 name={'TabNavigator'}
                 component={TabNavigator}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'SignInScreen'}
                 component={SignInScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'SwitcherScreen'}
@@ -61,44 +63,38 @@ export default function AppNavigator() {
             <Stack.Screen
                 name={'RegistrationOrLoginScreen'}
                 component={RegistrationOrLoginScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'WelcomeScreen'}
                 component={WelcomeScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'UpdateAppScreen'}
                 component={UpdateAppScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'GreetingScreen'}
                 component={GreetingScreen}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name={'PinCodeScreen'}
                 component={PinCodeScreen}
                 options={({
-                              route: {
-                                  params: { header },
-                              },
-                          }) => ({
+                    route: {
+                        params: { header },
+                    },
+                }) => ({
                     title: header === 'create' ? 'Создание PIN-кода' : '',
                     headerTitle:
                         header === 'enter'
-                            ? () => (
-                                <Image
-                                    style={{ height: 30, width: 151 }}
-                                    source={StoneHedge}
-                                />
-                            )
+                            ? () => <Image style={{ height: 30, width: 151 }} source={StoneHedge} />
                             : undefined,
                     headerLeft: header === 'enter' ? () => null : undefined,
-                })
-            }
+                })}
             />
             <Stack.Screen
                 name="HomeScreen"
@@ -111,6 +107,16 @@ export default function AppNavigator() {
                     ),
                 }}
             />
+            <Stack.Screen
+                name={'PdfViewScreen'}
+                component={PdfViewScreen}
+                options={({ route }) => ({ title: route.params.title })}
+            />
+            <Stack.Screen
+                name={'EditProfileScreen'}
+                component={EditProfileScreen}
+                options={{ title: 'Изменить профиль' }}
+            />
         </Stack.Navigator>
-    );
+    )
 }

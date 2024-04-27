@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
 const styles = StyleSheet.create({
     splitLine: {
@@ -9,9 +9,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
     },
-});
+})
 
-export default function SplitLine({style}) {
-    return <View style={[styles.splitLine, style]}/>
-
+export default function SplitLine({ style }) {
+    return <View style={[styles.splitLine, style]} />
 }

@@ -1,13 +1,22 @@
-import React, {useState} from 'react';
-import {Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
-import {connect} from 'react-redux';
-import shared from 'stonehedge-shared';
-import StoneHedge from '../../../assets/oldImg/StoneHedge.png';
-import {Fonts} from '../../utils/Fonts';
-import DefaultButton from "../../components/buttons/DefaultButton";
-import CircleCheckBox from "../../components/custom/CircleCheckBox";
-import ModalPrivacyPolicy from "../../components/custom/ModalPrivacyPolicy";
-import * as SecureStore from "expo-secure-store";
+import React, { useState } from 'react'
+import {
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from 'react-native'
+import { connect } from 'react-redux'
+import shared from 'stonehedge-shared'
+import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
+import { Fonts } from '../../utils/Fonts'
+import DefaultButton from '../../components/buttons/DefaultButton'
+import CircleCheckBox from '../../components/custom/CircleCheckBox'
+import ModalPrivacyPolicy from '../../components/custom/ModalPrivacyPolicy'
+import * as SecureStore from 'expo-secure-store'
+import reportError from '../../utils/ReportError'
 
 const styles = StyleSheet.create({
     container: {
@@ -83,22 +92,22 @@ const styles = StyleSheet.create({
         marginTop: 80,
         marginBottom: 0,
     },
-});
+})
 
-function SignInScreen({navigation, fetchProfile, auth}) {
-    const modalPrivacyPolicyRef = React.createRef();
-    const [isRememberMe, setIsRememberMe] = useState(false);
-    const [isProgress, setIsProgress] = useState(false);
-    const [login, setLogin] = useState(__DEV__ ? 'extra1' : '');
-    const [password, setPassword] = useState(__DEV__ ? 'extra1extra1' : '');
+function SignInScreen({ navigation, fetchProfile, auth }) {
+    const modalPrivacyPolicyRef = React.createRef()
+    const [isRememberMe, setIsRememberMe] = useState(false)
+    const [isProgress, setIsProgress] = useState(false)
+    const [login, setLogin] = useState(__DEV__ ? 'extra1' : '')
+    const [password, setPassword] = useState(__DEV__ ? 'extra1extra1' : '')
 
     const openPolicyModal = async () => {
-     modalPrivacyPolicyRef.current.open();
-    };
+        modalPrivacyPolicyRef.current.open()
+    }
 
     const handleCheckBox = () => {
         setIsRememberMe((prev) => !prev)
-    };
+    }
 
     const signIn = () => {
         setIsProgress(true)
@@ -107,52 +116,49 @@ function SignInScreen({navigation, fetchProfile, auth}) {
             .then(() => {
                 SecureStore.getItemAsync('login')
                     .then(() => signInSuccess())
-                    .catch(() => openPolicyModal());
+                    .catch((e) => {
+                        console.log(e)
+                        return openPolicyModal()
+                    })
             })
-            .catch(error => {
-                console.log(error)
+            .catch((error) => {
+                reportError(error, 'SingIn/signIn')
             })
-            .finally(() => setIsProgress(false));
-    };
+            .finally(() => setIsProgress(false))
+    }
 
     const signInSuccess = () => {
         fetchProfile()
-            .then(res => {
-                SecureStore.setItemAsync('login', login);
+            .then((res) => {
+                SecureStore.setItemAsync('login', login)
                 if (isRememberMe) {
-                    SecureStore.setItemAsync('password', password);
+                    SecureStore.setItemAsync('password', password)
                 }
-                const fio =
-                  (res.payload.data.profile && res.payload.data.profile.fio) || '';
+                const fio = (res.payload.data.profile && res.payload.data.profile.fio) || ''
 
-                navigation.navigate( 'GreetingScreen', {fio})
+                navigation.navigate('GreetingScreen', { fio })
 
                 // navigation.navigate(isRememberMe ? 'PinCodeScreen' : 'GreetingScreen', {
                 //   fio,
                 // });
             })
-            .catch(error => {
-                    console.log(error)
-                }
-                //reportError(error, 'SingIn/signInSuccess/fetchProfile'
-            );
-    };
+            .catch((error) => {
+                reportError(error, 'SingIn/signInSuccess/fetchProfile')
+            })
+    }
 
     return (
-        <View style={{flex: 1}}>
-            <ModalPrivacyPolicy
-                modalRef={modalPrivacyPolicyRef}
-                onAcceptClicked={signInSuccess}
-            />
-            <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={{ flex: 1 }}>
+            <ModalPrivacyPolicy modalRef={modalPrivacyPolicyRef} onAcceptClicked={signInSuccess} />
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={styles.container}>
-                    <Image style={styles.imageLabel} source={StoneHedge}/>
+                    <Image style={styles.imageLabel} source={StoneHedge} />
                     <TextInput
                         style={styles.login}
                         placeholder="Введите логин"
                         autoCapitalize="none"
                         selectionColor="#747E90"
-                        onChangeText={l => setLogin(l)}
+                        onChangeText={(l) => setLogin(l)}
                         value={login}
                     />
                     <TextInput
@@ -161,7 +167,7 @@ function SignInScreen({navigation, fetchProfile, auth}) {
                         autoCapitalize="none"
                         selectionColor="#747E90"
                         secureTextEntry
-                        onChangeText={p => setPassword(p)}
+                        onChangeText={(p) => setPassword(p)}
                         value={password}
                     />
                     <View style={styles.additionalWrapper}>
@@ -174,7 +180,8 @@ function SignInScreen({navigation, fetchProfile, auth}) {
                         />
                         <TouchableOpacity
                             style={styles.buttonPasswordForgot}
-                            onPress={() => navigation.navigate('PasswordRecoveryScreen')}>
+                            onPress={() => navigation.navigate('PasswordRecoveryScreen')}
+                        >
                             <Text style={styles.textForgot}>Забыли пароль?</Text>
                         </TouchableOpacity>
                     </View>
@@ -188,11 +195,11 @@ function SignInScreen({navigation, fetchProfile, auth}) {
                 </View>
             </ScrollView>
         </View>
-    );
+    )
 }
 
 export default connect(null, {
     auth: shared.actions.auth,
     fetchProfile: shared.actions.fetchProfile,
     setError: shared.actions.error,
-})(SignInScreen);
+})(SignInScreen)
