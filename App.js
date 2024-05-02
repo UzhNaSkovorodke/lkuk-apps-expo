@@ -1,11 +1,12 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { useFonts } from 'expo-font'
 import * as React from 'react'
-import { StyleSheet } from 'react-native'
 import { Provider } from 'react-redux'
-import shared from 'stonehedge-shared'
 
 import AppNavigator from './old/navigation/AppNavigator'
+
+import { NavigationContainer } from '@react-navigation/native'
+import { useFonts } from 'expo-font'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import shared from 'stonehedge-shared'
 
 export default function App() {
     const [fontsLoaded, fontError] = useFonts({
@@ -30,19 +31,12 @@ export default function App() {
     }
 
     return (
-        <NavigationContainer>
-            <Provider store={shared.store}>
-                <AppNavigator />
-            </Provider>
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <Provider store={shared.store}>
+                    <AppNavigator />
+                </Provider>
+            </NavigationContainer>
+        </SafeAreaProvider>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})

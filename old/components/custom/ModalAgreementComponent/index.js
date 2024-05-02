@@ -1,12 +1,12 @@
-import AttentionIcon from '../../../../assets/oldImg/Attention.png'
-import PropTypes from 'prop-types'
-import Modal from 'react-native-modalbox'
-
 import React, { useState } from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import styles from './styles'
+
+import AttentionIcon from '../../../../assets/oldImg/Attention.png'
+import PropTypes from 'prop-types'
+import Modal from 'react-native-modalbox'
 
 const ModalAgreementComponent = ({ onAcceptClicked, message, onClose }) => {
     const [modalVisibility, setModalVisibility] = useState(true)

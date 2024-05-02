@@ -1,7 +1,7 @@
-import { Fonts } from '../../utils/Fonts'
-
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+
+import { Fonts } from '../../utils/Fonts'
 
 const styles = StyleSheet.create({
     commentLabel: {
@@ -15,20 +15,15 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class CommentLabel extends React.Component {
-    render() {
-        const { required, viewStyle, style, text } = this.props
+const CommentLabel = ({ required, viewStyle, style, text }) => {
+    const requiredElement = required ? <Text style={styles.element}>*</Text> : null
 
-        let requiredElement
-        if (required) {
-            requiredElement = <Text style={styles.element}>*</Text>
-        }
-
-        return (
-            <View style={[{ flexDirection: 'row' }, viewStyle]}>
-                <Text style={[styles.commentLabel, style]}>{text}</Text>
-                {requiredElement}
-            </View>
-        )
-    }
+    return (
+        <View style={[{ flexDirection: 'row' }, viewStyle]}>
+            <Text style={[styles.commentLabel, style]}>{text}</Text>
+            {requiredElement}
+        </View>
+    )
 }
+
+export default CommentLabel

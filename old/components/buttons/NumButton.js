@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
 const { width } = Dimensions.get('window')
@@ -30,52 +30,39 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
 })
-export default class NumButton extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            buttonIsTouched: false,
-        }
+
+const NumButton = ({ numValue, wordValue, onPress }) => {
+    const [buttonIsTouched, setButtonIsTouched] = useState(false)
+
+    const onPressIn = () => {
+        setButtonIsTouched(true)
     }
 
-    onPressin = () => {
-        this.setState({ buttonIsTouched: true })
+    const onPressOut = () => {
+        setButtonIsTouched(false)
     }
 
-    onPressout = () => {
-        this.setState({ buttonIsTouched: false })
-    }
-
-    render() {
-        const { buttonIsTouched } = this.state
-        const { numValue, wordValue, onPress } = this.props
-        return (
-            <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}>
-                <TouchableHighlight
-                    style={styles.blueButton}
-                    underlayColor="#747E90"
-                    onPressIn={this.onPressin}
-                    delayPressIn={0}
-                    onPressOut={this.onPressout}
-                    onPress={() => onPress(numValue)}>
-                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Text
-                            style={[
-                                styles.blueButtonNumber,
-                                buttonIsTouched && { color: '#FFFFFF' },
-                            ]}>
-                            {numValue}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.blueButtonText,
-                                buttonIsTouched && { color: '#FFFFFF' },
-                            ]}>
-                            {wordValue}
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-            </View>
-        )
-    }
+    return (
+        <View style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}>
+            <TouchableHighlight
+                style={styles.blueButton}
+                underlayColor="#747E90"
+                onPressIn={onPressIn}
+                delayPressIn={0}
+                onPressOut={onPressOut}
+                onPress={() => onPress(numValue)}>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Text
+                        style={[styles.blueButtonNumber, buttonIsTouched && { color: '#FFFFFF' }]}>
+                        {numValue}
+                    </Text>
+                    <Text style={[styles.blueButtonText, buttonIsTouched && { color: '#FFFFFF' }]}>
+                        {wordValue}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+        </View>
+    )
 }
+
+export default NumButton

@@ -1,5 +1,3 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 
@@ -24,6 +22,8 @@ import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
 import BackImage from '../components/buttons/BackImage'
 
 import TabNavigator from './TabNavigator'
+
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
     headerStyle: {

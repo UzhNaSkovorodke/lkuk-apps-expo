@@ -1,3 +1,6 @@
+import React, { Component } from 'react'
+import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
+
 import Image1 from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeDefault.png'
 import FirstWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeIphoneX.png'
 import Image4 from '../../../assets/oldImg/WelcomeScreen/ForthWelcomeDefault.png'
@@ -6,13 +9,12 @@ import Image2 from '../../../assets/oldImg/WelcomeScreen/SecondWelcomeDefault.pn
 import SecondWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/SecondWelcomeIphoneX.png'
 import Image3 from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeDefault.png'
 import ThirdWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeIphoneX.png'
+import reportError from '../../utils/ReportError'
 import Timer from '../../utils/Timer'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import ProgressBarAnimated from 'react-native-progress-bar-animated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Swiper from 'react-native-swiper'
-
-import React, { Component } from 'react'
-import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 const { height: screenHeight } = Dimensions.get('screen')
@@ -80,12 +82,12 @@ export default class WelcomeScreen extends Component {
         this.timer = new Timer(this.increase, 500) // задержка для прогрузки картинок
     }
 
-    onButtonClicked = () => {
+    onButtonClicked = async () => {
         const { navigation } = this.props
         navigation.navigate('RegistrationOrLoginScreen')
-        //AsyncStorage.setItem('logged', '1').catch(error =>
-        //reportError(error, 'WelcomeScreen/onButtonClicked/setItem'),
-        //);
+        await AsyncStorage.setItem('logged', '1').catch((error) =>
+            reportError(error, 'WelcomeScreen/onButtonClicked/setItem')
+        )
     }
 
     increase = () => {

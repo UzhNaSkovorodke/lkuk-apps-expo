@@ -16,7 +16,8 @@
     "^../../assets/oldImg/",
     "^../screens/",
     "^../components/",
-    "^./"
+    "^./",
+    ".*"
   ],
   "importOrderSeparation": true,
   "importsSeparated": true,

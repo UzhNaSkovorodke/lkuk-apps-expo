@@ -1,5 +1,3 @@
-import { Fonts } from '../utils/Fonts'
-
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
@@ -9,6 +7,8 @@ import DeliveryPass from '../../assets/oldImg/DeliveryImage.png'
 import GuestPass from '../../assets/oldImg/GuestImage.png'
 import LargeSizePass from '../../assets/oldImg/LargeSize.png'
 import TaxiPass from '../../assets/oldImg/TaxiImage.png'
+
+import { Fonts } from '../utils/Fonts'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -74,123 +74,114 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    shadowButton: {
+        shadowColor: '#8E97A8',
+        shadowOpacity: 0.35,
+        flexBasis: '48%',
+        marginBottom: 16,
+        borderRadius: 3,
+        backgroundColor: '#747E90',
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 0 },
+    },
 })
-styles.shadowButton = {
-    shadowColor: '#8E97A8',
-    shadowOpacity: 0.35,
-    flexBasis: '48%',
-    marginBottom: 16,
-    borderRadius: 3,
-    backgroundColor: '#747E90',
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 0 },
+
+const RenderVisibleAppealButtons = ({ appealButtonsProps }) => {
+    return appealButtonsProps.map((elem, index) => {
+        return (
+            <TouchableOpacity onPress={elem.onClick} activeOpacity={0.93} key={index}>
+                <View style={styles.buttonContainer}>
+                    <Image style={elem.style} source={elem.image} />
+                    <Text style={styles.textButtonStyle}>{elem.text}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    })
 }
 
-const APPEAL_TYPES = {
-    GUEST: 1,
-    TAXI: 2,
-    DELIVERY: 4,
-    LARGE: 6,
-    BUILDING: 7,
-}
+const SelectPassOrderScreen = ({ navigation }) => {
+    const APPEAL_TYPES = {
+        GUEST: 1,
+        TAXI: 2,
+        DELIVERY: 4,
+        LARGE: 6,
+        BUILDING: 7,
+    }
 
-class SelectPassOrderScreen extends React.Component {
-    navigateToDeliveryPassScreen = () => {
-        const { navigation } = this.props
+    const navigateToDeliveryPassScreen = () => {
         navigation.navigate('CreateEventDeliveryPassScreen')
     }
 
-    navigateToTaxiPassOrderScreen = () => {
-        const { navigation } = this.props
+    const navigateToTaxiPassOrderScreen = () => {
         navigation.navigate('CreateEventTaxiPassOrderScreen')
     }
 
-    navigateToGuestPassOrderScreen = () => {
-        const { navigation } = this.props
+    const navigateToGuestPassOrderScreen = () => {
         navigation.navigate('CreateEventGuestPassOrderScreen')
     }
-    navigateToBuildingPassOrderScreen = () => {
-        const { navigation } = this.props
+
+    const navigateToBuildingPassOrderScreen = () => {
         navigation.navigate('CreateEventBuildingDeliveryPassScreen')
     }
-    navigateToLargeSizeDeliveryPassScreen = () => {
-        const { navigation } = this.props
+
+    const navigateToLargeSizeDeliveryPassScreen = () => {
         navigation.navigate('CreateEventLargeSizeDeliveryPassScreen')
     }
 
-    appealButtonsProps = [
+    const appealButtonsProps = [
         {
             image: DeliveryPass,
             text: 'Доставка',
-            onClick: this.navigateToDeliveryPassScreen,
+            onClick: navigateToDeliveryPassScreen,
             style: styles.deliveryPass,
             appealType: APPEAL_TYPES.DELIVERY,
         },
         {
             image: TaxiPass,
             text: 'Такси',
-            onClick: this.navigateToTaxiPassOrderScreen,
+            onClick: navigateToTaxiPassOrderScreen,
             style: styles.taxiPass,
             appealType: APPEAL_TYPES.TAXI,
         },
         {
             image: GuestPass,
             text: 'Гость',
-            onClick: this.navigateToGuestPassOrderScreen,
+            onClick: navigateToGuestPassOrderScreen,
             style: styles.guestPass,
             appealType: APPEAL_TYPES.GUEST,
         },
         {
             image: BuildPass,
             text: 'Доставка стройматериалов',
-            onClick: this.navigateToBuildingPassOrderScreen,
+            onClick: navigateToBuildingPassOrderScreen,
             style: styles.buildingPass,
             appealType: APPEAL_TYPES.BUILDING,
         },
         {
             image: LargeSizePass,
             text: 'Доставка \n габаритных грузов',
-            onClick: this.navigateToLargeSizeDeliveryPassScreen,
+            onClick: navigateToLargeSizeDeliveryPassScreen,
             style: styles.largeSizePass,
             appealType: APPEAL_TYPES.LARGE,
         },
     ]
 
-    renderVisibleAppealButtons = (appealButtonsProps) => {
-        return appealButtonsProps.map((elem, index) => {
-            return (
-                <View style={styles.shadowButton} key={index}>
-                    <TouchableOpacity onPress={elem.onClick} activeOpacity={0.93}>
-                        <View style={styles.buttonContainer}>
-                            <Image style={elem.style} source={elem.image} />
-                            <Text style={styles.textButtonStyle}>{elem.text}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
-        })
-    }
-
-    render() {
-        const appealButtons = this.renderVisibleAppealButtons(this.appealButtonsProps)
-
-        if (appealButtons.length === 0) {
-            return (
-                <View style={styles.emptyTextContainer}>
-                    <Text style={styles.emptyText}>
-                        Заказ пропусков недоступен для ваших проектов
-                    </Text>
-                </View>
-            )
-        }
-
+    if (appealButtonsProps.length === 0) {
         return (
-            <View style={styles.wrapper}>
-                <Text style={styles.label}>Выберите категорию для заказа пропуска</Text>
-                <View style={styles.buttonsContainer}>{appealButtons}</View>
+            <View style={styles.emptyTextContainer}>
+                <Text style={styles.emptyText}>Заказ пропусков недоступен для ваших проектов</Text>
             </View>
         )
     }
+
+    return (
+        <View style={styles.wrapper}>
+            <Text style={styles.label}>Выберите категорию для заказа пропуска</Text>
+            <View style={styles.buttonsContainer}>
+                <RenderVisibleAppealButtons appealButtonsProps={appealButtonsProps} />
+            </View>
+        </View>
+    )
 }
 
 export default connect(({ dicts, projects }) => ({

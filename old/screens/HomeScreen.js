@@ -1,13 +1,4 @@
-import { APPEAL_SELECTION_TYPES, APPEAL_TYPES } from '../constants/AppealTypes'
-import commonStyles from '../styles/CommonStyles'
-import { Fonts } from '../utils/Fonts'
-import reportError from '../utils/ReportError'
-import { filterAvailableProjectAppealTypes } from '../utils/Utils'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import * as Notifications from 'expo-notifications'
-import shared from 'stonehedge-shared'
-
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     AppState,
     Dimensions,
@@ -29,6 +20,14 @@ import TaxiIcon from '../../assets/oldImg/Taxi.png'
 
 import ButtonWithIcon from '../components/buttons/ButtonWithIcon'
 import SplitLine from '../components/custom/SplitLine'
+
+import { APPEAL_SELECTION_TYPES, APPEAL_TYPES } from '../constants/AppealTypes'
+import commonStyles from '../styles/CommonStyles'
+import { Fonts } from '../utils/Fonts'
+import reportError from '../utils/ReportError'
+import { filterAvailableProjectAppealTypes } from '../utils/Utils'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     scrollView: {
@@ -108,144 +107,175 @@ const styles = StyleSheet.create({
     },
 })
 
-class HomeScreen extends React.Component {
-    hasDevAppeals =
+const HomeScreen = ({
+    navigation,
+    fetchAllNews,
+    setWarning,
+    setSuccess,
+    editProfileFcmToken,
+    fetchBill,
+    updateNotification,
+    incrementNotification,
+    getNotifications,
+    notifications,
+    appealTypesArray,
+    projects,
+}) => {
+    const [news, setNews] = useState([])
+    const [needUpdate, setNeedUpdate] = useState(false)
+    const [isEndLoadingNews, setIsEndLoadingNews] = useState(false)
+    const [allNewsIsLoaded, setAllNewsIsLoaded] = useState(false)
+
+    const hasDevAppeals =
         filterAvailableProjectAppealTypes({
-            projects: this.props.projects,
-            appealTypesArray: this.props.appealTypesArray,
+            projects,
+            appealTypesArray,
             appealType: APPEAL_TYPES.DEV,
         })?.length > 0
 
-    hasUKAppeals =
+    const hasUKAppeals =
         filterAvailableProjectAppealTypes({
-            projects: this.props.projects,
-            appealTypesArray: this.props.appealTypesArray,
+            projects,
+            appealTypesArray,
             appealType: APPEAL_TYPES.UK,
         })?.length > 0
 
-    constructor(props) {
-        super(props)
-        this.previewState = []
-        this._unsubscribe = () => {}
-        this.state = {
-            news: [],
-            needUpdate: false,
-            isEndLoadingNews: false,
-            allNewsIsLoaded: false,
-        }
+    useEffect(() => {
+        const getNews = async (isUpdateNews = false, count = 10) => {
+            try {
+                const data = await fetchAllNews({ page: (count / 10).toFixed(0) - 1, size: 10 })
+                const newsData = data.payload.data.getNews
 
-        this.getNews()
-    }
-
-    async componentDidMount() {
-        // Notifications.registerRemoteNotifications();
-        await this.checkPermission()
-        await this.createNotificationListeners()
-        AppState.addEventListener('change', this.handleAppStateChange)
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
-            this.setState({ isEndLoadingNews: false })
-            this.getNews(true)
-        })
-    }
-
-    componentWillUnmount() {
-        this._unsubscribe()
-    }
-
-    handleAppStateChange = (nextAppState) => {
-        if (nextAppState === 'active') {
-            this.setState({ isEndLoadingNews: false })
-            this.getNews(true)
-            this.props.getNotifications()
-        }
-    }
-
-    requestPermission = async () => {
-        try {
-            //await messaging().requestPermission()
-            await this.getToken()
-        } catch (error) {
-            reportError(error, 'Home/requestPermission/Notifications')
-            // User has rejected permissions
-        }
-    }
-
-    checkPermission = async () => {
-        const enabled = false
-        //await messaging().hasPermission()
-
-        if (enabled) {
-            await this.getToken()
-        } else {
-            await this.requestPermission()
-        }
-    }
-
-    getToken = async () => {
-        const { editProfileFcmToken } = this.props
-
-        // wasTokenResubscription -- костылёк, проверяем флаг, была ли совершена повторная подписка на пуш-уведомления
-        let wasNotificationResubscription = false
-
-        try {
-            wasNotificationResubscription = await AsyncStorage.getItem(
-                'wasNotificationResubscription'
-            )
-
-            // const fcmToken = await messaging().getToken();
-            console.warn({ fcmToken })
-            if (fcmToken) {
-                await editProfileFcmToken({ enablePush: true, fcmToken })
-                if (!wasNotificationResubscription) {
-                    await AsyncStorage.setItem('wasNotificationResubscription', 'true')
+                if (
+                    Number(newsData.pagingOptions.pageTotal) === Number((count / 10).toFixed(0)) &&
+                    (newsData.news.length > 0 || news.length > 0)
+                ) {
+                    setAllNewsIsLoaded(true)
                 }
+
+                if (isUpdateNews) {
+                    setNews(newsData.news)
+                    setIsEndLoadingNews(true)
+                } else {
+                    setNews([...news, ...newsData.news])
+                    setIsEndLoadingNews(true)
+                }
+            } catch (error) {
+                console.error(error)
             }
-        } catch (error) {
-            // reportError(error, 'Home/getToken');
         }
-    }
 
-    createNotificationListeners = async () => {
-        // Вызывается когда приложение открыто
-        // Notifications.events().registerNotificationReceivedForeground(
-        //    (notification, completion) => {
-        //        this.props.incrementNotification();
-        //         completion({alert: true, sound: true, badge: false});
-        //     },
-        //   );
-        // Вызывается когда телефон неактивен
-        //   Notifications.events().registerNotificationOpened(
-        //      (notification, completion, action) => {
-        //          this.handleNotification(notification.payload);
-        //          completion();
-        //       },
-        //  );
-        // Вызывается когда приложение неактивено
-        //   Notifications.getInitialNotification()
-        //     .then(
-        //        notificationOpen =>
-        //            notificationOpen && this.handleNotification(notificationOpen.payload),
-        //    )
-        //    .catch(error => {}
-        // reportError(
-        //     error,
-        //     'Home/createNotificationListeners/getInitialNotification',
-        // ),
-        //   );
-    }
+        const loadAdditionallyNews = () => {
+            if (allNewsIsLoaded) {
+                setSuccess([{ message: 'Мы загрузили все новости.' }])
+                setAllNewsIsLoaded(false)
+            }
 
-    handleNotification = (notification) => {
-        const { navigation, updateNotification, getNotifications } = this.props
-        getNotifications()
+            if (needUpdate || news.length % 10 !== 0) {
+                return
+            }
+
+            setNeedUpdate(true)
+            getNews(false, news.length + 10)
+        }
+
+        const handleAppStateChange = (nextAppState) => {
+            if (nextAppState === 'active') {
+                setIsEndLoadingNews(false)
+                getNews(true)
+                getNotifications()
+            }
+        }
+
+        const checkPermission = async () => {
+            const enabled = false
+            //await messaging().hasPermission()
+
+            if (enabled) {
+                await getToken()
+            } else {
+                await requestPermission()
+            }
+        }
+
+        const requestPermission = async () => {
+            try {
+                //await messaging().requestPermission()
+                await getToken()
+            } catch (error) {
+                reportError(error, 'Home/requestPermission/Notifications')
+                // User has rejected permissions
+            }
+        }
+
+        const getToken = async () => {
+            // wasTokenResubscription -- костылёк, проверяем флаг, была ли совершена повторная подписка на пуш-уведомления
+            let wasNotificationResubscription = false
+
+            try {
+                wasNotificationResubscription = await AsyncStorage.getItem(
+                    'wasNotificationResubscription'
+                )
+
+                // const fcmToken = await messaging().getToken();
+                console.warn({ fcmToken })
+                if (fcmToken) {
+                    await editProfileFcmToken({ enablePush: true, fcmToken })
+                    if (!wasNotificationResubscription) {
+                        await AsyncStorage.setItem('wasNotificationResubscription', 'true')
+                    }
+                }
+            } catch (error) {
+                // reportError(error, 'Home/getToken');
+            }
+        }
+
+        const createNotificationListeners = async () => {
+            // Вызывается когда приложение открыто
+            // Notifications.events().registerNotificationReceivedForeground(
+            //    (notification, completion) => {
+            //        incrementNotification();
+            //         completion({alert: true, sound: true, badge: false});
+            //     },
+            //   );
+            // Вызывается когда телефон неактивен
+            //   Notifications.events().registerNotificationOpened(
+            //      (notification, completion, action) => {
+            //          handleNotification(notification.payload);
+            //          completion();
+            //       },
+            //  );
+            // Вызывается когда приложение неактивено
+            //   Notifications.getInitialNotification()
+            //     .then(
+            //        notificationOpen =>
+            //            notificationOpen && handleNotification(notificationOpen.payload),
+            //    )
+            //    .catch(error => {}
+            // reportError(
+            //     error,
+            //     'Home/createNotificationListeners/getInitialNotification',
+            // ),
+            //   );
+        }
+
+        checkPermission()
+        createNotificationListeners()
+        AppState.addEventListener('change', handleAppStateChange)
+
+        return () => {}
+    }, [allNewsIsLoaded, needUpdate, news])
+
+    const handleNotification = (notification) => {
         const response = JSON.parse(notification.data).notification
         if (response.event !== undefined) {
             const { eventTypeId, eventId } = response.event
             updateNotification({ notificationId: response.notificationId })
-            this.checkEvent({ eventTypeId, eventId, navigation })
+            checkEvent({ eventTypeId, eventId })
         } else if (response.bill !== undefined) {
             const { billId, description } = response.bill
             updateNotification({ notificationId: response.notificationId })
-            this.checkBill({ billId, description, navigation })
+            checkBill({ billId, description })
         } else if (response.news !== undefined) {
             const { newsId, title } = response.news
             updateNotification({ notificationId: response.notificationId })
@@ -258,8 +288,7 @@ class HomeScreen extends React.Component {
         }
     }
 
-    checkBill = ({ billId, description, navigation }) => {
-        const { fetchBill } = this.props
+    const checkBill = ({ billId, description }) => {
         fetchBill({ billId }).then((response) => {
             const { fileLink } = response.payload.data.getBill
             navigation.navigate('PdfViewScreen', {
@@ -269,7 +298,7 @@ class HomeScreen extends React.Component {
         })
     }
 
-    checkEvent = ({ eventTypeId, eventId, navigation }) => {
+    const checkEvent = ({ eventTypeId, eventId }) => {
         switch (eventTypeId) {
             case 1:
                 //navigation.navigate('MyEventsGuestPassOrderScreen', {eventId});
@@ -288,181 +317,108 @@ class HomeScreen extends React.Component {
         }
     }
 
-    getNews = (isUpdateNews = false, count = 10) => {
-        const { setWarning, fetchAllNews } = this.props
-        const { news } = this.state
-        const endLoadingNews = () => {
-            this.setState({ isEndLoadingNews: true })
-            if (this.state.news.length === 0) {
-                setWarning([{ message: 'Список новостей пуст.' }])
-            }
-        }
+    const isNearBottom = ({ layoutMeasurement, contentOffset, contentSize }) =>
+        layoutMeasurement.height + contentOffset.y >= contentSize.height - 100
 
-        fetchAllNews({ page: (count / 10).toFixed(0) - 1, size: 10 }) // page = 1, size = 10
-            .then((resp) => resp.payload.data.getNews)
-            .then((data) => {
-                if (
-                    Number(data.pagingOptions.pageTotal) === Number((count / 10).toFixed(0)) &&
-                    (data.news.length > 0 || news.length > 0)
-                ) {
-                    this.setState({ allNewsIsLoaded: true })
-                }
-
-                if (isUpdateNews) {
-                    this.setState({ news: data.news }, () => endLoadingNews())
-                } else {
-                    this.setState({ news: news.concat(data.news) }, () => endLoadingNews())
-                }
-            })
-    }
-
-    loadAdditionallyNews = () => {
-        const { news, needUpdate, allNewsIsLoaded } = this.state
-        const { setSuccess } = this.props
-
-        if (allNewsIsLoaded) {
-            setSuccess([{ message: 'Мы загрузили все новости.' }])
-            this.setState({ allNewsIsLoaded: false })
-        }
-
-        if (needUpdate || news.length % 10 !== 0) {
-            return
-        }
-
-        this.setState({ needUpdate: true })
-        this.getNews(false, news.length + 10)
-    }
-
-    onPaymentsButtonPress = () => this.props.navigation.navigate('PaymentsScreen')
-
-    onPassOrderButtonPress = () => this.props.navigation.navigate('SelectPassOrderScreen')
-
-    onContactManageCompanyButtonPress = (mode) => () =>
-        this.props.navigation.navigate('AppealSelectionScreen', { mode })
-
-    keyExtractor = (item) => item.newsId.toString()
-
-    renderNews = () => {
-        const { news, needUpdate } = this.state
-        return (
-            // <>
-            //     {news.map((elem, index) => {
-            //
-            //     })}
-            // </>
-            <View
-                style={styles.flatlist}
-                keyExtractor={this.keyExtractor}
-                extraData={needUpdate}
-                data={news}
-                renderItem={this.renderOneNews}
-            />
-        )
-    }
-
-    renderOneNews = (news, index) => {
-        const { navigation } = this.props
-        return (
-            <View style={styles.oneNews}>
-                <TouchableHighlight
-                    key={index}
-                    style={styles.oneNewsButton}
-                    underlayColor="#E8E8E8"
-                    onPress={() =>
-                        navigation.navigate('NewsScreen', {
-                            title: news.item.title,
-                            id: news.item.newsId,
-                        })
-                    }>
-                    <>
-                        <Image
-                            style={styles.newsImage}
-                            source={
-                                news.item.previewPicture
-                                    ? {
-                                          uri: `https://admin-lk.stonehedge.ru${news.item.previewPicture}`,
-                                      }
-                                    : NewsIcon
-                            }
-                        />
-                        <View style={styles.wrapperPadding}>
-                            <Text style={styles.newsText}>{news.item.title}</Text>
-                        </View>
-                    </>
-                </TouchableHighlight>
-            </View>
-        )
-    }
-
-    renderPlaceholderNews = () => (
-        <View style={styles.wrapper}>
-            <View style={styles.placeholder}></View>
+    const renderOneNews = ({ item }) => (
+        <View style={styles.oneNews}>
+            <TouchableHighlight
+                style={styles.oneNewsButton}
+                underlayColor="#E8E8E8"
+                onPress={() =>
+                    navigation.navigate('NewsScreen', {
+                        title: item.title,
+                        id: item.newsId,
+                    })
+                }>
+                <>
+                    <Image
+                        style={styles.newsImage}
+                        source={
+                            item.previewPicture
+                                ? {
+                                      uri: `https://admin-lk.stonehedge.ru${item.previewPicture}`,
+                                  }
+                                : NewsIcon
+                        }
+                    />
+                    <View style={styles.wrapperPadding}>
+                        <Text style={styles.newsText}>{item.title}</Text>
+                    </View>
+                </>
+            </TouchableHighlight>
         </View>
     )
 
-    isNearBottom = ({ layoutMeasurement, contentOffset, contentSize }) =>
-        layoutMeasurement.height + contentOffset.y >= contentSize.height - 100
-
-    render() {
-        const { isEndLoadingNews } = this.state
-        return (
-            <ScrollView
-                style={styles.scrollView}
-                onScroll={({ nativeEvent }) => {
-                    if (this.isNearBottom(nativeEvent)) {
-                        this.loadAdditionallyNews()
-                    } else {
-                        this.setState({ needUpdate: false })
-                    }
-                }}>
-                <View style={[commonStyles.container, styles.container]}>
-                    <View style={styles.wrapper}>
+    return (
+        <ScrollView
+            style={styles.scrollView}
+            onScroll={({ nativeEvent }) => {
+                if (isNearBottom(nativeEvent)) {
+                    loadAdditionallyNews()
+                } else {
+                    setNeedUpdate(false)
+                }
+            }}>
+            <View style={[commonStyles.container, styles.container]}>
+                <View style={styles.wrapper}>
+                    <ButtonWithIcon
+                        label="Счета"
+                        description="Нажмите, чтобы посмотреть и оплатить"
+                        source={GuestsIcon}
+                        imageStyle={styles.guestsIcon}
+                        onPress={() => navigation.navigate('PaymentsScreen')}
+                    />
+                    <ButtonWithIcon
+                        label="Заказать пропуск"
+                        description="Для гостя, такси или доставки"
+                        source={TaxiIcon}
+                        imageStyle={styles.taxiIcon}
+                        onPress={() => navigation.navigate('SelectPassOrderScreen')}
+                    />
+                    {hasUKAppeals && (
                         <ButtonWithIcon
-                            label="Счета"
-                            description="Нажмите, чтобы посмотреть и оплатить"
-                            source={GuestsIcon}
-                            imageStyle={styles.guestsIcon}
-                            onPress={this.onPaymentsButtonPress}
+                            label="Обратиться в УК"
+                            description="Нажмите, чтобы обратиться"
+                            source={MakeAppealIcon}
+                            imageStyle={styles.makeAppealIcon}
+                            onPress={() =>
+                                navigation.navigate('AppealSelectionScreen', {
+                                    mode: APPEAL_SELECTION_TYPES.MANAGE_COMPANY,
+                                })
+                            }
                         />
+                    )}
+                    {hasDevAppeals && (
                         <ButtonWithIcon
-                            label="Заказать пропуск"
-                            description="Для гостя, такси или доставки"
-                            source={TaxiIcon}
-                            imageStyle={styles.taxiIcon}
-                            onPress={this.onPassOrderButtonPress}
+                            label="Обратиться к застройщику"
+                            description="Нажмите, чтобы выбрать тип обращения"
+                            source={BuildingAppealIcon}
+                            imageStyle={styles.buildingAppealIcon}
+                            onPress={() =>
+                                navigation.navigate('AppealSelectionScreen', {
+                                    mode: APPEAL_SELECTION_TYPES.BUILDING_COMPANY,
+                                })
+                            }
                         />
-                        {this.hasUKAppeals && (
-                            <ButtonWithIcon
-                                label="Обратиться в УК"
-                                description="Нажмите, чтобы обратиться"
-                                source={MakeAppealIcon}
-                                imageStyle={styles.makeAppealIcon}
-                                onPress={this.onContactManageCompanyButtonPress(
-                                    APPEAL_SELECTION_TYPES.MANAGE_COMPANY
-                                )}
-                            />
-                        )}
-                        {this.hasDevAppeals && (
-                            <ButtonWithIcon
-                                label="Обратиться к застройщику"
-                                description="Нажмите, чтобы выбрать тип обращения"
-                                source={BuildingAppealIcon}
-                                imageStyle={styles.buildingAppealIcon}
-                                onPress={this.onContactManageCompanyButtonPress(
-                                    APPEAL_SELECTION_TYPES.BUILDING_COMPANY
-                                )}
-                            />
-                        )}
-                    </View>
-
-                    <SplitLine style={styles.splitLine} />
-
-                    {/*<Text style={styles.containerText}>Лента новостей</Text>*/}
-                    {/*{isEndLoadingNews ? this.renderNews() : this.renderPlaceholderNews()}*/}
+                    )}
                 </View>
-            </ScrollView>
-        )
-    }
+
+                <SplitLine style={styles.splitLine} />
+
+                {isEndLoadingNews ? (
+                    <FlatList
+                        style={styles.flatlist}
+                        keyExtractor={(item) => item.newsId.toString()}
+                        data={news}
+                        renderItem={renderOneNews}
+                    />
+                ) : (
+                    <View style={styles.wrapper}>{/* Placeholder for loading indicator */}</View>
+                )}
+            </View>
+        </ScrollView>
+    )
 }
 
 export default connect(

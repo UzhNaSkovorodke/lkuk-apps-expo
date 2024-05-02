@@ -1,8 +1,8 @@
-import { Fonts } from '../../utils/Fonts'
-import SpinLoader from '../custom/Spinner'
-
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { Fonts } from '../../utils/Fonts'
+import SpinLoader from '../custom/Spinner'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -55,37 +55,44 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class DefaultButton extends React.Component {
-    render() {
-        const { text, textStyle, style, onPress, disabled, isShowLoader, wrapperStyle } = this.props
-        return (
-            <View style={[styles.shadowBox, style]}>
-                <TouchableOpacity
-                    style={[
-                        disabled ? styles.disabledWrapperColor : styles.defaultWrapperColor,
-                        styles.defaultWrapper,
-                        wrapperStyle,
-                    ]}
-                    onPress={onPress}
-                    disabled={disabled || isShowLoader}>
-                    <View style={styles.wrapper}>
-                        <Text
-                            style={[
-                                disabled ? styles.disabledTextColor : styles.defaultTextColor,
-                                styles.defaultText,
-                                textStyle,
-                            ]}>
-                            {text}
-                        </Text>
-                    </View>
+const DefaultButton = ({
+    text,
+    textStyle,
+    style,
+    onPress,
+    disabled,
+    isShowLoader,
+    wrapperStyle,
+}) => {
+    return (
+        <View style={[styles.shadowBox, style]}>
+            <TouchableOpacity
+                style={[
+                    disabled ? styles.disabledWrapperColor : styles.defaultWrapperColor,
+                    styles.defaultWrapper,
+                    wrapperStyle,
+                ]}
+                onPress={onPress}
+                disabled={disabled || isShowLoader}>
+                <View style={styles.wrapper}>
+                    <Text
+                        style={[
+                            disabled ? styles.disabledTextColor : styles.defaultTextColor,
+                            styles.defaultText,
+                            textStyle,
+                        ]}>
+                        {text}
+                    </Text>
+                </View>
 
-                    {isShowLoader !== undefined && isShowLoader && (
-                        <View style={styles.spinnerWrapper}>
-                            <SpinLoader style={styles.spinner} />
-                        </View>
-                    )}
-                </TouchableOpacity>
-            </View>
-        )
-    }
+                {isShowLoader !== undefined && isShowLoader && (
+                    <View style={styles.spinnerWrapper}>
+                        <SpinLoader style={styles.spinner} />
+                    </View>
+                )}
+            </TouchableOpacity>
+        </View>
+    )
 }
+
+export default DefaultButton

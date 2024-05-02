@@ -1,61 +1,74 @@
 {
-    "expo": {
-        "name": "my-app",
-        "slug": "my-app",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "light",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true,
-            "infoPlist": {
-                "NSCameraUsageDescription": "This app uses the camera to change avatar profile.",
-                "NSPhotoLibraryUsageDescription": "This app uses the library to change avatar profile."
-            }
-        },
-        "android": {
-            "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
-            }
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
-        },
-        "plugins": [
-            [
-                "expo-font",
-                {
-                    "fonts": [
-                        "./assets/fonts/PFEncoreSansPro-Light.ttf",
-                        "./assets/fonts/SFCompactDisplay-Bold.ttf",
-                        "./assets/fonts/SFCompactDisplay-Light.ttf",
-                        "./assets/fonts/SFCompactDisplay-Regular.ttf",
-                        "./assets/fonts/SFCompactDisplay-SemiBold.ttf",
-                        "./assets/fonts/SFCompactText-Light.ttf",
-                        "./assets/fonts/SFProText-SemiBold.ttf",
-                        "./assets/fonts/SFUIDisplay-Bold.ttf",
-                        "./assets/fonts/SFUIDisplay-Light.ttf",
-                        "./assets/fonts/SFUIDisplay-Medium.ttf",
-                        "./assets/fonts/SFUIDisplay-Regular.ttf",
-                        "./assets/fonts/SFUIDisplay-SemiBold.ttf",
-                        "./assets/fonts/SFUIText-Bold.ttf",
-                        "./assets/fonts/SFUIText-Light.ttf",
-                        "./assets/fonts/SFUIText-Medium.ttf",
-                        "./assets/fonts/SFUIText-Regular.ttf"
-                    ]
-                }
-            ],
-            "expo-secure-store",
-            "expo-image-picker",
-            "expo-notifications"
-        ]
+  "expo": {
+    "name": "my-app",
+    "slug": "my-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to change avatar profile.",
+        "NSPhotoLibraryUsageDescription": "This app uses the library to change avatar profile."
+      }
+    },
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.stone"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/PFEncoreSansPro-Light.ttf",
+            "./assets/fonts/SFCompactDisplay-Bold.ttf",
+            "./assets/fonts/SFCompactDisplay-Light.ttf",
+            "./assets/fonts/SFCompactDisplay-Regular.ttf",
+            "./assets/fonts/SFCompactDisplay-SemiBold.ttf",
+            "./assets/fonts/SFCompactText-Light.ttf",
+            "./assets/fonts/SFProText-SemiBold.ttf",
+            "./assets/fonts/SFUIDisplay-Bold.ttf",
+            "./assets/fonts/SFUIDisplay-Light.ttf",
+            "./assets/fonts/SFUIDisplay-Medium.ttf",
+            "./assets/fonts/SFUIDisplay-Regular.ttf",
+            "./assets/fonts/SFUIDisplay-SemiBold.ttf",
+            "./assets/fonts/SFUIText-Bold.ttf",
+            "./assets/fonts/SFUIText-Light.ttf",
+            "./assets/fonts/SFUIText-Medium.ttf",
+            "./assets/fonts/SFUIText-Regular.ttf"
+          ]
+        }
+      ],
+      "expo-secure-store",
+      "expo-image-picker",
+      "expo-notifications"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "996dfb3a-d99f-4d98-940e-ecf2adda8f14"
+      }
     }
+  }
 }

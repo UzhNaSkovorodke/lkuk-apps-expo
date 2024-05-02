@@ -1,8 +1,8 @@
-import ModalAgreementComponent from '../ModalAgreementComponent'
-
 import React, { useState } from 'react'
 
 import ModalContext from './context'
+
+import ModalAgreementComponent from '../ModalAgreementComponent'
 
 const renderModals = (modalContext) => {
     if (!modalContext) {

@@ -1,7 +1,7 @@
-import { Fonts } from '../../utils/Fonts'
-
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { Fonts } from '../../utils/Fonts'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -44,19 +44,18 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class ButtonWithIcon extends React.Component {
-    render() {
-        const { imageStyle, style, onPress, source, label, description } = this.props
-        return (
-            <View style={[styles.shadowBoxContainer, style]}>
-                <TouchableOpacity style={styles.wrapper} onPress={onPress}>
-                    <Image style={[styles.icon, imageStyle]} source={source} />
-                    <View style={{ flexDirection: 'column', flex: 1 }}>
-                        <Text style={styles.labelText}>{label}</Text>
-                        <Text style={styles.descriptionText}>{description}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        )
-    }
+const ButtonWithIcon = ({ imageStyle, style, onPress, source, label, description }) => {
+    return (
+        <View style={[styles.shadowBoxContainer, style]}>
+            <TouchableOpacity style={styles.wrapper} onPress={onPress}>
+                <Image style={[styles.icon, imageStyle]} source={source} />
+                <View style={{ flexDirection: 'column', flex: 1 }}>
+                    <Text style={styles.labelText}>{label}</Text>
+                    <Text style={styles.descriptionText}>{description}</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
 }
+
+export default ButtonWithIcon
