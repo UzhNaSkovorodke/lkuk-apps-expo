@@ -8,9 +8,8 @@ import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
-import HomeScreen from '../screens/HomeScreen'
+import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
-import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
 import GreetingScreen from '../screens/StartScreens/GreetingScreen'
 import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
@@ -132,11 +131,6 @@ export default function AppNavigator() {
                 name={'PasswordRecoveryScreen'}
                 component={PasswordRecoveryScreen}
                 options={{ title: 'Восстановление пароля' }}
-            />
-            <Stack.Screen
-                name={'SelectPassOrderScreen'}
-                component={SelectPassOrderScreen}
-                options={{ title: 'Заказать пропуск' }}
             />
         </Stack.Navigator>
     )
