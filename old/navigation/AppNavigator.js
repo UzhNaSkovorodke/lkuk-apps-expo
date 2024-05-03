@@ -9,6 +9,7 @@ import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
+import NewsScreen from '../screens/NewsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
 import GreetingScreen from '../screens/StartScreens/GreetingScreen'
 import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
@@ -111,6 +112,17 @@ export default function AppNavigator() {
                         <Image style={[styles.homeIcon, { tintColor }]} source={HomeIcon} />
                     ),
                 }}
+            />
+            <Stack.Screen
+                name={'NewsScreen'}
+                component={NewsScreen}
+                options={({ route }) => ({
+                    title: route?.params?.title,
+                    headerTitleContainerStyle: {
+                        width: '70%',
+                        alignItems: 'center',
+                    },
+                })}
             />
             <Stack.Screen
                 name={'PdfViewScreen'}
