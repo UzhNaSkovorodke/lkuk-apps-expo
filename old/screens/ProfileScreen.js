@@ -1,9 +1,3 @@
-import uri from '../constants/Uri'
-import { Fonts } from '../utils/Fonts'
-import * as ImagePicker from 'expo-image-picker'
-import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
-
 import React from 'react'
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
@@ -14,6 +8,12 @@ import DefaultButton from '../components/buttons/DefaultButton'
 import CommentLabel from '../components/custom/CommentLabel'
 import Spinner from '../components/custom/Spinner'
 import SplitLine from '../components/custom/SplitLine'
+
+import uri from '../constants/Uri'
+import { Fonts } from '../utils/Fonts'
+import * as ImagePicker from 'expo-image-picker'
+import * as SecureStore from 'expo-secure-store'
+import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     container: {

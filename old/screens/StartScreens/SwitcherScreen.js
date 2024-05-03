@@ -1,12 +1,12 @@
+import React, { useEffect } from 'react'
+import { View } from 'react-native'
+import { connect } from 'react-redux'
+
 import Spinner from '../../components/custom/Spinner'
 import reportError from '../../utils/ReportError'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SecureStore from 'expo-secure-store'
 import shared from 'stonehedge-shared'
-
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
-import { connect } from 'react-redux'
 
 const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
     useEffect(() => {
@@ -28,7 +28,6 @@ const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
     const onCheckLoggedLaunch = async () => {
         const login = await SecureStore.getItemAsync('login')
         const password = await SecureStore.getItemAsync('password')
-
         auth({ login, password })
             .then(() => fetchProfile())
             .then((res) => {
@@ -41,9 +40,9 @@ const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
             })
     }
     const onCheckFirstLaunch = async () => {
-        AsyncStorage.getItem('logged').then((isLogin) =>
-            navigation.navigate(isLogin ? 'WelcomeScreen' : 'WelcomeScreen')
-        )
+        AsyncStorage.getItem('logged').then((isLogin) => {
+            navigation.navigate(isLogin ? 'RegistrationOrLoginScreen' : 'WelcomeScreen')
+        })
     }
 
     return (

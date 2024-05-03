@@ -1,3 +1,15 @@
+import React from 'react'
+import {
+    BackHandler,
+    Dimensions,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableWithoutFeedback,
+    View,
+} from 'react-native'
+import { connect } from 'react-redux'
+
 import DeleteImage from '../../../assets/oldImg/DeleteButton.png'
 import FaceIdIcon from '../../../assets/oldImg/FaceId.png'
 import TouchIdIcon from '../../../assets/oldImg/TouchIdIcon.png'
@@ -6,11 +18,6 @@ import { Fonts } from '../../utils/Fonts'
 import * as SecureStore from 'expo-secure-store'
 import TouchId from 'react-native-touch-id'
 import shared from 'stonehedge-shared'
-
-import React from 'react'
-import { BackHandler } from 'react-native'
-import { Dimensions, Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
-import { connect } from 'react-redux'
 
 const { width } = Dimensions.get('window')
 const buttonSize = width / 5.2
@@ -98,7 +105,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
 })
-
 class PinCodeScreen extends React.Component {
     optionalConfigObject = {
         title: 'Необходима Авторизация', // Android
@@ -124,7 +130,7 @@ class PinCodeScreen extends React.Component {
             loadedPassword: '',
             maxAttempts: 10,
             modePinCode: '',
-            secondPassword: '',
+            seccondPassword: '',
             touchIdAttempts: 0,
         }
         this.handleBackButton = this.handleBackButton.bind(this)
@@ -133,42 +139,30 @@ class PinCodeScreen extends React.Component {
         BackHandler.exitApp()
     }
     componentDidMount() {
-        // SecureStore.deleteItemAsync('login')
-        // SecureStore.deleteItemAsync('password')
-        // SecureStore.deleteItemAsync('PinCode')
-        //TODO сделать проверку чтобы если пин в сторе null или undefined то пин стирается с другими данными
-
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
-        SecureStore.getItemAsync('PinCode')
-            .then((isHas) => {
-                if (isHas['_k']) {
-                    TouchId.isSupported().then((type) => {
-                        if (type === 'TouchID' || type === true) {
-                            this.setState({ isTouchId: true }, () => this.onTouchIdPressed())
-                        } else if (type === 'FaceID') {
-                            this.setState({ isFaceId: true }, () => this.onTouchIdPressed())
-                        }
-                    })
+        SecureStore.getItemAsync('PinCode').then((isHas) => {
+            if (isHas) {
+                TouchId.isSupported().then((type) => {
+                    if (type === 'TouchID' || type === true) {
+                        this.setState({ isTouchId: true }, () => this.onTouchIdPressed())
+                    } else if (type === 'FaceID') {
+                        this.setState({ isFaceId: true }, () => this.onTouchIdPressed())
+                    }
+                })
 
-                    SecureStore.getItemAsync('PinCode').then((res) => {
-                        this.setState({ modePinCode: 'enter', loadedPassword: res })
-                        this.props.navigation.setParams({
-                            header: 'enter',
-                        })
-                    })
-                } else {
-                    SecureStore.deleteItemAsync('PinCode')
-                    this.setState({ modePinCode: 'create' })
+                SecureStore.getItemAsync('PinCode').then((res) => {
+                    this.setState({ modePinCode: 'enter', loadedPassword: res })
                     this.props.navigation.setParams({
-                        header: 'create',
+                        header: 'enter',
                     })
-                }
-            })
-            .catch(() => {
-                SecureStore.deleteItemAsync('login')
-                SecureStore.deleteItemAsync('password')
-                SecureStore.deleteItemAsync('PinCode')
-            })
+                })
+            } else {
+                this.setState({ modePinCode: 'create' })
+                this.props.navigation.setParams({
+                    header: 'create',
+                })
+            }
+        })
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton)
@@ -188,29 +182,29 @@ class PinCodeScreen extends React.Component {
         ) // Задержка перед очисткой, Импорт state не менять, т.к. метод асинхронный
     }
 
-    secondCreatePassword = (index) => {
-        const { secondPassword } = this.state
+    seccondCreatePassword = (index) => {
+        const { seccondPassword } = this.state
 
         this.setState(
             {
-                countOfEnteredPins: secondPassword.length + 1,
-                secondPassword: secondPassword + index,
+                countOfEnteredPins: seccondPassword.length + 1,
+                seccondPassword: seccondPassword + index,
             },
-            () => this.state.secondPassword.length === 4 && this.validateCreatedPin()
+            () => this.state.seccondPassword.length === 4 && this.validateCreatedPin()
         ) // Импорт state не менять, т.к. метод асинхронный
     }
 
     validateCreatedPin = async () => {
-        const { currentPassword, secondPassword } = this.state
+        const { currentPassword, seccondPassword } = this.state
         const { setError } = this.props
 
-        if (secondPassword === currentPassword) {
+        if (seccondPassword === currentPassword) {
             SecureStore.setItem('PinCode', currentPassword)
             this.onSuccess()
         } else {
             this.setState({
                 currentPassword: '',
-                secondPassword: '',
+                seccondPassword: '',
                 countOfEnteredPins: 0,
             })
             setError([{ message: 'Вы ввели неверный пароль' }])
@@ -241,9 +235,9 @@ class PinCodeScreen extends React.Component {
     onFail = () => {
         const { navigation } = this.props
 
-        SecureStore.deleteItemAsync('login')
-        SecureStore.deleteItemAsync('password')
-        SecureStore.deleteItemAsync('PinCode')
+        // SecureStore.deleteItemAsync('login')
+        // SecureStore.deleteItemAsync('password')
+        // SecureStore.deleteItemAsync('PinCode')
         navigation.navigate('SignInScreen')
     }
 
@@ -284,7 +278,7 @@ class PinCodeScreen extends React.Component {
 
     createPinOnPressButton = (index) =>
         this.state.currentPassword.length === 4
-            ? this.secondCreatePassword(index)
+            ? this.seccondCreatePassword(index)
             : this.firstCreatePassword(index)
 
     onTouchIdPressed = () => {
@@ -317,13 +311,13 @@ class PinCodeScreen extends React.Component {
     }
 
     removeButtonOnPress = () => {
-        const { currentPassword, secondPassword, countOfEnteredPins } = this.state
+        const { currentPassword, seccondPassword, countOfEnteredPins } = this.state
 
         if (currentPassword.length === 4) {
-            const removedStr = secondPassword.slice(0, -1)
+            const removedStr = seccondPassword.slice(0, -1)
 
             this.setState({
-                secondPassword: removedStr !== undefined ? removedStr : '',
+                seccondPassword: removedStr !== undefined ? removedStr : '',
             })
         } else {
             const removedStr = currentPassword.slice(0, -1)
@@ -450,7 +444,11 @@ class PinCodeScreen extends React.Component {
     }
 
     render() {
-        return (
+        const { header } = this.props.route.params
+
+        return header === undefined ? (
+            <View />
+        ) : (
             <View style={styles.mainContainer}>
                 <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
                     {this.renderHeader()}

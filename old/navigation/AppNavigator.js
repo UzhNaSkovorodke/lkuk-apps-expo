@@ -56,8 +56,13 @@ export default function AppNavigator() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name={'SignInScreen'}
-                component={SignInScreen}
+                name={'UpdateAppScreen'}
+                component={UpdateAppScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={'WelcomeScreen'}
+                component={WelcomeScreen}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -71,15 +76,11 @@ export default function AppNavigator() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name={'WelcomeScreen'}
-                component={WelcomeScreen}
+                name={'SignInScreen'}
+                component={SignInScreen}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name={'UpdateAppScreen'}
-                component={UpdateAppScreen}
-                options={{ headerShown: false }}
-            />
+
             <Stack.Screen
                 name={'GreetingScreen'}
                 component={GreetingScreen}
