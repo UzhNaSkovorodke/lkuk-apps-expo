@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Dimensions, Platform } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Platform } from 'react-native'
 import { connect } from 'react-redux'
 
 import WebView from 'react-native-webview'

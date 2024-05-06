@@ -15,6 +15,7 @@ import MakeAppealIcon from '../../../assets/oldImg/MakeAppeal.png'
 import TaxiIcon from '../../../assets/oldImg/Taxi.png'
 import ButtonWithIcon from '../../components/buttons/ButtonWithIcon'
 import SplitLine from '../../components/custom/SplitLine'
+import { APPEAL_SELECTION_TYPES } from '../../constants/AppealTypes'
 import commonStyles from '../../styles/CommonStyles'
 import { Fonts } from '../../utils/Fonts'
 import { useNavigation } from '@react-navigation/native'
@@ -157,7 +158,9 @@ const HomeScreen = ({}) => {
                         source={MakeAppealIcon}
                         imageStyle={styles.makeAppealIcon}
                         onPress={() => {
-                            navigation.navigate('ProfileScreen')
+                            navigation.navigate('AppealSelectionScreen', {
+                                mode: APPEAL_SELECTION_TYPES.MANAGE_COMPANY,
+                            })
                         }}
                     />
                 </View>
