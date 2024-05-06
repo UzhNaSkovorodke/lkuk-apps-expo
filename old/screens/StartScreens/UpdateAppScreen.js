@@ -1,71 +1,13 @@
+import React, { useState, useEffect } from 'react'
+import { Image, Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+
 import Warning from '../../../assets/oldImg/Warning.png'
 import { version } from '../../../package.json'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
 import shared from 'stonehedge-shared'
-
-import React, { useState, useEffect } from 'react'
-import { Image, Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { connect } from 'react-redux'
-
-const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: '#F1EFF0',
-    },
-    buttonContainer: {
-        justifyContent: 'center',
-        borderTopWidth: 1,
-        borderTopColor: '#C0C0C0',
-        marginTop: 8,
-        marginBottom: 36,
-        marginHorizontal: 20,
-    },
-    textButton: {
-        fontFamily: Fonts.DisplayCompactRegular,
-        fontSize: 16,
-    },
-    title: {
-        padding: 16,
-        color: '#000',
-        fontFamily: Fonts.DisplayBold,
-        fontSize: 20,
-        fontWeight: '900',
-        lineHeight: 26,
-    },
-    description: {
-        color: '#747E90',
-        fontFamily: Fonts.DisplayLight,
-        fontSize: 14,
-        textAlign: 'left',
-    },
-    contrastText: {
-        paddingLeft: 16,
-        color: '#000',
-        fontSize: 14,
-        lineHeight: 26,
-    },
-    icon: {
-        width: 30,
-        height: 30,
-        margin: 16,
-        marginTop: 4,
-    },
-    scroll: {
-        paddingHorizontal: 16,
-    },
-    defaultWrapper: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#747E90',
-        backgroundColor: '#F1EFF0',
-        borderRadius: 3,
-        fontSize: 16,
-    },
-})
 
 const UpdateAppScreen = ({ fetchConfig, navigation }) => {
     const [config, setConfig] = useState(null)
@@ -142,5 +84,63 @@ const UpdateAppScreen = ({ fetchConfig, navigation }) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: '#F1EFF0',
+    },
+    buttonContainer: {
+        justifyContent: 'center',
+        borderTopWidth: 1,
+        borderTopColor: '#C0C0C0',
+        marginTop: 8,
+        marginBottom: 36,
+        marginHorizontal: 20,
+    },
+    textButton: {
+        fontFamily: Fonts.DisplayCompactRegular,
+        fontSize: 16,
+    },
+    title: {
+        padding: 16,
+        color: '#000',
+        fontFamily: Fonts.DisplayBold,
+        fontSize: 20,
+        fontWeight: '900',
+        lineHeight: 26,
+    },
+    description: {
+        color: '#747E90',
+        fontFamily: Fonts.DisplayLight,
+        fontSize: 14,
+        textAlign: 'left',
+    },
+    contrastText: {
+        paddingLeft: 16,
+        color: '#000',
+        fontSize: 14,
+        lineHeight: 26,
+    },
+    icon: {
+        width: 30,
+        height: 30,
+        margin: 16,
+        marginTop: 4,
+    },
+    scroll: {
+        paddingHorizontal: 16,
+    },
+    defaultWrapper: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#747E90',
+        backgroundColor: '#F1EFF0',
+        borderRadius: 3,
+        fontSize: 16,
+    },
+})
 
 export default connect(null, { fetchConfig: shared.actions.fetchConfig })(UpdateAppScreen)

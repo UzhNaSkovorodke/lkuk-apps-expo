@@ -3,6 +3,19 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import RightArrow from '../../../assets/oldImg/Down.png'
 
+function ResidenceButton({ style, textStyle, text, onPress, isArrowVisible }) {
+    return (
+        <TouchableOpacity
+            style={[styles.wrapper, style]}
+            onPress={isArrowVisible ? onPress : undefined}>
+            <View style={styles.container}>
+                <Text style={[styles.text, textStyle]}>{text}</Text>
+                {isArrowVisible && <Image style={styles.rightIcon} source={RightArrow} />}
+            </View>
+        </TouchableOpacity>
+    )
+}
+
 const styles = StyleSheet.create({
     wrapper: {
         marginTop: 13,
@@ -25,16 +38,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
-
-export default function ResidenceButton({ style, textStyle, text, onPress, isArrowVisible }) {
-    return (
-        <TouchableOpacity
-            style={[styles.wrapper, style]}
-            onPress={isArrowVisible ? onPress : undefined}>
-            <View style={styles.container}>
-                <Text style={[styles.text, textStyle]}>{text}</Text>
-                {isArrowVisible && <Image style={styles.rightIcon} source={RightArrow} />}
-            </View>
-        </TouchableOpacity>
-    )
-}
+export default ResidenceButton

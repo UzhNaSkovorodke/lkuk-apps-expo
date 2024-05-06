@@ -3,6 +3,18 @@ import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'reac
 
 import { Fonts } from '../../utils/Fonts'
 
+const ButtonWithIcon = ({ imageStyle, style, onPress, source, label, description }) => {
+    return (
+        <Pressable style={[styles.wrapper, style]} onPress={onPress}>
+            <Image style={[styles.icon, imageStyle]} source={source} />
+            <View style={{ flexDirection: 'column', flex: 1 }}>
+                <Text style={styles.labelText}>{label}</Text>
+                <Text style={styles.descriptionText}>{description}</Text>
+            </View>
+        </Pressable>
+    )
+}
+
 const styles = StyleSheet.create({
     labelText: {
         color: '#F7F7F9',
@@ -33,17 +45,5 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
     },
 })
-
-const ButtonWithIcon = ({ imageStyle, style, onPress, source, label, description }) => {
-    return (
-        <Pressable style={[styles.wrapper, style]} onPress={onPress}>
-            <Image style={[styles.icon, imageStyle]} source={source} />
-            <View style={{ flexDirection: 'column', flex: 1 }}>
-                <Text style={styles.labelText}>{label}</Text>
-                <Text style={styles.descriptionText}>{description}</Text>
-            </View>
-        </Pressable>
-    )
-}
 
 export default ButtonWithIcon

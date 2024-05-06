@@ -1,6 +1,16 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
+const RoundButton = ({ text, style, onPress, isSelected }) => {
+    return (
+        <TouchableOpacity
+            style={[isSelected ? styles.selectedButton : styles.notSelectedButton, style]}
+            onPress={onPress}>
+            <Text style={isSelected ? styles.selectedText : styles.notSelectedText}>{text}</Text>
+        </TouchableOpacity>
+    )
+}
+
 const styles = StyleSheet.create({
     notSelectedButton: {
         height: 40,
@@ -35,15 +45,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
-
-const RoundButton = ({ text, style, onPress, isSelected }) => {
-    return (
-        <TouchableOpacity
-            style={[isSelected ? styles.selectedButton : styles.notSelectedButton, style]}
-            onPress={onPress}>
-            <Text style={isSelected ? styles.selectedText : styles.notSelectedText}>{text}</Text>
-        </TouchableOpacity>
-    )
-}
 
 export default RoundButton

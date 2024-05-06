@@ -3,6 +3,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { Fonts } from '../../utils/Fonts'
 
+const CalendarButton = ({ style, onPress, currentMode }) => {
+    return (
+        <TouchableOpacity style={[styles.wrapper, style]} onPress={onPress}>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.text}>{currentMode}</Text>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
 const styles = StyleSheet.create({
     wrapper: {
         flexDirection: 'column',
@@ -24,14 +34,4 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
 })
-
-const CalendarButton = ({ style, onPress, currentMode }) => {
-    return (
-        <TouchableOpacity style={[styles.wrapper, style]} onPress={onPress}>
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.text}>{currentMode}</Text>
-            </View>
-        </TouchableOpacity>
-    )
-}
 export default CalendarButton
