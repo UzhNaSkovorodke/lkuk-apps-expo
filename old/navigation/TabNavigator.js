@@ -6,6 +6,7 @@ import Filter from '../../assets/oldImg/Filter.png'
 import HomeIcon from '../../assets/oldImg/Home.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 
+import AppealsScreen from '../screens/AppealsScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
@@ -124,7 +125,7 @@ function TabNavigator() {
             />
             <Tab.Screen
                 name="AppealsScreen"
-                component={RegistrationOrLoginScreen}
+                component={AppealsScreen}
                 options={({ route: { params }, navigation: { navigate } }) => ({
                     title: 'Обращения',
                     tabBarLabel: 'Обращения',
@@ -133,12 +134,10 @@ function TabNavigator() {
                     ),
                     headerRight: () => (
                         <TouchableOpacity
-                            onPress={
-                                () => {}
-                                // navigate('AppealsFilterScreen', {
-                                //     filter: params?.filter || {},
-                                // })
-                            }>
+                        // onPress={navigate('AppealsFilterScreen', {
+                        //     filter: params?.filter || {},
+                        // })}
+                        >
                             <Image style={styles.filter} source={Filter} />
                         </TouchableOpacity>
                     ),

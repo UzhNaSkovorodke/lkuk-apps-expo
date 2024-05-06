@@ -1,9 +1,6 @@
 import React from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
-import HomeIcon from '../../assets/oldImg/Home.png'
-
-import FakeScreen from '../screens/AppealCreateScreen'
 import AppealCreateScreen from '../screens/AppealCreateScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
@@ -126,7 +123,7 @@ export default function AppNavigator() {
             <Stack.Screen
                 name={'EventAppealScreen'}
                 component={EventAppealScreen}
-                // options={({ route }) => ({ title: route.params.title })}
+                options={({ route }) => ({ title: route.params.title })}
             />
         </Stack.Navigator>
     )

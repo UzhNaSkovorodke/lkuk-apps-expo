@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     },
 })
 
-export default
 const CalendarButton = ({ style, onPress, currentMode }) => {
     return (
         <TouchableOpacity style={[styles.wrapper, style]} onPress={onPress}>
@@ -35,3 +34,4 @@ const CalendarButton = ({ style, onPress, currentMode }) => {
         </TouchableOpacity>
     )
 }
+export default CalendarButton
