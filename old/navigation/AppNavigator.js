@@ -3,9 +3,12 @@ import { Image, StyleSheet } from 'react-native'
 
 import HomeIcon from '../../assets/oldImg/Home.png'
 
+import FakeScreen from '../screens/AppealCreateScreen'
+import AppealCreateScreen from '../screens/AppealCreateScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
+import EventAppealScreen from '../screens/EventAppealScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import NewsScreen from '../screens/NewsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
@@ -34,7 +37,7 @@ const Stack = createNativeStackNavigator()
 export default function AppNavigator() {
     return (
         <Stack.Navigator
-            initialRouteName="UpdateAppScreen"
+            initialRouteName="SwitcherScreen"
             //     screenOptions={{
             //     gestureEnabled: false,
             //     headerBackImage: () => (
@@ -115,11 +118,16 @@ export default function AppNavigator() {
                 component={PasswordRecoveryScreen}
                 options={{ title: 'Восстановление пароля' }}
             />
-            {/*<Stack.Screen*/}
-            {/*    name={'AppealSelectionScreen'}*/}
-            {/*    component={AppealSelectionScreen}*/}
-            {/*    options={{ title: 'Создать обращение' }}*/}
-            {/*/>*/}
+            <Stack.Screen
+                name={'AppealCreateScreen'}
+                component={AppealCreateScreen}
+                options={{ title: 'Создать обращение' }}
+            />
+            <Stack.Screen
+                name={'EventAppealScreen'}
+                component={EventAppealScreen}
+                // options={({ route }) => ({ title: route.params.title })}
+            />
         </Stack.Navigator>
     )
 }

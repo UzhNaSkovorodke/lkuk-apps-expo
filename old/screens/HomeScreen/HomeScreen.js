@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
     Dimensions,
     Image,
+    Pressable,
     ScrollView,
     StyleSheet,
     Text,
@@ -158,7 +159,7 @@ const HomeScreen = ({}) => {
                         source={MakeAppealIcon}
                         imageStyle={styles.makeAppealIcon}
                         onPress={() => {
-                            navigation.navigate('AppealSelectionScreen', {
+                            navigation.navigate('AppealCreateScreen', {
                                 mode: APPEAL_SELECTION_TYPES.MANAGE_COMPANY,
                             })
                         }}

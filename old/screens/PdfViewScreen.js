@@ -9,6 +9,7 @@ import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import { downloadFile } from '../utils/Utils'
 import * as Print from 'expo-print'
+import WebView from 'react-native-webview'
 import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
@@ -106,14 +107,7 @@ const PdfViewScreen = ({ route, navigation, setError }) => {
                     this.modalRootContext = context
                 }}
             </ModalRoot.ModalRootContext.Consumer>
-            <Print
-                style={styles.pdf}
-                source={file} // Передача base64 строки в качестве URI
-                onError={(error) => {
-                    reportError(error, 'PDFView/PdfOnError')
-                    setError([{ message: 'Извините, возникла проблема при открытии PDF файла.' }])
-                }}
-            />
+
             {isDownload && (
                 <View style={styles.shadowBoxButton}>
                     <TouchableOpacity style={styles.downloadButton} onPress={downloadFileHandler}>
