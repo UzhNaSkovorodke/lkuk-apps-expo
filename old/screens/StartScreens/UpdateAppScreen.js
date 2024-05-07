@@ -62,7 +62,7 @@ const UpdateAppScreen = ({ fetchConfig, navigation }) => {
             </View>
             <Text style={styles.contrastText}>Версия: {config.lastBuild}</Text>
             <Text style={styles.contrastText}>Основные изменения:</Text>
-            <ScrollView style={styles.scroll}>
+            <ScrollView style={styles.scroll} scrollEventThrottle={16}>
                 <Text>{config.lastBuildDescription}</Text>
             </ScrollView>
             <View style={styles.buttonContainer}>

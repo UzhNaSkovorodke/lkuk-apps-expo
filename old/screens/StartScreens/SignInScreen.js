@@ -145,7 +145,7 @@ function SignInScreen({ navigation, fetchProfile, auth }) {
     return (
         <View style={{ flex: 1 }}>
             <ModalPrivacyPolicy modalRef={modalPrivacyPolicyRef} onAcceptClicked={signInSuccess} />
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} scrollEventThrottle={16}>
                 <View style={styles.container}>
                     <Image style={styles.imageLabel} source={StoneHedge} />
                     <TextInput

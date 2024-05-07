@@ -1,7 +1,9 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import RoomTransferAppeal from '../../assets/oldImg/RoomTransferImage.png'
+
+import ClickBtn from '../components/custom/ClickBtn'
 
 import { APPEAL_TYPES } from '../constants/AppealTypes'
 import { Fonts } from '../utils/Fonts'
@@ -19,9 +21,7 @@ const AppealCreateScreen = ({ appealTypesArray, projects }) => {
 
     return (
         <View style={styles.wrapper}>
-            <View style={styles.mainContainer}>
-                <Text style={styles.label}>Выберите категорию для написания обращения</Text>
-            </View>
+            <Text style={styles.label}>Выберите категорию для написания обращения</Text>
 
             <FlatList
                 numColumns={2}
@@ -49,24 +49,12 @@ const AppealCreateScreen = ({ appealTypesArray, projects }) => {
                     }
 
                     return (
-                        <View style={{ width: '50%' }}>
-                            <View style={styles.btnWrapper}>
-                                <View style={styles.shadowButton}>
-                                    <Pressable
-                                        style={{ paddingHorizontal: 8 }}
-                                        onPress={() => navigationHandler(e)}>
-                                        <View style={styles.imageWrapper}>
-                                            <Image style={styles.imgAppeal} source={imgSrc} />
-                                        </View>
-                                        <View style={styles.textWrapper}>
-                                            <Text style={styles.textButtonStyle}>
-                                                {e.item.name}
-                                            </Text>
-                                        </View>
-                                    </Pressable>
-                                </View>
-                            </View>
-                        </View>
+                        <ClickBtn
+                            onPress={() => navigationHandler(e)}
+                            imgSrc={imgSrc}
+                            imgStyle={styles.imgAppeal}
+                            title={e.item.name}
+                        />
                     )
                 }}
             />
@@ -77,40 +65,33 @@ const AppealCreateScreen = ({ appealTypesArray, projects }) => {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        padding: 16,
         backgroundColor: '#F7F7F9',
-    },
-    mainContainer: {
-        marginBottom: 24,
-        paddingHorizontal: 8,
     },
     label: {
         maxWidth: 260,
-        marginTop: 13,
         marginBottom: 26,
         color: '#111111',
         fontFamily: Fonts.DisplayBold,
         fontSize: 18,
-        marginHorizontal: 8,
     },
     subLabel: {
         marginBottom: 16,
         color: '#747E90',
         fontFamily: Fonts.DisplayLight,
         fontSize: 12,
-        marginHorizontal: 8,
     },
     btnWrapper: {
-        width: '100%',
-        paddingHorizontal: 8,
+        backgroundColor: '#FFFFFF',
     },
     shadowButton: {
         height: 117,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 20,
-        backgroundColor: '#F7F7F9',
+        backgroundColor: '#ffffff',
+        elevation: 5,
         borderRadius: 3,
-        shadowColor: '#B7B7B7',
+        shadowColor: '#dedede',
         shadowOpacity: 0.25,
         shadowRadius: 4,
         shadowOffset: { width: 0, height: 0 },
@@ -119,10 +100,8 @@ const styles = StyleSheet.create({
         width: 38,
         alignSelf: 'center',
         height: 46.23,
-        marginTop: 16,
         resizeMode: 'contain',
     },
-    imageWrapper: {},
     textWrapper: {
         height: 50,
         justifyContent: 'center',

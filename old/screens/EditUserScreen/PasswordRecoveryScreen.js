@@ -1,12 +1,12 @@
+import React, { Component } from 'react'
+import { ScrollView, View } from 'react-native'
+import { connect } from 'react-redux'
+
 import DefaultButton from '../../components/buttons/DefaultButton'
 import TextField from '../../components/custom/TextField'
 import commonStyles from '../../styles/CommonStyles'
 import reportError from '../../utils/ReportError'
 import shared from 'stonehedge-shared'
-
-import React, { Component } from 'react'
-import { ScrollView, View } from 'react-native'
-import { connect } from 'react-redux'
 
 class PasswordRecoveryScreen extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class PasswordRecoveryScreen extends Component {
     render() {
         const { value } = this.state
         return (
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} scrollEventThrottle={16}>
                 <View
                     style={[commonStyles.container, { justifyContent: 'center', marginTop: -60 }]}>
                     <TextField

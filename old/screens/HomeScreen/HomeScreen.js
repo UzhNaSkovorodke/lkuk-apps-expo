@@ -24,9 +24,7 @@ import shared from 'stonehedge-shared'
 import { fetchAllNews } from 'stonehedge-shared/src/api'
 
 const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: '#F7F7F9',
-    },
+    scrollView: {},
     newsWrapper: {
         width: '100%',
     },
@@ -131,7 +129,7 @@ const HomeScreen = ({}) => {
     }, [])
 
     return (
-        <ScrollView style={styles.scrollView} onScroll={({ nativeEvent }) => {}}>
+        <ScrollView style={styles.scrollView} scrollEventThrottle={16}>
             <View style={[commonStyles.container, styles.container]}>
                 <View style={styles.wrapper}>
                     <ButtonWithIcon
@@ -149,7 +147,7 @@ const HomeScreen = ({}) => {
                         source={TaxiIcon}
                         imageStyle={styles.taxiIcon}
                         onPress={() => {
-                            navigation.navigate('ProfileScreen')
+                            navigation.navigate('SelectPassOrderScreen')
                         }}
                     />
                     {/*{this.hasUKAppeals && (*/}

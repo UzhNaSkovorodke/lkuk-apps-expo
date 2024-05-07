@@ -1,11 +1,12 @@
 import * as React from 'react'
+import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 
 import AppNavigator from './old/navigation/AppNavigator'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import shared from 'stonehedge-shared'
 
 export default function App() {
@@ -31,12 +32,17 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                <Provider store={shared.store}>
-                    <AppNavigator />
-                </Provider>
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <>
+            <SafeAreaView style={{ backgroundColor: '#F7F7F9' }}>
+                <StatusBar barStyle="dark-content" backgroundColor="#F7F7F9" />
+            </SafeAreaView>
+            <SafeAreaProvider>
+                <NavigationContainer>
+                    <Provider store={shared.store}>
+                        <AppNavigator />
+                    </Provider>
+                </NavigationContainer>
+            </SafeAreaProvider>
+        </>
     )
 }

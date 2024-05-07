@@ -220,7 +220,7 @@ const FilterAdditionalBills = ({ filter, projectsData, updateFilter }) => {
                 />
             </TouchableOpacity>
             <View style={[styles.openFilter, !isOpenFilter && { display: 'none' }]}>
-                <ScrollView style={{ paddingHorizontal: 16 }}>
+                <ScrollView style={{ paddingHorizontal: 16 }} scrollEventThrottle={16}>
                     <Text style={styles.title}>Статус</Text>
                     <View style={{ flexDirection: 'row' }}>
                         {Object.values(filterTypes).map((item, index) => {

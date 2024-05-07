@@ -7,12 +7,14 @@ import HomeIcon from '../../assets/oldImg/Home.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 
 import AppealsScreen from '../screens/AppealsScreen'
+import FakeScreen from '../screens/FakeScreen/FakeScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
 
 import { Fonts } from '../utils/Fonts'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { TransitionPresets } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const Tab = createBottomTabNavigator()
@@ -33,11 +35,7 @@ function TabNavigator() {
             fontFamily: Fonts.DisplayBold,
             fontSize: 18,
         },
-        appHeaderTitleStyle: {
-            color: '#111111',
-            fontFamily: Fonts.DisplayRegular,
-            fontSize: 14,
-        },
+
         homeIcon: {
             width: 20.93,
             height: 18.21,
@@ -99,7 +97,7 @@ function TabNavigator() {
                 tabBarInactiveTintColor: '#747E90',
                 tabBarLabelStyle,
                 tabBarStyle: { paddingBottom: bottom + 4 },
-                //...TransitionPresets.ScaleFromCenterAndroid,
+                ...TransitionPresets.ScaleFromCenterAndroid,
             }}>
             <Tab.Screen
                 name="HomeScreen"

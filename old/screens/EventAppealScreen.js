@@ -400,6 +400,7 @@ const EventManagementCompanyAppealScreen = ({
 
     return (
         <ScrollView
+            scrollEventThrottle={16}
             ref={(ref) => {
                 this.scrollView = ref
             }}>

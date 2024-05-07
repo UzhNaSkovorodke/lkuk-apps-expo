@@ -1,14 +1,17 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
+import StoneHedge from '../../assets/oldImg/StoneHedge.png'
+
 import AppealCreateScreen from '../screens/AppealCreateScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
 import EventAppealScreen from '../screens/EventAppealScreen'
-import HomeScreen from '../screens/HomeScreen/HomeScreen'
+import FakeScreen from '../screens/FakeScreen/FakeScreen'
 import NewsScreen from '../screens/NewsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
+import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
 import GreetingScreen from '../screens/StartScreens/GreetingScreen'
 import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
@@ -19,13 +22,19 @@ import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
 
 import TabNavigator from './TabNavigator'
 
+import { Fonts } from '../utils/Fonts'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { TransitionPresets } from '@react-navigation/stack'
 
 const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
     headerStyle: {
         height: 56,
-        backgroundColor: 'transparent',
         elevation: 0,
+    },
+    appHeaderTitleStyle: {
+        color: '#111111',
+        fontFamily: Fonts.DisplayRegular,
+        fontSize: 14,
     },
 })
 
@@ -35,65 +44,77 @@ export default function AppNavigator() {
     return (
         <Stack.Navigator
             initialRouteName="SwitcherScreen"
-            //     screenOptions={{
-            //     gestureEnabled: false,
-            //     headerBackImage: () => (
-            //         <BackImage width={21.33} height={16} source={BackArrowIcon} />
-            //     ),
-            //     headerBackTitle: false,
-            //     headerBackTitleVisible: false,
-            //     headerStyle,
-            //     headerTitleAlign: 'center',
-            //     headerTitleStyle: styles.appHeaderTitleStyle,
-            // }}
-        >
-            <Stack.Screen name={'TabNavigator'} component={TabNavigator} />
-            <Stack.Screen name={'UpdateAppScreen'} component={UpdateAppScreen} />
-            <Stack.Screen name={'WelcomeScreen'} component={WelcomeScreen} />
-            <Stack.Screen name={'SwitcherScreen'} component={SwitcherScreen} />
+            screenOptions={{
+                gestureEnabled: false,
+                headerBackTitleVisible: false,
+                headerStyle,
+                headerTitleAlign: 'center',
+                headerTitleStyle: styles.appHeaderTitleStyle,
+                tabBarStyle: { paddingBottom: 10 + 4 },
+                ...TransitionPresets.ScaleFromCenterAndroid,
+            }}>
+            <Stack.Screen
+                name={'TabNavigator'}
+                component={TabNavigator}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={'UpdateAppScreen'}
+                component={UpdateAppScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={'WelcomeScreen'}
+                component={WelcomeScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={'SwitcherScreen'}
+                component={SwitcherScreen}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name={'RegistrationOrLoginScreen'}
                 component={RegistrationOrLoginScreen}
+                options={{ headerShown: false }}
             />
-            <Stack.Screen name={'SignInScreen'} component={SignInScreen} />
-            <Stack.Screen name={'GreetingScreen'} component={GreetingScreen} />
+            <Stack.Screen
+                name={'SignInScreen'}
+                component={SignInScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name={'GreetingScreen'}
+                component={GreetingScreen}
+                options={{ headerShown: false }}
+            />
             <Stack.Screen
                 name={'PinCodeScreen'}
                 component={PinCodeScreen}
-                // options={({
-                //     route: {
-                //         params: { header },
-                //     },
-                // }) => ({
-                //     title: header === 'create' ? 'Создание PIN-кода' : '',
-                //     headerTitle:
-                //         header === 'enter'
-                //             ? () => <Image style={{ height: 30, width: 151 }} source={StoneHedge} />
-                //             : undefined,
-                //     headerLeft: header === 'enter' ? () => null : undefined,
-                // })}
+                options={({
+                    route: {
+                        params: { header },
+                    },
+                }) => ({
+                    title: header === 'create' ? 'Создание PIN-кода' : '',
+                    headerTitle:
+                        header === 'enter'
+                            ? () => <Image style={{ height: 30, width: 151 }} source={StoneHedge} />
+                            : undefined,
+                    headerLeft: header === 'enter' ? () => null : undefined,
+                })}
             />
-            <Stack.Screen
-                name="HomeScreen"
-                component={HomeScreen}
-                // options={{
-                //     title: '',
-                //     tabBarLabel: 'Главная',
-                //     tabBarIcon: ({ color: tintColor }) => (
-                //         <Image style={[styles.homeIcon, { tintColor }]} source={HomeIcon} />
-                //     ),
-                // }}
-            />
+
             <Stack.Screen
                 name={'NewsScreen'}
                 component={NewsScreen}
-                // options={({ route }) => ({
-                //     title: route?.params?.title,
-                //     headerTitleContainerStyle: {
-                //         width: '70%',
-                //         alignItems: 'center',
-                //     },
-                // })}
+                options={({ route }) => ({
+                    title: route?.params?.title,
+                    headerTitleContainerStyle: {
+                        width: '70%',
+                        alignItems: 'center',
+                    },
+                })}
             />
             <Stack.Screen
                 name={'PdfViewScreen'}
@@ -125,6 +146,12 @@ export default function AppNavigator() {
                 component={EventAppealScreen}
                 options={({ route }) => ({ title: route.params.title })}
             />
+            <Stack.Screen
+                name={'SelectPassOrderScreen'}
+                component={SelectPassOrderScreen}
+                options={{ title: 'Заказать пропуск' }}
+            />
+            <Stack.Screen name={'FakeScreen'} component={FakeScreen} />
         </Stack.Navigator>
     )
 }

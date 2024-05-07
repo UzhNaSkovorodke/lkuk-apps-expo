@@ -33,7 +33,7 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
 
     return (
         <View style={styles.mainWrapper}>
-            <ScrollView>
+            <ScrollView scrollEventThrottle={16}>
                 <View style={styles.wrapper}>
                     <TextField
                         label="ФИО"
