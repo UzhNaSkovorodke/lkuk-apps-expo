@@ -3,12 +3,13 @@ import { StyleSheet } from 'react-native'
 
 import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 
-import AppealCreateScreen from '../screens/AppealCreateScreen'
+import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
+import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
+import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
 import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
-import EventAppealScreen from '../screens/EventAppealScreen'
 import FakeScreen from '../screens/FakeScreen/FakeScreen'
 import NewsScreen from '../screens/NewsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
@@ -164,6 +165,11 @@ export default function AppNavigator() {
                 name={'CreateEventDeliveryPassScreen'}
                 component={CreateEventDeliveryPassScreen}
                 options={{ title: 'Заказать пропуск для доставки' }}
+            />
+            <Stack.Screen
+                name={'MyEventChangeProfileAppealScreen'}
+                component={MyEventChangeProfileAppealScreen}
+                options={{ title: 'Мои события' }}
             />
         </Stack.Navigator>
     )

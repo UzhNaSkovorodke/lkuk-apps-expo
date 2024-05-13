@@ -1,13 +1,15 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
-import RoomTransferAppeal from '../../assets/oldImg/RoomTransferImage.png'
-
-import ClickBtn from '../components/custom/ClickBtn'
-
-import { APPEAL_TYPES } from '../constants/AppealTypes'
-import { Fonts } from '../utils/Fonts'
-import { checkValidUrl, filterAvailableProjectAppealTypes, getRootImageUrl } from '../utils/Utils'
+import RoomTransferAppeal from '../../../assets/oldImg/RoomTransferImage.png'
+import ClickBtn from '../../components/custom/ClickBtn'
+import { APPEAL_TYPES } from '../../constants/AppealTypes'
+import { Fonts } from '../../utils/Fonts'
+import {
+    checkValidUrl,
+    filterAvailableProjectAppealTypes,
+    getRootImageUrl,
+} from '../../utils/Utils'
 import { useNavigation } from '@react-navigation/native'
 
 const AppealCreateScreen = ({ appealTypesArray, projects }) => {

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 
+import ModalRoot from './old/components/custom/RootModalsComponent'
 import AppNavigator from './old/navigation/AppNavigator'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -36,10 +37,13 @@ export default function App() {
             <SafeAreaView style={{ backgroundColor: '#F7F7F9' }}>
                 <StatusBar barStyle="dark-content" backgroundColor="#F7F7F9" />
             </SafeAreaView>
+
             <SafeAreaProvider>
                 <NavigationContainer>
                     <Provider store={shared.store}>
-                        <AppNavigator />
+                        <ModalRoot.RootModalsComponent>
+                            <AppNavigator />
+                        </ModalRoot.RootModalsComponent>
                     </Provider>
                 </NavigationContainer>
             </SafeAreaProvider>

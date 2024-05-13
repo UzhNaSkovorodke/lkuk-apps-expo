@@ -6,8 +6,8 @@ import Filter from '../../assets/oldImg/Filter.png'
 import HomeIcon from '../../assets/oldImg/Home.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 
-import AppealsScreen from '../screens/AppealsScreen'
-import HomeScreen from '../screens/HomeScreen/HomeScreen'
+import AppealsScreen from '../screens/Appeals/AppealsScreen'
+import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
 

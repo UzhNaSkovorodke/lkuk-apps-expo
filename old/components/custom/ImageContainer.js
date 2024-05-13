@@ -4,9 +4,6 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AnotherFile from '../../../assets/oldImg/Document.png'
 import ExitImg from '../../../assets/oldImg/Exit3.png'
 import Pdf from '../../../assets/oldImg/Pdf.png'
-import { withNavigation } from '@react-navigation/compat'
-import ImageView from 'react-native-image-view'
-import ReactNativePickerModule from 'react-native-picker-module'
 
 const styles = StyleSheet.create({
     filesContainer: {
@@ -121,12 +118,12 @@ class ImageContainer extends React.Component {
             ]
             return (
                 <View>
-                    <ImageView
-                        images={images}
-                        imageIndex={0}
-                        isVisible={isImageFullScreenVisible}
-                        onClose={() => this.setState({ isImageFullScreenVisible: false })}
-                    />
+                    {/*<ImageView*/}
+                    {/*    images={images}*/}
+                    {/*    imageIndex={0}*/}
+                    {/*    isVisible={isImageFullScreenVisible}*/}
+                    {/*    onClose={() => this.setState({ isImageFullScreenVisible: false })}*/}
+                    {/*/>*/}
                     <TouchableOpacity
                         onPress={() =>
                             this.onPickerShow({
@@ -137,27 +134,27 @@ class ImageContainer extends React.Component {
                             })
                         }
                         style={[styles.filesContainer, containerStyle]}>
-                        <ReactNativePickerModule
-                            pickerRef={(e) => {
-                                this.pickerRefImage = e
-                            }}
-                            title="Выберите Действие"
-                            confirmButton="Выбрать"
-                            cancelButton="Отмена"
-                            items={['Открыть', 'Удалить']}
-                            onValueChange={(value) => {
-                                if (value === 'Удалить') {
-                                    this.onClickDisable()
-                                }
-                                if (value === 'Открыть') {
-                                    // задержка нужно чтобы скрылся пикер
-                                    setTimeout(
-                                        () => this.setState({ isImageFullScreenVisible: true }),
-                                        400
-                                    )
-                                }
-                            }}
-                        />
+                        {/*<ReactNativePickerModule*/}
+                        {/*    pickerRef={(e) => {*/}
+                        {/*        this.pickerRefImage = e*/}
+                        {/*    }}*/}
+                        {/*    title="Выберите Действие"*/}
+                        {/*    confirmButton="Выбрать"*/}
+                        {/*    cancelButton="Отмена"*/}
+                        {/*    items={['Открыть', 'Удалить']}*/}
+                        {/*    onValueChange={(value) => {*/}
+                        {/*        if (value === 'Удалить') {*/}
+                        {/*            this.onClickDisable()*/}
+                        {/*        }*/}
+                        {/*        if (value === 'Открыть') {*/}
+                        {/*            // задержка нужно чтобы скрылся пикер*/}
+                        {/*            setTimeout(*/}
+                        {/*                () => this.setState({ isImageFullScreenVisible: true }),*/}
+                        {/*                400*/}
+                        {/*            )*/}
+                        {/*        }*/}
+                        {/*    }}*/}
+                        {/*/>*/}
                         <Image
                             style={{ width: 80, height: 68 }}
                             source={{
@@ -189,26 +186,26 @@ class ImageContainer extends React.Component {
                         })
                     }}
                     style={[styles.filesContainer, containerStyle]}>
-                    <ReactNativePickerModule
-                        pickerRef={(e) => {
-                            this.pickerRef = e
-                        }}
-                        title="Выберите Действие"
-                        confirmButton="Выбрать"
-                        cancelButton="Отмена"
-                        items={['Открыть', 'Удалить']}
-                        onValueChange={(value) => {
-                            if (value === 'Удалить') {
-                                this.onClickDisable()
-                            }
-                            if (value === 'Открыть') {
-                                navigation.navigate('PdfViewScreen', {
-                                    fileLink: fileUri,
-                                    title: fileName,
-                                })
-                            }
-                        }}
-                    />
+                    {/*<ReactNativePickerModule*/}
+                    {/*    pickerRef={(e) => {*/}
+                    {/*        this.pickerRef = e*/}
+                    {/*    }}*/}
+                    {/*    title="Выберите Действие"*/}
+                    {/*    confirmButton="Выбрать"*/}
+                    {/*    cancelButton="Отмена"*/}
+                    {/*    items={['Открыть', 'Удалить']}*/}
+                    {/*    onValueChange={(value) => {*/}
+                    {/*        if (value === 'Удалить') {*/}
+                    {/*            this.onClickDisable()*/}
+                    {/*        }*/}
+                    {/*        if (value === 'Открыть') {*/}
+                    {/*            navigation.navigate('PdfViewScreen', {*/}
+                    {/*                fileLink: fileUri,*/}
+                    {/*                title: fileName,*/}
+                    {/*            })*/}
+                    {/*        }*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     <Image style={styles.imageWrapping} tintColor="#FFFFFF" source={Pdf} />
                     <View style={styles.viewWrapping}>
                         <Text
@@ -264,4 +261,4 @@ class ImageContainer extends React.Component {
         return undefined
     }
 }
-export default withNavigation(ImageContainer)
+export default ImageContainer

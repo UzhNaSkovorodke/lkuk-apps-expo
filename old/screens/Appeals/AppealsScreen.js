@@ -2,11 +2,10 @@ import React from 'react'
 import { SectionList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
-import AppealsComponent from '../components/custom/AppealsComponent'
-import Spinner from '../components/custom/Spinner'
-
-import { Fonts } from '../utils/Fonts'
-import reportError from '../utils/ReportError'
+import AppealsComponent from '../../components/custom/AppealsComponent'
+import Spinner from '../../components/custom/Spinner'
+import { Fonts } from '../../utils/Fonts'
+import reportError from '../../utils/ReportError'
 import moment from 'moment'
 import shared from 'stonehedge-shared'
 
