@@ -7,7 +7,6 @@ import HomeIcon from '../../assets/oldImg/Home.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 
 import AppealsScreen from '../screens/AppealsScreen'
-import FakeScreen from '../screens/FakeScreen/FakeScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'

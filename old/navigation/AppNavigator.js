@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native'
 import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 
 import AppealCreateScreen from '../screens/AppealCreateScreen'
+import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
@@ -19,6 +20,8 @@ import SignInScreen from '../screens/StartScreens/SignInScreen'
 import SwitcherScreen from '../screens/StartScreens/SwitcherScreen'
 import UpdateAppScreen from '../screens/StartScreens/UpdateAppScreen'
 import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
+
+import ItemSelectionScreen from '../components/custom/ItemSelectionScreen'
 
 import TabNavigator from './TabNavigator'
 
@@ -152,6 +155,16 @@ export default function AppNavigator() {
                 options={{ title: 'Заказать пропуск' }}
             />
             <Stack.Screen name={'FakeScreen'} component={FakeScreen} />
+            <Stack.Screen
+                name={'ItemSelectionScreen'}
+                component={ItemSelectionScreen}
+                options={({ route }) => ({ title: route.params.title })}
+            />
+            <Stack.Screen
+                name={'CreateEventDeliveryPassScreen'}
+                component={CreateEventDeliveryPassScreen}
+                options={{ title: 'Заказать пропуск для доставки' }}
+            />
         </Stack.Navigator>
     )
 }

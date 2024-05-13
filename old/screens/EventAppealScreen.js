@@ -3,6 +3,7 @@ import {
     Dimensions,
     FlatList,
     Image,
+    LogBox,
     ScrollView,
     StyleSheet,
     Text,
@@ -152,6 +153,8 @@ const EventManagementCompanyAppealScreen = ({
     const [comment, setComment] = useState('')
     const [isDisableSend, setIsDisableSend] = useState(false)
     const [isShowLoader, setIsShowLoader] = useState(false)
+
+    LogBox.ignoreLogs(['Non-serializable values were found in the navigation state'])
 
     const removeData = (id) => {
         setData((prevData) =>
@@ -395,7 +398,10 @@ const EventManagementCompanyAppealScreen = ({
     const onCheckResidence = ({ id }) => {
         const selectedProject = projectList.find((project) => project.projectId === id)
         setSelectedProject(selectedProject)
-        setRoomList(selectedProject?.rooms)
+        return {
+            selectedProject,
+            roomList: selectedProject?.rooms,
+        }
     }
 
     return (
