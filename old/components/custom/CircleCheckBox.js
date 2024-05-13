@@ -36,7 +36,6 @@ export default class CircleCheckBox extends React.Component {
         onToggle: PropTypes.func.isRequired,
         labelPosition: PropTypes.oneOf([LABEL_POSITION.RIGHT, LABEL_POSITION.LEFT]),
         // styleCheckboxContainer: ViewPropTypes.style.isRequired,
-        styleLabel: Text.propTypes.style,
     }
 
     static defaultProps = {

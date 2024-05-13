@@ -6,6 +6,7 @@ import StoneHedge from '../../assets/oldImg/StoneHedge.png'
 import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
 import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
 import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
+import MyEventManagementCompanyAppealScreen from '../screens/Appeals/MyEventManagementCompanyAppealScreen'
 import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
@@ -169,6 +170,12 @@ export default function AppNavigator() {
             <Stack.Screen
                 name={'MyEventChangeProfileAppealScreen'}
                 component={MyEventChangeProfileAppealScreen}
+                options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'MyEventManagementCompanyAppealScreen'}
+                component={MyEventManagementCompanyAppealScreen}
+                update
                 options={{ title: 'Мои события' }}
             />
         </Stack.Navigator>
