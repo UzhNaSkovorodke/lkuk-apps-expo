@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
 const DeliveryPassScreen = ({ projects, sendPass, setError, setSuccess, navigation }) => {
     const [deliveryTypeId, setDeliveryTypeId] = useState(1)
-    const [date, setDate] = useState(10)
+    const [date, setDate] = useState(new Date() + 1000)
     const [selectedProject, setSelectedProject] = useState(projects[0] || {})
     const [comment, setComment] = useState('')
     const [guests, setGuests] = useState([])
@@ -117,6 +117,7 @@ const DeliveryPassScreen = ({ projects, sendPass, setError, setSuccess, navigati
         (deliveryTypeId !== 1 && carData.plateNumber !== undefined && carData.plateNumber !== '')
 
     const onClickedSendButton = () => {
+        console.log(date)
         if (!checkCarData({ carData, deliveryTypeId })) {
             setError([
                 {

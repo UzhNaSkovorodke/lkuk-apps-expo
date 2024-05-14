@@ -7,7 +7,11 @@ import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
 import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
 import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
 import MyEventManagementCompanyAppealScreen from '../screens/Appeals/MyEventManagementCompanyAppealScreen'
+import CreateEventBuildingDeliveryPassScreen from '../screens/CreateEventBuildingDeliveryPassScreen'
 import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
+import CreateEventGuestPassOrderScreen from '../screens/CreateEventGuestPassOrderScreen'
+import CreateEventLargeSizeDeliveryPassScreen from '../screens/CreateEventLargeSizeDeliveryPassScreen'
+import CreateEventTaxiPassOrderScreen from '../screens/CreateEventTaxiPassOrderScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
@@ -177,6 +181,26 @@ export default function AppNavigator() {
                 component={MyEventManagementCompanyAppealScreen}
                 update
                 options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'CreateEventTaxiPassOrderScreen'}
+                component={CreateEventTaxiPassOrderScreen}
+                options={{ title: 'Заказать пропуск для такси' }}
+            />
+            <Stack.Screen
+                name={'CreateEventGuestPassOrderScreen'}
+                component={CreateEventGuestPassOrderScreen}
+                options={{ title: 'Заказать пропуск для гостя' }}
+            />
+            <Stack.Screen
+                name={'CreateEventBuildingDeliveryPassScreen'}
+                component={CreateEventBuildingDeliveryPassScreen}
+                options={{ title: 'Заказать пропуск для стройматериалов' }}
+            />
+            <Stack.Screen
+                name={'CreateEventLargeSizeDeliveryPassScreen'}
+                component={CreateEventLargeSizeDeliveryPassScreen}
+                options={{ title: 'Заказать пропуск для крупногабаритных грузов' }}
             />
         </Stack.Navigator>
     )
