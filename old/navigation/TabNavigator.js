@@ -9,6 +9,7 @@ import ProfileIcon from '../../assets/oldImg/Profile.png'
 import AppealsScreen from '../screens/Appeals/AppealsScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ProfileScreen from '../screens/ProfileScreen'
+import ResidenceScreen from '../screens/ResidenceScreen'
 import RegistrationOrLoginScreen from '../screens/StartScreens/RegistrationOrLoginScreen'
 
 import { Fonts } from '../utils/Fonts'
@@ -111,7 +112,7 @@ function TabNavigator() {
             />
             <Tab.Screen
                 name="ResidenceScreen"
-                component={RegistrationOrLoginScreen}
+                component={ResidenceScreen}
                 options={{
                     title: 'Управление недвижимостью',
                     tabBarLabel: 'Недвижимость',

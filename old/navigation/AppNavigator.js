@@ -7,6 +7,8 @@ import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
 import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
 import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
 import MyEventManagementCompanyAppealScreen from '../screens/Appeals/MyEventManagementCompanyAppealScreen'
+import MyEventsGuestPassOrderScreen from '../screens/Appeals/MyEventsGuestPassOrderScreen'
+import MyEventsTaxiPassOrderScreen from '../screens/Appeals/MyEventsTaxiPassOrderScreen'
 import CreateEventBuildingDeliveryPassScreen from '../screens/CreateEventBuildingDeliveryPassScreen'
 import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
 import CreateEventGuestPassOrderScreen from '../screens/CreateEventGuestPassOrderScreen'
@@ -16,6 +18,7 @@ import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
 import FakeScreen from '../screens/FakeScreen/FakeScreen'
+import MyResidenceScreen from '../screens/MyResidenceScreen'
 import NewsScreen from '../screens/NewsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
 import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
@@ -171,17 +174,7 @@ export default function AppNavigator() {
                 component={CreateEventDeliveryPassScreen}
                 options={{ title: 'Заказать пропуск для доставки' }}
             />
-            <Stack.Screen
-                name={'MyEventChangeProfileAppealScreen'}
-                component={MyEventChangeProfileAppealScreen}
-                options={{ title: 'Мои события' }}
-            />
-            <Stack.Screen
-                name={'MyEventManagementCompanyAppealScreen'}
-                component={MyEventManagementCompanyAppealScreen}
-                update
-                options={{ title: 'Мои события' }}
-            />
+
             <Stack.Screen
                 name={'CreateEventTaxiPassOrderScreen'}
                 component={CreateEventTaxiPassOrderScreen}
@@ -201,6 +194,34 @@ export default function AppNavigator() {
                 name={'CreateEventLargeSizeDeliveryPassScreen'}
                 component={CreateEventLargeSizeDeliveryPassScreen}
                 options={{ title: 'Заказать пропуск для крупногабаритных грузов' }}
+            />
+            <Stack.Screen
+                name={'MyEventsGuestPassOrderScreen'}
+                component={MyEventsGuestPassOrderScreen}
+                options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'MyEventsTaxiPassOrderScreen'}
+                component={MyEventsTaxiPassOrderScreen}
+                options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'MyEventChangeProfileAppealScreen'}
+                component={MyEventChangeProfileAppealScreen}
+                options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'MyEventManagementCompanyAppealScreen'}
+                component={MyEventManagementCompanyAppealScreen}
+                update
+                options={{ title: 'Мои события' }}
+            />
+            <Stack.Screen
+                name={'MyResidenceScreen'}
+                component={MyResidenceScreen}
+                options={({ route }) => ({
+                    title: route.params ? route.params.data.projectName : '',
+                })}
             />
         </Stack.Navigator>
     )

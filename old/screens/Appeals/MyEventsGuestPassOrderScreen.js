@@ -2,19 +2,15 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
-import {
-    CalendarButton,
-    Chat,
-    CommentLabel,
-    DefaultButton,
-    Spinner,
-    SplitLine,
-    TimeButton,
-} from '../components/Components'
-import ModalRoot, { openAgreementModal } from '../components/custom/RootModalsComponent'
-
+import CalendarButton from '../../components/buttons/CalendarButton'
+import DefaultButton from '../../components/buttons/DefaultButton'
+import Chat from '../../components/custom/Chat'
+import CommentLabel from '../../components/custom/CommentLabel'
+import ModalRoot from '../../components/custom/RootModalsComponent'
+import Spinner from '../../components/custom/Spinner'
+import SplitLine from '../../components/custom/SplitLine'
+import { Fonts } from '../../utils/Fonts'
 import { APPEAL_STATE_TYPES } from '../../utils/Utils'
-import { Fonts } from '../utils/Fonts'
 import moment from 'moment'
 import shared from 'stonehedge-shared'
 
@@ -22,7 +18,7 @@ const styles = StyleSheet.create({
     label: {
         marginBottom: 24,
         color: '#111111',
-        fontFamily: Fonts.DisplayСompactSemiBold,
+        fontFamily: Fonts.DisplayCompactSemiBold,
         fontSize: 16,
     },
     description: {
@@ -72,7 +68,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textButton: {
-        fontFamily: Fonts.DisplayСompactRegular,
+        fontFamily: Fonts.DisplayCompactRegular,
         fontSize: 16,
     },
 })
@@ -106,7 +102,7 @@ class MyEventsGuestPassOrderScreen extends React.Component {
     }
 
     relevanceButtonClick = () => {
-        openAgreementModal(this.modalRootContext, {
+        ModalRoot.openAgreementModal(this.modalRootContext, {
             message: 'Завершить обращение?',
             onAcceptClicked: this.handleEditAppealRelevance,
         })
@@ -182,7 +178,7 @@ class MyEventsGuestPassOrderScreen extends React.Component {
                             </View>
                             <View style={{ flex: 1, alignItems: 'flex-start' }}>
                                 <CommentLabel text="Время" />
-                                <TimeButton time={moment(data.dateTime).format('HH:mm')} />
+                                {/*<TimeButton time={moment(data.dateTime).format('HH:mm')} />*/}
                             </View>
                         </View>
                         <SplitLine style={styles.splitLine} />
@@ -200,8 +196,8 @@ class MyEventsGuestPassOrderScreen extends React.Component {
                             </>
                         )}
 
-                        {data.guest.map((item) => (
-                            <View>
+                        {data.guest.map((item, index) => (
+                            <View key={index}>
                                 {item.phoneNumber && (
                                     <>
                                         <CommentLabel text="Телефон" />
