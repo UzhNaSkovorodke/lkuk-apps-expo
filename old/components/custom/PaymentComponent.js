@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } f
 import SplitLine from './SplitLine'
 
 import CleaningIcon from '../../../assets/oldImg/Cleaning.png'
-import DrycleaningIcon from '../../../assets/oldImg/Drycleaning.png'
+import DryCleaningIcon from '../../../assets/oldImg/Drycleaning.png'
 import ExclamationMark from '../../../assets/oldImg/ExclamationMark.png'
 import PaidIcon from '../../../assets/oldImg/Paid.png'
 import ParkingIcon from '../../../assets/oldImg/Parking.png'
@@ -216,7 +216,7 @@ export default class extends React.Component {
                 categoryIconStyle = styles.cleaningIcon
                 break
             case 'DRY_CLEANING':
-                categoryIcon = DrycleaningIcon
+                categoryIcon = DryCleaningIcon
                 categoryIconStyle = styles.drycleaningIcon
                 break
             case 'TECHNICAL_SERVICES':

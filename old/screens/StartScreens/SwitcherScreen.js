@@ -32,7 +32,7 @@ const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
             .then(() => fetchProfile())
             .then((res) => {
                 const fio = (res.payload.data.profile && res.payload.data.profile.fio) || ''
-                navigation.navigate('GreetingScreen', { fio })
+                navigation.navigate('PinCodeScreen', { fio })
             })
             .catch((error) => {
                 reportError(error, 'SwitcherScreen/OnCheckLoggedLaunch/auth')

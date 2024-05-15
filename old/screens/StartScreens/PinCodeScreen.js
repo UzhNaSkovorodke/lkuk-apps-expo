@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
 })
+
 class PinCodeScreen extends React.Component {
     optionalConfigObject = {
         title: 'Необходима Авторизация', // Android
@@ -130,14 +131,16 @@ class PinCodeScreen extends React.Component {
             loadedPassword: '',
             maxAttempts: 10,
             modePinCode: '',
-            seccondPassword: '',
+            secondPassword: '',
             touchIdAttempts: 0,
         }
         this.handleBackButton = this.handleBackButton.bind(this)
     }
+
     handleBackButton = () => {
         BackHandler.exitApp()
     }
+
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
         SecureStore.getItemAsync('PinCode').then((isHas) => {
@@ -164,6 +167,7 @@ class PinCodeScreen extends React.Component {
             }
         })
     }
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton)
     }
@@ -183,28 +187,28 @@ class PinCodeScreen extends React.Component {
     }
 
     seccondCreatePassword = (index) => {
-        const { seccondPassword } = this.state
+        const { secondPassword } = this.state
 
         this.setState(
             {
-                countOfEnteredPins: seccondPassword.length + 1,
-                seccondPassword: seccondPassword + index,
+                countOfEnteredPins: secondPassword.length + 1,
+                secondPassword: secondPassword + index,
             },
-            () => this.state.seccondPassword.length === 4 && this.validateCreatedPin()
+            () => this.state.secondPassword.length === 4 && this.validateCreatedPin()
         ) // Импорт state не менять, т.к. метод асинхронный
     }
 
     validateCreatedPin = async () => {
-        const { currentPassword, seccondPassword } = this.state
+        const { currentPassword, secondPassword } = this.state
         const { setError } = this.props
 
-        if (seccondPassword === currentPassword) {
+        if (secondPassword === currentPassword) {
             SecureStore.setItem('PinCode', currentPassword)
             this.onSuccess()
         } else {
             this.setState({
                 currentPassword: '',
-                seccondPassword: '',
+                secondPassword: '',
                 countOfEnteredPins: 0,
             })
             setError([{ message: 'Вы ввели неверный пароль' }])
@@ -235,9 +239,12 @@ class PinCodeScreen extends React.Component {
     onFail = () => {
         const { navigation } = this.props
 
-        // SecureStore.deleteItemAsync('login')
-        // SecureStore.deleteItemAsync('password')
-        // SecureStore.deleteItemAsync('PinCode')
+        SecureStore.deleteItemAsync('login').then(() =>
+            SecureStore.deleteItemAsync('password').then(() =>
+                SecureStore.deleteItemAsync('PinCode')
+            )
+        )
+
         navigation.navigate('SignInScreen')
     }
 
@@ -311,13 +318,13 @@ class PinCodeScreen extends React.Component {
     }
 
     removeButtonOnPress = () => {
-        const { currentPassword, seccondPassword, countOfEnteredPins } = this.state
+        const { currentPassword, secondPassword, countOfEnteredPins } = this.state
 
         if (currentPassword.length === 4) {
-            const removedStr = seccondPassword.slice(0, -1)
+            const removedStr = secondPassword.slice(0, -1)
 
             this.setState({
-                seccondPassword: removedStr !== undefined ? removedStr : '',
+                secondPassword: removedStr !== undefined ? removedStr : '',
             })
         } else {
             const removedStr = currentPassword.slice(0, -1)

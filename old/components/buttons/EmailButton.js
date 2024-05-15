@@ -23,18 +23,16 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class EmailButton extends React.Component {
-    render() {
-        const { mail, style } = this.props
-        return (
-            <TouchableOpacity
-                style={[styles.wrapper, style]}
-                onPress={() => Linking.openURL(`mailto:${mail}`)}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.icon} tintColor="#747E90" source={CallIcon} />
-                    <Text style={styles.text}>{mail}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
+const EmailButton = ({ mail, style }) => {
+    return (
+        <TouchableOpacity
+            style={[styles.wrapper, style]}
+            onPress={() => Linking.openURL(`mailto:${mail}`)}>
+            <View style={{ flexDirection: 'row' }}>
+                <Image style={styles.icon} tintColor="#747E90" source={CallIcon} />
+                <Text style={styles.text}>{mail}</Text>
+            </View>
+        </TouchableOpacity>
+    )
 }
+export default EmailButton

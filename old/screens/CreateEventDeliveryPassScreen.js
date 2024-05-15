@@ -117,7 +117,6 @@ const DeliveryPassScreen = ({ projects, sendPass, setError, setSuccess, navigati
         (deliveryTypeId !== 1 && carData.plateNumber !== undefined && carData.plateNumber !== '')
 
     const onClickedSendButton = () => {
-        console.log(date)
         if (!checkCarData({ carData, deliveryTypeId })) {
             setError([
                 {

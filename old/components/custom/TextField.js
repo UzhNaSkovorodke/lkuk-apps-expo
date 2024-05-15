@@ -1,10 +1,10 @@
-import { TextInputMask } from 'react-native-masked-text'
-
 import React, { Component } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 
 import FloatingLabel from './FloatingLabel'
 import Underline from './Underline'
+
+import { TextInputMask } from 'react-native-masked-text'
 
 const styles = StyleSheet.create({
     wrapper: {

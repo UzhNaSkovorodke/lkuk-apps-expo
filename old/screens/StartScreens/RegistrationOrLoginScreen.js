@@ -1,12 +1,12 @@
+import React from 'react'
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+
 import Stone from '../../../assets/oldImg/Stnhdg.png'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import { Fonts } from '../../utils/Fonts'
 import * as SecureStore from 'expo-secure-store'
 import shared from 'stonehedge-shared'
-
-import React from 'react'
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -60,7 +60,6 @@ class RegistrationOrLoginScreen extends React.Component {
                                 const password = await SecureStore.getItemAsync('password')
 
                                 if (login && password) {
-                                    navigation.navigate('SignInScreen')
                                     auth({ login, password })
                                         .then(() => fetchProfile())
                                         .then((res) => {

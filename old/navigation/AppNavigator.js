@@ -100,22 +100,7 @@ export default function AppNavigator() {
                 component={GreetingScreen}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name={'PinCodeScreen'}
-                component={PinCodeScreen}
-                options={({
-                    route: {
-                        params: { header },
-                    },
-                }) => ({
-                    title: header === 'create' ? 'Создание PIN-кода' : '',
-                    headerTitle:
-                        header === 'enter'
-                            ? () => <Image style={{ height: 30, width: 151 }} source={StoneHedge} />
-                            : undefined,
-                    headerLeft: header === 'enter' ? () => null : undefined,
-                })}
-            />
+            <Stack.Screen name={'PinCodeScreen'} component={PinCodeScreen} />
 
             <Stack.Screen
                 name={'NewsScreen'}

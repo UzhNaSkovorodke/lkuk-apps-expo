@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 })
 
 const ApartmentsSelector = ({
-    appartmentsName,
+    apartmentsName,
     rooms,
     isChecked,
     onSelectCheckBox,
@@ -37,7 +37,7 @@ const ApartmentsSelector = ({
             style={styles.checkBoxStyle}
             onValueChange={onSelectCheckBox}
             value={isChecked}
-            label={appartmentsName}
+            label={apartmentsName}
         />
         {isChecked && (
             <View style={styles.wrapper}>

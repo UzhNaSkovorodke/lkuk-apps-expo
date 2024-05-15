@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import DefaultButton from '../../components/buttons/DefaultButton'
 import TextField from '../../components/custom/TextField'
+import TextFieldNew from '../../components/custom/TextFieldNew'
 import commonStyles from '../../styles/CommonStyles'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
@@ -46,6 +47,8 @@ const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
                     value={oldPassword}
                     secureTextEntry
                 />
+
+                <TextFieldNew placeholder="Текущий пароль" secureTextEntry />
 
                 <TextField
                     label="Новый пароль"

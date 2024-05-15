@@ -80,10 +80,6 @@ const styles = StyleSheet.create({
         height: 5,
         marginLeft: 2,
     },
-    delimeter: {
-        marginTop: 25,
-        marginBottom: 34,
-    },
     buttons: {
         width: '100%',
         marginBottom: 29,

@@ -52,7 +52,6 @@ const ProfileScreen = ({ navigation, profile, logoutProfile, editProfile, setErr
         }
 
         const result = await ImagePicker.launchImageLibraryAsync(options)
-        console.log(result)
         if (!result.cancelled) {
             setIsAvatarLoading(true)
             setProfileAvatarUri(result.assets[0].uri)

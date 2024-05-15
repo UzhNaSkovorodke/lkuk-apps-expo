@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class PhoneButton extends React.Component {
-    onCallButtonPress(phone) {
+const PhoneButton = ({ number, style }) => {
+    const onCallButtonPress = (phone) => {
         const args = {
             number: phone,
         }
@@ -35,17 +35,13 @@ export default class PhoneButton extends React.Component {
         // call(args).catch((error) => reportError(error, 'PhoneButton'))
     }
 
-    render() {
-        const { number, style } = this.props
-        return (
-            <TouchableOpacity
-                style={[styles.wrapper, style]}
-                onPress={() => this.onCallButtonPress(number)}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.icon} tintColor="#747E90" source={CallIcon} />
-                    <Text style={styles.text}>{number}</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
+    return (
+        <TouchableOpacity style={[styles.wrapper, style]} onPress={() => onCallButtonPress(number)}>
+            <View style={{ flexDirection: 'row' }}>
+                <Image style={styles.icon} tintColor="#747E90" source={CallIcon} />
+                <Text style={styles.text}>{number}</Text>
+            </View>
+        </TouchableOpacity>
+    )
 }
+export default PhoneButton

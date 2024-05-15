@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import PropTypes from 'prop-types'
@@ -23,92 +23,47 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class CircleCheckBox extends React.Component {
-    static propTypes = {
-        checked: PropTypes.bool,
-        label: PropTypes.string,
-        outerSize: PropTypes.number,
-        filterSize: PropTypes.number,
-        innerSize: PropTypes.number,
-        outerColor: PropTypes.string,
-        filterColor: PropTypes.string,
-        innerColor: PropTypes.string,
-        onToggle: PropTypes.func.isRequired,
-        labelPosition: PropTypes.oneOf([LABEL_POSITION.RIGHT, LABEL_POSITION.LEFT]),
-        // styleCheckboxContainer: ViewPropTypes.style.isRequired,
+const CircleCheckBox = ({
+    checked = false,
+    label = '',
+    filterSize = 12.5,
+    innerSize = 8,
+    filterColor = '#FFFFFF',
+    innerColor = '#747E90',
+    outerColor = '#747E90',
+    onToggle,
+    labelPosition = LABEL_POSITION.RIGHT,
+    styleCheckboxContainer,
+    styleLabel,
+}) => {
+    const customStyle = {
+        circleFilterStyle: {
+            width: filterSize,
+            height: filterSize,
+            backgroundColor: filterColor,
+            borderRadius: filterSize / 2,
+            borderWidth: 1,
+            borderColor: outerColor,
+        },
+        circleInnerStyle: {
+            width: innerSize,
+            height: innerSize,
+            backgroundColor: innerColor,
+            borderRadius: innerSize / 2,
+        },
     }
 
-    static defaultProps = {
-        checked: false,
-        outerSize: 12,
-        filterSize: 23,
-        innerSize: 6,
-        outerColor: '#747E90',
-        filterColor: '#FFFFFF',
-        innerColor: '#747E90',
-        label: '',
-        labelPosition: LABEL_POSITION.RIGHT,
-        styleLabel: {},
-    }
-
-    constructor(props) {
-        super(props)
-        const outerSize =
-            parseInt(props.outerSize, 10) < 10 || Number.isNaN(parseInt(props.outerSize, 10))
-                ? 10
-                : parseInt(props.outerSize, 10)
-        const filterSize =
-            parseInt(props.filterSize, 10) > outerSize + 3 ||
-            Number.isNaN(parseInt(props.filterSize, 10))
-                ? outerSize - 3
-                : parseInt(props.filterSize, 10)
-        const innerSize =
-            parseInt(props.innerSize, 10) > filterSize + 5 ||
-            Number.isNaN(parseInt(props.innerSize, 10))
-                ? filterSize - 5
-                : parseInt(props.innerSize, 10)
-
-        const customStyle = StyleSheet.create({
-            circleOuterStyle: {
-                width: outerSize,
-                height: outerSize,
-                backgroundColor: props.outerColor,
-                borderRadius: outerSize / 2,
-            },
-            circleFilterStyle: {
-                width: filterSize,
-                height: filterSize,
-                backgroundColor: props.filterColor,
-                borderRadius: filterSize / 2,
-            },
-            circleInnerStyle: {
-                width: innerSize,
-                height: innerSize,
-                backgroundColor: props.innerColor,
-                borderRadius: innerSize / 2,
-            },
-        })
-
-        this.state = {
-            customStyle,
-        }
-    }
-
-    onToggle = () => {
-        const { onToggle, checked } = this.props
+    const toggleCheckBox = () => {
         if (onToggle) {
             onToggle(!checked)
         }
     }
 
-    renderInner() {
-        const { checked } = this.props
-        const { customStyle } = this.state
+    const renderInner = () => {
         return checked ? <View style={customStyle.circleInnerStyle} /> : <View />
     }
 
-    renderLabel(position) {
-        const { label, labelPosition, styleLabel } = this.props
+    const renderLabel = (position) => {
         return label.length > 0 && position === labelPosition ? (
             <Text style={[styles.checkBoxLabel, styleLabel]}>{label}</Text>
         ) : (
@@ -116,21 +71,32 @@ export default class CircleCheckBox extends React.Component {
         )
     }
 
-    render() {
-        const { styleCheckboxContainer } = this.props
-        const { customStyle } = this.state
-        return (
-            <TouchableOpacity onPress={this.onToggle}>
-                <View style={[styles.checkBoxContainer, styleCheckboxContainer]}>
-                    {this.renderLabel(LABEL_POSITION.LEFT)}
-                    <View style={[styles.alignStyle, customStyle.circleOuterStyle]}>
-                        <View style={[styles.alignStyle, customStyle.circleFilterStyle]}>
-                            {this.renderInner()}
-                        </View>
-                    </View>
-                    {this.renderLabel(LABEL_POSITION.RIGHT)}
+    return (
+        <TouchableOpacity onPress={toggleCheckBox}>
+            <View style={[styles.checkBoxContainer, styleCheckboxContainer]}>
+                {renderLabel(LABEL_POSITION.LEFT)}
+                <View style={[styles.alignStyle, customStyle.circleFilterStyle]}>
+                    {renderInner()}
                 </View>
-            </TouchableOpacity>
-        )
-    }
+                {renderLabel(LABEL_POSITION.RIGHT)}
+            </View>
+        </TouchableOpacity>
+    )
 }
+
+CircleCheckBox.propTypes = {
+    checked: PropTypes.bool,
+    label: PropTypes.string,
+    outerSize: PropTypes.number,
+    filterSize: PropTypes.number,
+    innerSize: PropTypes.number,
+    outerColor: PropTypes.string,
+    filterColor: PropTypes.string,
+    innerColor: PropTypes.string,
+    onToggle: PropTypes.func.isRequired,
+    labelPosition: PropTypes.oneOf([LABEL_POSITION.RIGHT, LABEL_POSITION.LEFT]),
+    styleCheckboxContainer: PropTypes.object, // Вместо ViewPropTypes.style
+    styleLabel: PropTypes.object,
+}
+
+export default CircleCheckBox

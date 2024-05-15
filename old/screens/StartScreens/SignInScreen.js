@@ -133,7 +133,7 @@ function SignInScreen({ navigation, fetchProfile, auth }) {
                     SecureStore.setItemAsync('password', password)
                 }
                 const fio = (res.payload.data.profile && res.payload.data.profile.fio) || ''
-                navigation.navigate(isRememberMe ? 'GreetingScreen' : 'GreetingScreen', {
+                navigation.navigate(isRememberMe ? 'PinCodeScreen' : 'GreetingScreen', {
                     fio,
                 })
             })
