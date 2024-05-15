@@ -140,7 +140,7 @@ const HomeScreen = ({}) => {
                         source={GuestsIcon}
                         imageStyle={styles.guestsIcon}
                         onPress={() => {
-                            navigation.navigate('ProfileScreen')
+                            navigation.navigate('PaymentsScreen')
                         }}
                     />
                     <ButtonWithIcon

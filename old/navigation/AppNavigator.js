@@ -20,6 +20,7 @@ import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoverySc
 import FakeScreen from '../screens/FakeScreen/FakeScreen'
 import MyResidenceScreen from '../screens/MyResidenceScreen'
 import NewsScreen from '../screens/NewsScreen'
+import PaymentsScreen from '../screens/PaymentsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
 import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
 import GreetingScreen from '../screens/StartScreens/GreetingScreen'
@@ -206,6 +207,13 @@ export default function AppNavigator() {
                 component={MyResidenceScreen}
                 options={({ route }) => ({
                     title: route.params ? route.params.data.projectName : '',
+                })}
+            />
+            <Stack.Screen
+                name={'PaymentsScreen'}
+                component={PaymentsScreen}
+                options={({ route: { params }, navigation }) => ({
+                    title: 'Счета',
                 })}
             />
         </Stack.Navigator>

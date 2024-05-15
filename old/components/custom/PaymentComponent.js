@@ -17,7 +17,6 @@ import WaitingPaymentIcon from '../../../assets/oldImg/WaitingPayment.png'
 import WaitingPaymentInvertedIcon from '../../../assets/oldImg/WaitingPaymentInverted.png'
 import { Fonts } from '../../utils/Fonts'
 import { normalizePrice } from '../../utils/Utils'
-import ShadowBox from 'react-native-simple-shadow-view'
 import { SwipeRow } from 'react-native-swipe-list-view'
 
 const styles = StyleSheet.create({
@@ -65,24 +64,24 @@ const styles = StyleSheet.create({
     label: {
         marginBottom: 3,
         color: '#111111',
-        fontFamily: Fonts.DisplayСompactSemiBold,
+        fontFamily: Fonts.DisplayCompactSemiBold,
         fontSize: 16,
     },
     category: {
         color: '#8E97A8',
-        fontFamily: Fonts.DisplayСompactLight,
+        fontFamily: Fonts.DisplayCompactLight,
         fontSize: 12,
     },
     price: {
         marginBottom: 3,
         color: '#111111',
-        fontFamily: Fonts.DisplayСompactSemiBold,
+        fontFamily: Fonts.DisplayCompactSemiBold,
         fontSize: 16,
         textAlign: 'right',
     },
     date: {
         color: '#8E97A8',
-        fontFamily: Fonts.DisplayСompactLight,
+        fontFamily: Fonts.DisplayCompactLight,
         fontSize: 12,
         textAlign: 'right',
     },
@@ -278,7 +277,7 @@ export default class extends React.Component {
         const categoryName = isUtilityItem ? 'Задолженность по л/с' : category.name
 
         return (
-            <ShadowBox style={styles.cell}>
+            <View style={styles.cell}>
                 <View>
                     <SwipeRow
                         disableRightSwipe
@@ -373,7 +372,7 @@ export default class extends React.Component {
                         </TouchableHighlight>
                     </SwipeRow>
                 </View>
-            </ShadowBox>
+            </View>
         )
     }
 }
