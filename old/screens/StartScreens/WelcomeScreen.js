@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Dimensions, ImageBackground, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { Dimensions, ImageBackground, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import Image1 from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeDefault.png'
 import FirstWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/FirstWelcomeIphoneX.png'
@@ -10,22 +10,19 @@ import SecondWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/SecondWel
 import Image3 from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeDefault.png'
 import ThirdWelcomeIphoneX from '../../../assets/oldImg/WelcomeScreen/ThirdWelcomeIphoneX.png'
 import reportError from '../../utils/ReportError'
-import Timer from '../../utils/Timer'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import ProgressBarAnimated from 'react-native-progress-bar-animated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Swiper from 'react-native-swiper'
 
 const { width, height } = Dimensions.get('window')
-const { height: screenHeight } = Dimensions.get('screen')
-const isLongScreen = height / width > 2 // для Iphone X, huawei p20 ..
+const isLongScreen = height / width > 2
 
-const styles = {
+const styles = StyleSheet.create({
     startButton: {
         borderRadius: 26,
         backgroundColor: '#747E90',
         marginBottom: (((height / 100) * 95) / 100) * 16,
-        marginRight: width / 18, // динамический отступ от правого края
+        marginRight: width / 18,
         width: 103,
         height: 40,
         justifyContent: 'center',
@@ -38,6 +35,7 @@ const styles = {
         flex: 1,
         height: '100%',
         backgroundColor: '#E6E6E6',
+        position: 'relative',
     },
     slide: {
         flex: 1,
@@ -62,177 +60,84 @@ const styles = {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
     },
-    dotsContainer: {
-        marginHorizontal: 5,
-        backgroundColor: '#BBBBBB',
-        borderRadius: 4,
+    wrapper: {},
+    pagination: {
+        position: 'absolute',
+        top: -(height / 1.15),
     },
-}
+    dot: {
+        backgroundColor: '#BBBBBB',
+        width: '20%',
+        height: 4,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3,
+        top: 0,
+    },
+    activeDot: {
+        backgroundColor: '#FFFFFF',
+        width: '20%',
+        height: 4,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3,
+        top: 0,
+    },
+})
 
-export default class WelcomeScreen extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            progress: 0,
-            currentPage: 0,
-        }
-    }
-
-    componentDidMount() {
-        this.timer = new Timer(this.increase, 500) // задержка для прогрузки картинок
-    }
-
-    onButtonClicked = async () => {
-        const { navigation } = this.props
+const WelcomeScreen = ({ navigation }) => {
+    const onButtonClicked = async () => {
         navigation.navigate('RegistrationOrLoginScreen')
         await AsyncStorage.setItem('logged', '1').catch((error) =>
             reportError(error, 'WelcomeScreen/onButtonClicked/setItem')
         )
     }
 
-    increase = () => {
-        const { progress, currentPage } = this.state
-        if (progress === 100) {
-            if (currentPage < 3) {
-                this.swiperRef.scrollBy(1)
-            }
-        } else {
-            this.setState({ progress: progress + 2.5 }, () => {
-                this.timer = new Timer(() => this.increase(), 75)
-            })
-        }
-    }
-
-    onStopCorousel = () => {
-        this.timer.pause()
-    }
-
-    onResumeCorousel = () => {
-        this.timer.resume()
-    }
-
-    render() {
-        const { progress } = this.state
-
-        return (
-            <SafeAreaView style={styles.container}>
-                <Swiper
-                    ref={(ref) => {
-                        this.swiperRef = ref
-                    }}
-                    onIndexChanged={(currentPage) => {
-                        this.timer.pause()
-                        this.setState({ progress: 0, currentPage }, () => {
-                            this.increase()
-                        })
-                    }}
-                    onTouchStart={this.onStopCorousel}
-                    onTouchEnd={this.onResumeCorousel}
-                    height={height}
-                    loop={false}
-                    paginationStyle={{
-                        bottom: height * 0.95,
-                    }}
-                    containerStyle={{
-                        justifyContent: 'flex-start',
-                        textAlign: 'flex-start',
-                    }}
-                    dot={
-                        <View style={styles.dotsContainer}>
-                            <ProgressBarAnimated
-                                barAnimationDuration={1}
-                                borderWidth={0}
-                                height={3}
-                                width={width / 5}
-                                value={0}
-                                backgroundColor="#FFFFFF"
-                            />
-                        </View>
-                    }
-                    activeDot={
-                        <View style={styles.dotsContainer}>
-                            <ProgressBarAnimated
-                                borderWidth={0}
-                                backgroundColor="#FFFFFF"
-                                height={3}
-                                width={width / 5}
-                                barAnimationDuration={125}
-                                value={progress}
-                            />
-                        </View>
-                    }>
-                    <View style={styles.slide}>
+    return (
+        <SafeAreaView style={styles.container}>
+            <Swiper
+                style={styles.wrapper}
+                showsButtons={false}
+                loop={true}
+                autoplay={true}
+                autoplayTimeout={5}
+                dot={<View style={styles.dot} />}
+                activeDot={<View style={styles.activeDot} />}
+                paginationStyle={styles.pagination}>
+                {[Image1, Image2, Image3, Image4].map((image, index) => (
+                    <View style={styles.slide} key={index}>
                         <TouchableOpacity
                             style={styles.wrapperImg}
                             activeOpacity={1}
                             delayPressIn={0}>
                             <ImageBackground
                                 style={styles.image}
-                                source={isLongScreen ? FirstWelcomeIphoneX : Image1}>
+                                source={
+                                    isLongScreen
+                                        ? [
+                                              FirstWelcomeIphoneX,
+                                              SecondWelcomeIphoneX,
+                                              ThirdWelcomeIphoneX,
+                                              ForthWelcomeIphoneX,
+                                          ][index]
+                                        : image
+                                }>
                                 <TouchableOpacity
                                     style={styles.startButton}
-                                    onPress={this.onButtonClicked}>
+                                    onPress={onButtonClicked}>
                                     <Text style={styles.textStartButton}>Начать</Text>
                                 </TouchableOpacity>
                             </ImageBackground>
                         </TouchableOpacity>
                     </View>
-
-                    <View style={styles.slide}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            delayPressIn={0}
-                            style={styles.wrapperImg}
-                            delayPressOut={0}>
-                            <ImageBackground
-                                style={styles.image}
-                                source={isLongScreen ? SecondWelcomeIphoneX : Image2}>
-                                <TouchableOpacity
-                                    style={styles.startButton}
-                                    onPress={this.onButtonClicked}>
-                                    <Text style={styles.textStartButton}>Начать</Text>
-                                </TouchableOpacity>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.slide}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            delayPressIn={0}
-                            style={styles.wrapperImg}
-                            delayPressOut={0}>
-                            <ImageBackground
-                                style={styles.image}
-                                source={isLongScreen ? ThirdWelcomeIphoneX : Image3}>
-                                <TouchableOpacity
-                                    style={styles.startButton}
-                                    onPress={this.onButtonClicked}>
-                                    <Text style={styles.textStartButton}>Начать</Text>
-                                </TouchableOpacity>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.slide}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            style={styles.wrapperImg}
-                            delayPressIn={0}
-                            delayPressOut={0}>
-                            <ImageBackground
-                                style={styles.image}
-                                source={isLongScreen ? ForthWelcomeIphoneX : Image4}>
-                                <TouchableOpacity
-                                    style={styles.startButton}
-                                    onPress={this.onButtonClicked}>
-                                    <Text style={styles.textStartButton}>Начать</Text>
-                                </TouchableOpacity>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                    </View>
-                </Swiper>
-            </SafeAreaView>
-        )
-    }
+                ))}
+            </Swiper>
+        </SafeAreaView>
+    )
 }
+
+export default WelcomeScreen
