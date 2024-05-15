@@ -1,12 +1,13 @@
+import React from 'react'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+
 import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
+import { useFocusEffect } from '@react-navigation/native'
 import shared from 'stonehedge-shared'
-
-import React, { useEffect } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
     container: {
@@ -62,9 +63,11 @@ const GreetingScreen = ({
             })
     }
 
-    useEffect(() => {
-        loadAllDict()
-    }, [loadAllDict])
+    useFocusEffect(
+        React.useCallback(() => {
+            loadAllDict()
+        }, [])
+    )
 
     const getTimeTitle = () => {
         const hours = new Date().getHours()
