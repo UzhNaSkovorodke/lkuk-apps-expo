@@ -1,14 +1,21 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import StoneHedge from '../../assets/oldImg/StoneHedge.png'
+import AppealsIcon from '../../assets/oldImg/Appeals.png'
+import BackArrowIcon from '../../assets/oldImg/BackArrow.png'
+import EstateIcon from '../../assets/oldImg/Estate.png'
+import Filter from '../../assets/oldImg/Filter.png'
+import HomeIcon from '../../assets/oldImg/Home.png'
+import ProfileIcon from '../../assets/oldImg/Profile.png'
 
 import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
+import AppealsScreen from '../screens/Appeals/AppealsScreen'
 import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
 import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
 import MyEventManagementCompanyAppealScreen from '../screens/Appeals/MyEventManagementCompanyAppealScreen'
 import MyEventsGuestPassOrderScreen from '../screens/Appeals/MyEventsGuestPassOrderScreen'
 import MyEventsTaxiPassOrderScreen from '../screens/Appeals/MyEventsTaxiPassOrderScreen'
+import BillPaymentScreen from '../screens/BillPaymentScreen'
 import CreateEventBuildingDeliveryPassScreen from '../screens/CreateEventBuildingDeliveryPassScreen'
 import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScreen'
 import CreateEventGuestPassOrderScreen from '../screens/CreateEventGuestPassOrderScreen'
@@ -18,10 +25,14 @@ import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
 import FakeScreen from '../screens/FakeScreen/FakeScreen'
+import HomeScreen from '../screens/HomeScreen'
 import MyResidenceScreen from '../screens/MyResidenceScreen'
 import NewsScreen from '../screens/NewsScreen'
+import PaymentStatementScreen from '../screens/PaymentStatemetScreen'
 import PaymentsScreen from '../screens/PaymentsScreen'
 import PdfViewScreen from '../screens/PdfViewScreen'
+import ProfileScreen from '../screens/ProfileScreen'
+import ResidenceScreen from '../screens/ResidenceScreen'
 import SelectPassOrderScreen from '../screens/SelectPassOrderScreen'
 import GreetingScreen from '../screens/StartScreens/GreetingScreen'
 import PinCodeScreen from '../screens/StartScreens/PinCodeScreen'
@@ -31,27 +42,159 @@ import SwitcherScreen from '../screens/StartScreens/SwitcherScreen'
 import UpdateAppScreen from '../screens/StartScreens/UpdateAppScreen'
 import WelcomeScreen from '../screens/StartScreens/WelcomeScreen'
 
+import BackImage from '../components/buttons/BackImage'
 import ItemSelectionScreen from '../components/custom/ItemSelectionScreen'
 
-import TabNavigator from './TabNavigator'
-
 import { Fonts } from '../utils/Fonts'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { TransitionPresets } from '@react-navigation/stack'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
+    tabBarLabelStyle: {
+        fontFamily: Fonts.TextRegular,
+        fontSize: 11,
+    },
     headerStyle: {
-        height: 56,
+        height: Platform.OS === 'ios' ? 100 : 56,
+        backgroundColor: Platform.OS === 'ios' ? '#f2f2f2' : 'transparent',
         elevation: 0,
+    },
+    tabHeaderTitleStyle: {
+        color: '#111111',
+        fontFamily: Fonts.DisplayBold,
+        fontSize: 18,
     },
     appHeaderTitleStyle: {
         color: '#111111',
         fontFamily: Fonts.DisplayRegular,
         fontSize: 14,
     },
+    homeIcon: {
+        width: 20.93,
+        height: 18.21,
+    },
+    estateIcon: {
+        width: 24.62,
+        height: 13.17,
+        transform: [{ rotate: '-45deg' }],
+    },
+    appealsIcon: {
+        width: 20.1,
+        height: 19.7,
+    },
+    profileIcon: {
+        width: 15.61,
+        height: 19.37,
+    },
+    filter: {
+        width: 20,
+        height: 20,
+        marginEnd: 20,
+        tintColor: '#111111',
+    },
+    title: {
+        marginLeft: 16,
+        color: '#111111',
+        fontFamily: Fonts.DisplayBold,
+        fontSize: 18,
+    },
+
+    headerContainer: {
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    },
+    headerTitle: {
+        fontFamily: Fonts.DisplayRegular,
+        fontSize: 14,
+    },
+    headerDescription: {
+        alignSelf: 'center',
+        color: '#747E90',
+        fontFamily: Fonts.DisplayCompactLight,
+        fontSize: 12,
+    },
 })
 
 const Stack = createNativeStackNavigator()
+
+function TabNavigator() {
+    const Tab = createBottomTabNavigator()
+
+    const { bottom } = useSafeAreaInsets()
+    return (
+        <Tab.Navigator
+            initialRouteName="HomeScreen"
+            screenOptions={{
+                gestureEnabled: false,
+                headerBackTitleVisible: false,
+                //headerRight: NotificationsButton,
+                headerStyle,
+                headerTitleStyle: styles.tabHeaderTitleStyle,
+                tabBarActiveTintColor: '#101010',
+                tabBarInactiveTintColor: '#747E90',
+                tabBarLabelStyle,
+                tabBarStyle: { paddingBottom: bottom + 4 },
+                ...TransitionPresets.ScaleFromCenterAndroid,
+            }}>
+            <Tab.Screen
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{
+                    title: '',
+                    tabBarLabel: 'Главная',
+                    tabBarIcon: ({ color: tintColor }) => (
+                        <Image style={[styles.homeIcon, { tintColor }]} source={HomeIcon} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="ResidenceScreen"
+                component={ResidenceScreen}
+                options={{
+                    title: 'Управление недвижимостью',
+                    tabBarLabel: 'Недвижимость',
+                    tabBarIcon: ({ color: tintColor }) => (
+                        <Image style={[styles.estateIcon, { tintColor }]} source={EstateIcon} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="AppealsScreen"
+                component={AppealsScreen}
+                options={({ route: { params }, navigation: { navigate } }) => ({
+                    title: 'Обращения',
+                    tabBarLabel: 'Обращения',
+                    tabBarIcon: ({ color: tintColor }) => (
+                        <Image style={[styles.appealsIcon, { tintColor }]} source={AppealsIcon} />
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigate('AppealsFilterScreen', {
+                                    filter: params?.filter || {},
+                                })
+                            }>
+                            <Image style={styles.filter} source={Filter} />
+                        </TouchableOpacity>
+                    ),
+                })}
+            />
+            <Tab.Screen
+                name="ProfileScreen"
+                component={ProfileScreen}
+                options={{
+                    title: 'Профиль',
+                    tabBarLabel: 'Профиль',
+                    tabBarIcon: ({ color: tintColor }) => (
+                        <Image style={[styles.profileIcon, { tintColor }]} source={ProfileIcon} />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    )
+}
 
 export default function AppNavigator() {
     return (
@@ -59,11 +202,13 @@ export default function AppNavigator() {
             initialRouteName="SwitcherScreen"
             screenOptions={{
                 gestureEnabled: false,
+                headerBackImage: () => (
+                    <BackImage width={21.33} height={16} source={BackArrowIcon} />
+                ),
                 headerBackTitleVisible: false,
-                headerStyle,
+                headerStyle: headerStyle,
                 headerTitleAlign: 'center',
                 headerTitleStyle: styles.appHeaderTitleStyle,
-                tabBarStyle: { paddingBottom: 10 + 4 },
                 ...TransitionPresets.ScaleFromCenterAndroid,
             }}>
             <Stack.Screen
@@ -101,7 +246,11 @@ export default function AppNavigator() {
                 component={GreetingScreen}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen name={'PinCodeScreen'} component={PinCodeScreen} />
+            <Stack.Screen
+                name={'PinCodeScreen'}
+                component={PinCodeScreen}
+                options={{ headerShown: false }}
+            />
 
             <Stack.Screen
                 name={'NewsScreen'}
@@ -214,6 +363,23 @@ export default function AppNavigator() {
                 component={PaymentsScreen}
                 options={({ route: { params }, navigation }) => ({
                     title: 'Счета',
+                })}
+            />
+            <Stack.Screen
+                name={'BillPaymentScreen'}
+                component={BillPaymentScreen}
+                options={{ title: 'Оплата услуги' }}
+            />
+            <Stack.Screen
+                name={'PaymentStatementScreen'}
+                component={PaymentStatementScreen}
+                options={({ route }) => ({
+                    headerTitle: () => (
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.headerTitle}>Выписка по л/с</Text>
+                            <Text style={styles.headerDescription}>{route.params.roomName}</Text>
+                        </View>
+                    ),
                 })}
             />
         </Stack.Navigator>

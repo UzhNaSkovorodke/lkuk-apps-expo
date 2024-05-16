@@ -10,7 +10,7 @@ const BackImage = ({ width, height, source }) => {
                     height,
                     tintColor: '#434851',
                 }}
-                source={source}
+                source={source ?? undefined}
             />
         </View>
     )

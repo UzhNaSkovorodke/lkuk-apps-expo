@@ -146,8 +146,10 @@ const EditablePaymentLabel = ({
             })
         }
 
-        Keyboard.addListener('keyboardDidHide', handleAcceptValue)
-        return () => Keyboard.removeListener('keyboardDidHide', handleAcceptValue)
+        const showSubscription = Keyboard.addListener('keyboardDidHide', handleAcceptValue)
+        return () => {
+            showSubscription.remove()
+        }
     }, [handleRejectValue, onAccept])
 
     return (

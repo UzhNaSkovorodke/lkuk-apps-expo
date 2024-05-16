@@ -112,7 +112,6 @@ function SignInScreen({ navigation, fetchProfile, auth }) {
 
     const signIn = () => {
         setIsProgress(true)
-
         auth({ login, password })
             .then(() => {
                 SecureStore.getItemAsync('login')

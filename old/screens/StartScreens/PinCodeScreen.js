@@ -145,13 +145,15 @@ class PinCodeScreen extends React.Component {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
         SecureStore.getItemAsync('PinCode').then((isHas) => {
             if (isHas) {
-                TouchId.isSupported().then((type) => {
-                    if (type === 'TouchID' || type === true) {
-                        this.setState({ isTouchId: true }, () => this.onTouchIdPressed())
-                    } else if (type === 'FaceID') {
-                        this.setState({ isFaceId: true }, () => this.onTouchIdPressed())
-                    }
-                })
+                TouchId.isSupported()
+                    .then((type) => {
+                        if (type === 'TouchID' || type === true) {
+                            this.setState({ isTouchId: true }, () => this.onTouchIdPressed())
+                        } else if (type === 'FaceID') {
+                            this.setState({ isFaceId: true }, () => this.onTouchIdPressed())
+                        }
+                    })
+                    .catch((e) => console.log(e))
 
                 SecureStore.getItemAsync('PinCode').then((res) => {
                     this.setState({ modePinCode: 'enter', loadedPassword: res })
@@ -186,7 +188,7 @@ class PinCodeScreen extends React.Component {
         ) // Задержка перед очисткой, Импорт state не менять, т.к. метод асинхронный
     }
 
-    seccondCreatePassword = (index) => {
+    secondCreatePassword = (index) => {
         const { secondPassword } = this.state
 
         this.setState(
@@ -239,11 +241,9 @@ class PinCodeScreen extends React.Component {
     onFail = () => {
         const { navigation } = this.props
 
-        SecureStore.deleteItemAsync('login').then(() =>
-            SecureStore.deleteItemAsync('password').then(() =>
-                SecureStore.deleteItemAsync('PinCode')
-            )
-        )
+        SecureStore.deleteItemAsync('login')
+        SecureStore.deleteItemAsync('password')
+        SecureStore.deleteItemAsync('PinCode')
 
         navigation.navigate('SignInScreen')
     }
@@ -285,7 +285,7 @@ class PinCodeScreen extends React.Component {
 
     createPinOnPressButton = (index) =>
         this.state.currentPassword.length === 4
-            ? this.seccondCreatePassword(index)
+            ? this.secondCreatePassword(index)
             : this.firstCreatePassword(index)
 
     onTouchIdPressed = () => {
