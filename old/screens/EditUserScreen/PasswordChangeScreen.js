@@ -48,7 +48,7 @@ const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
                     secureTextEntry
                 />
 
-                <TextFieldNew placeholder="Текущий пароль" secureTextEntry />
+                {/*<TextFieldNew placeholder="Текущий пароль" secureTextEntry />*/}
 
                 <TextField
                     label="Новый пароль"

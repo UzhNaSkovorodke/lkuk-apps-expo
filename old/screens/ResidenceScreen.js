@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 12,
         backgroundColor: '#FFFFFF',
-        borderRadius: 3,
+        borderRadius: 8,
         marginHorizontal: 16,
         shadowColor: '#B7B7B7',
         shadowOpacity: 0.2,
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
     },
     residenceImage: {
         width: '100%',
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
     },
     button: {
-        borderRadius: 3,
+        borderRadius: 8,
     },
     buttonView: {
         backgroundColor: '#FFFFFF',

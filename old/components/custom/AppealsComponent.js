@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     cell: {
         marginBottom: 16,
         backgroundColor: '#FFFFFF',
-        borderRadius: 3,
+        borderRadius: 8,
         shadowColor: '#B7B7B7',
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         paddingBottom: 13,
         backgroundColor: '#FFFFFF',
-        borderRadius: 3,
+        borderRadius: 8,
         paddingHorizontal: 16,
     },
     statusWrapper: {

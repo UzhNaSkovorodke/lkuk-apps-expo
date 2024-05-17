@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#8E97A8',
     },
     input: {
-        top: Platform.OS === 'ios' ? -4 : 10,
+        top: Platform.OS === 'ios' ? -4 : 0,
+        left: 2,
         width: '100%',
     },
     disabledSendButton: {

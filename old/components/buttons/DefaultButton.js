@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: 30,
         backgroundColor: '#747E90',
-        borderRadius: 3,
+        borderRadius: 10,
         shadowColor: '#8E97A8',
         shadowOpacity: 0.35,
         shadowRadius: 4,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderRadius: 3,
+        borderRadius: 10,
     },
     defaultWrapperColor: {
         backgroundColor: '#747E90',

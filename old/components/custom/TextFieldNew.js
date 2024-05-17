@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Animated, StyleSheet, TextInput, View } from 'react-native'
 
 const TextFieldNew = ({
+    value,
+    setValue,
     placeholder = '',
     keyboardType = 'default',
     isBorderBot = true,
     ...props
 }) => {
-    const [value, onChangeValue] = useState(props?.value)
     const [isFocused, setIsFocused] = useState(false)
     const fontSize = useRef(new Animated.Value(14)).current
     const top = useRef(new Animated.Value(30)).current
@@ -51,7 +52,7 @@ const TextFieldNew = ({
         <View style={styles.root}>
             <TextInput
                 style={[styles.input, isBorderBot ? styles.borderBot : '']}
-                onChangeText={onChangeValue}
+                onChangeText={setValue}
                 value={value}
                 keyboardType={keyboardType}
                 secureTextEntry

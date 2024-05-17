@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -6,14 +6,12 @@ import CalendarButton from '../components/buttons/CalendarButton'
 import DefaultButton from '../components/buttons/DefaultButton'
 import ResidenceButton from '../components/buttons/ResidenceButton'
 import RoundButton from '../components/buttons/RoundButton'
-import TimeButton from '../components/buttons/TimeButton'
 import CommentLabel from '../components/custom/CommentLabel'
 import SplitLine from '../components/custom/SplitLine'
 import TextField from '../components/custom/TextField'
 
 import commonStyles from '../styles/CommonStyles'
 import reportError from '../utils/ReportError'
-import { getTime } from '../utils/Utils'
 import moment from 'moment'
 // import DatePicker from 'react-native-date-picker'
 import Modal from 'react-native-modalbox'
@@ -303,7 +301,7 @@ const DeliveryPassScreen = ({ projects, sendPass, setError, setSuccess, navigati
                         }}
                         onChangeText={(text) => {
                             const comment = text.replace(/(\r\n|\n|\r)/gm, '\\n')
-                            this.setState({ comment })
+                            setComment(comment)
                         }}
                         autoCapitalize="sentences"
                         multiline

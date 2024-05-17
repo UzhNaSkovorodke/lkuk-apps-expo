@@ -8,7 +8,9 @@ import Filter from '../../assets/oldImg/Filter.png'
 import HomeIcon from '../../assets/oldImg/Home.png'
 import ProfileIcon from '../../assets/oldImg/Profile.png'
 
+import AdditionalServicesScreen from '../screens/AdditionalServicesScreen'
 import AppealCreateScreen from '../screens/Appeals/AppealCreateScreen'
+import AppealsFilterScreen from '../screens/Appeals/AppealsFilterScreen'
 import AppealsScreen from '../screens/Appeals/AppealsScreen'
 import EventAppealScreen from '../screens/Appeals/EventAppealScreen'
 import MyEventChangeProfileAppealScreen from '../screens/Appeals/MyEventChangeProfileAppealScreen'
@@ -21,6 +23,7 @@ import CreateEventDeliveryPassScreen from '../screens/CreateEventDeliveryPassScr
 import CreateEventGuestPassOrderScreen from '../screens/CreateEventGuestPassOrderScreen'
 import CreateEventLargeSizeDeliveryPassScreen from '../screens/CreateEventLargeSizeDeliveryPassScreen'
 import CreateEventTaxiPassOrderScreen from '../screens/CreateEventTaxiPassOrderScreen'
+import DocumentsScreen from '../screens/DocumentsScreen'
 import EditProfileScreen from '../screens/EditUserScreen/EditProfileScreen'
 import PasswordChangeScreen from '../screens/EditUserScreen/PasswordChangeScreen'
 import PasswordRecoveryScreen from '../screens/EditUserScreen/PasswordRecoveryScreen'
@@ -58,7 +61,7 @@ const { tabBarLabelStyle, headerStyle, ...styles } = StyleSheet.create({
     },
     headerStyle: {
         height: Platform.OS === 'ios' ? 100 : 56,
-        backgroundColor: Platform.OS === 'ios' ? '#f2f2f2' : 'transparent',
+        backgroundColor: Platform.OS === 'ios' ? '#F7F7F9' : '#F7F7F9',
         elevation: 0,
     },
     tabHeaderTitleStyle: {
@@ -381,6 +384,21 @@ export default function AppNavigator() {
                         </View>
                     ),
                 })}
+            />
+            <Stack.Screen
+                name={'AppealsFilterScreen'}
+                component={AppealsFilterScreen}
+                options={{ title: 'Фильтры' }}
+            />
+            <Stack.Screen
+                name={'AdditionalServicesScreen'}
+                component={AdditionalServicesScreen}
+                options={{ title: 'Дополнительные услуги' }}
+            />
+            <Stack.Screen
+                name={'DocumentsScreen'}
+                component={DocumentsScreen}
+                options={{ title: 'Документы' }}
             />
         </Stack.Navigator>
     )

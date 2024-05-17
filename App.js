@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import ModalRoot from './old/components/custom/RootModalsComponent'
 import AppNavigator from './old/navigation/AppNavigator'
 
-import { NavigationContainer } from '@react-navigation/native'
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import shared from 'stonehedge-shared'
@@ -39,7 +39,14 @@ export default function App() {
             </SafeAreaView>
 
             <SafeAreaProvider>
-                <NavigationContainer>
+                <NavigationContainer
+                    theme={{
+                        ...DefaultTheme,
+                        colors: {
+                            ...DefaultTheme.colors,
+                            background: '#F7F7F9',
+                        },
+                    }}>
                     <Provider store={shared.store}>
                         <ModalRoot.RootModalsComponent>
                             <AppNavigator />

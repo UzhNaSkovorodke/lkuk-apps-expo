@@ -1,11 +1,20 @@
 import React from 'react'
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+    FlatList,
+    LogBox,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native'
 import { connect } from 'react-redux'
 
+import CheckBox from '../../components/custom/CheckBox'
 import SplitLine from '../../components/custom/SplitLine'
 import { saveOrDeleteElementInArray } from '../../utils/Array'
 import { Fonts } from '../../utils/Fonts'
-import { CheckBox } from 'react-native-web'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const styles = StyleSheet.create({
     title: {
@@ -111,8 +120,12 @@ class AppealsFilterScreen extends React.Component {
         )
     }
 
+    componentDidMount() {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested'])
+    }
+
     render() {
-        const { navigation, appealTypes } = this.props
+        const { appealTypes } = this.props
         const { filter } = this.state
         const { startAt, endAt } = filter
         return (
@@ -195,17 +208,6 @@ class AppealsFilterScreen extends React.Component {
                     <SplitLine style={styles.splitLine} />
 
                     <Text style={styles.title}>Дата</Text>
-                    {/*<CalendarButton*/}
-                    {/*    style={styles.calendarButton}*/}
-                    {/*    currentMode={`${moment(startAt).format('DD MMMM YYYY')} - ${moment(*/}
-                    {/*        endAt*/}
-                    {/*    ).format('DD MMMM YYYY')}`}*/}
-                    {/*    onPress={() =>*/}
-                    {/*        navigation.navigate('CalendarScreen', {*/}
-                    {/*            onSetDate: this.onSetDate,*/}
-                    {/*        })*/}
-                    {/*    }*/}
-                    {/*/>*/}
                 </ScrollView>
 
                 <View style={styles.shadowBoxButtonFilter}>
