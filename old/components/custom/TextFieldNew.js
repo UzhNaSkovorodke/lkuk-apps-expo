@@ -4,7 +4,7 @@ import { Animated, StyleSheet, TextInput, View } from 'react-native'
 const TextFieldNew = ({
     value,
     setValue,
-    placeholder = '',
+    placeholder,
     keyboardType = 'default',
     isBorderBot = true,
     ...props
@@ -13,37 +13,38 @@ const TextFieldNew = ({
     const fontSize = useRef(new Animated.Value(14)).current
     const top = useRef(new Animated.Value(30)).current
 
-    const focusIn = () => {
+    const focusIn = (time = 300) => {
         Animated.timing(fontSize, {
             toValue: 12,
-            duration: 300,
+            duration: time,
             useNativeDriver: false,
         }).start()
 
         Animated.timing(top, {
             toValue: 10,
-            duration: 300,
+            duration: time,
             useNativeDriver: false,
         }).start()
     }
 
-    const focusOut = () => {
+    const focusOut = (time = 200) => {
         if (!isFocused && !value) {
             Animated.timing(fontSize, {
                 toValue: 14,
-                duration: 200,
+                duration: time,
                 useNativeDriver: false,
             }).start()
 
             Animated.timing(top, {
                 toValue: 30,
-                duration: 200,
+                duration: time,
                 useNativeDriver: false,
             }).start()
         }
     }
 
     useEffect(() => {
+        if (Boolean(value)) focusIn(0)
         if (isFocused) focusIn()
         else focusOut()
     }, [isFocused])
@@ -72,8 +73,7 @@ const TextFieldNew = ({
 }
 
 const PlaceHolder = ({ isFocused, placeholder, value, fontSize, top }) => {
-    const isFloat = isFocused || value
-
+    const isFloat = isFocused || Boolean(value)
     return (
         <View style={[styles.floatLabel]}>
             <Animated.Text

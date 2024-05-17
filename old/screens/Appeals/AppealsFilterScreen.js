@@ -120,9 +120,7 @@ class AppealsFilterScreen extends React.Component {
         )
     }
 
-    componentDidMount() {
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested'])
-    }
+    componentDidMount() {}
 
     render() {
         const { appealTypes } = this.props

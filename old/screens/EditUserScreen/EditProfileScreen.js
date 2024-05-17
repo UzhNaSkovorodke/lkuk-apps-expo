@@ -1,24 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import DefaultButton from '../../components/buttons/DefaultButton'
-import TextField from '../../components/custom/TextField'
+import TextFieldNew from '../../components/custom/TextFieldNew'
+import { Controller, useForm } from 'react-hook-form'
 import shared from 'stonehedge-shared'
 
 const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
+    const {
+        control,
+        handleSubmit,
+        getValues,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            fio: route.params.profileFio,
+            phone: route.params.phoneNumber,
+            email: route.params.profileEmail,
+        },
+    })
+
     const [isProgress, setIsProgress] = useState(false)
-    const [profileFio, setProfileFio] = useState(route.params.profileFio)
-    const [profilePhoneNumber, setProfilePhoneNumber] = useState(route.params.phoneNumber)
-    const [profileEmail, setProfileEmail] = useState(route.params.profileEmail)
 
     const sendChangesButtonPress = () => {
         setIsProgress(true)
-
+        const values = getValues()
         editProfile({
-            fio: profileFio.replace('"', '\\"'),
-            phone: profilePhoneNumber,
-            email: profileEmail,
+            fio: values.fio.replace('"', '\\"'),
+            phone: values.phone,
+            email: values.email,
         })
             .then(() => {
                 setSuccess([
@@ -35,25 +46,52 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
         <View style={styles.mainWrapper}>
             <ScrollView scrollEventThrottle={16}>
                 <View style={styles.wrapper}>
-                    <TextField
-                        label="ФИО"
-                        value={profileFio}
-                        keyboardType="default"
-                        onChangeText={(text) => setProfileFio(text)}
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextFieldNew
+                                placeholder="Фио"
+                                keyboardType="default"
+                                value={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                        name="fio"
                     />
-                    <TextField
-                        label="Телефон"
-                        masked
-                        keyboardType="phone-pad"
-                        value={profilePhoneNumber}
-                        onChangeText={(text) => setProfilePhoneNumber(text)}
+
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextFieldNew
+                                placeholder="Телефон"
+                                keyboardType="phone-pad"
+                                value={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                        name="phone"
                     />
-                    <TextField
-                        label="Электронная почта"
-                        keyboardType="email-address"
-                        autoCompleteType="email"
-                        value={profileEmail}
-                        onChangeText={(text) => setProfileEmail(text)}
+
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextFieldNew
+                                placeholder="Электронная почта"
+                                keyboardType="email-address"
+                                value={value}
+                                onChangeText={onChange}
+                            />
+                        )}
+                        name="email"
                     />
                 </View>
             </ScrollView>
