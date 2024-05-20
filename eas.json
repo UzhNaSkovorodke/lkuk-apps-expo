@@ -5,12 +5,19 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://test-lk.stonehedge.ru/api/v2"
+      }
     },
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://test-lk.stonehedge.ru/api/v2"
+      }
+    }
   },
   "submit": {
     "production": {}

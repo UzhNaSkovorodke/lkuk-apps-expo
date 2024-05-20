@@ -19,7 +19,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to change avatar profile.",
         "NSPhotoLibraryUsageDescription": "This app uses the library to change avatar profile."
-      }
+      },
+      "bundleIdentifier": "com.stone"
     },
     "android": {
       "permissions": [
