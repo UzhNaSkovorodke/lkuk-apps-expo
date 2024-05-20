@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Animated, StyleSheet, TextInput, View } from 'react-native'
 
+import { TextInputMask } from 'react-native-masked-text'
+
 const TextFieldNew = ({
     value,
     setValue,
     placeholder,
     keyboardType = 'default',
     isBorderBot = true,
+    isPhoneMask = false,
     ...props
 }) => {
     const [isFocused, setIsFocused] = useState(false)
@@ -51,16 +54,34 @@ const TextFieldNew = ({
 
     return (
         <View style={styles.root}>
-            <TextInput
-                style={[styles.input, isBorderBot ? styles.borderBot : '']}
-                onChangeText={setValue}
-                value={value}
-                keyboardType={keyboardType}
-                secureTextEntry
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                {...props}
-            />
+            {!isPhoneMask && (
+                <TextInput
+                    style={[styles.input, isBorderBot ? styles.borderBot : '']}
+                    onChangeText={setValue}
+                    value={value}
+                    keyboardType={keyboardType}
+                    secureTextEntry
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    {...props}
+                />
+            )}
+            {isPhoneMask && (
+                <TextInputMask
+                    style={[styles.input, isBorderBot ? styles.borderBot : '']}
+                    type="custom"
+                    options={{
+                        mask: '+7 (999) 999 99 99',
+                    }}
+                    keyboardType={keyboardType}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    value={value}
+                    onChangeText={(text) => {
+                        props?.onChangeText(text)
+                    }}
+                />
+            )}
             <PlaceHolder
                 isFocused={isFocused}
                 placeholder={placeholder}

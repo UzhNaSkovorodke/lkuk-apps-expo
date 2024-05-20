@@ -1,20 +1,28 @@
-import React, { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import React from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import DefaultButton from '../../components/buttons/DefaultButton'
-import TextField from '../../components/custom/TextField'
 import TextFieldNew from '../../components/custom/TextFieldNew'
 import commonStyles from '../../styles/CommonStyles'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
+import { Controller, useForm } from 'react-hook-form'
 import shared from 'stonehedge-shared'
 
 const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
-    const [oldPassword, setOldPassword] = useState('')
-    const [newPassword, setNewPassword] = useState('')
-    const [newPasswordCheck, setNewPasswordCheck] = useState('')
-    //TODO сделать валидацию сделать loading и сообщение
+    //TODO сделать валидацию сделать loading и сообщение, обработку ошибок
+    const { control, watch } = useForm({
+        defaultValues: {
+            oldPassword: '',
+            newPassword: '',
+            newPasswordCheck: '',
+        },
+    })
+
+    const newPassword = watch('newPassword')
+    const oldPassword = watch('oldPassword')
+    const newPasswordCheck = watch('newPasswordCheck')
     const onSendButtonPress = () => {
         if (newPassword !== newPasswordCheck) {
             setError([
@@ -37,40 +45,60 @@ const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
                 setError({ message: 'Ошибка сервера' })
             })
     }
-
     return (
         <ScrollView scrollEventThrottle={16}>
             <View style={[commonStyles.container, { justifyContent: 'center' }]}>
-                <TextField
-                    label="Текущий пароль"
-                    onChangeText={setOldPassword}
-                    value={oldPassword}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                        <TextFieldNew
+                            placeholder="Текущий пароль"
+                            secureTextEntry
+                            value={value}
+                            onChangeText={onChange}
+                        />
+                    )}
+                    name="oldPassword"
                 />
 
-                {/*<TextFieldNew placeholder="Текущий пароль" secureTextEntry />*/}
-
-                <TextField
-                    label="Новый пароль"
-                    onChangeText={setNewPassword}
-                    value={newPassword}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    rules={{
+                        minLength: 10,
+                        required: true,
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                        <TextFieldNew
+                            placeholder="Новый пароль"
+                            secureTextEntry
+                            value={value}
+                            onChangeText={onChange}
+                        />
+                    )}
+                    name="newPassword"
                 />
 
-                <TextField
-                    label="Повторите пароль"
-                    onChangeText={setNewPasswordCheck}
-                    value={newPasswordCheck}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    rules={{
+                        required: true,
+                        minLength: 10,
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                        <TextFieldNew
+                            placeholder="Повторите пароль"
+                            secureTextEntry
+                            value={value}
+                            onChangeText={onChange}
+                        />
+                    )}
+                    name="newPasswordCheck"
                 />
 
-                <Text
-                    style={{
-                        fontSize: 13,
-                        color: '#BBBBBB',
-                        fontFamily: Fonts.TextRegular,
-                        marginTop: 20,
-                    }}>
+                <Text style={[styles.requirements]}>
                     {
                         'Требования к паролю:\nПароль должен быть длиной не менее 10 символов, содержать латинские символы верхнего и нижнего региста, а также знаки пунктуации'
                     }
@@ -86,6 +114,14 @@ const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
     )
 }
 
+const styles = StyleSheet.create({
+    requirements: {
+        fontSize: 13,
+        color: '#BBBBBB',
+        fontFamily: Fonts.TextRegular,
+        marginTop: 20,
+    },
+})
 export default connect(
     ({ auth, profile }) => ({
         auth,

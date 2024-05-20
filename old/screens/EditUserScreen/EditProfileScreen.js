@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -8,12 +8,7 @@ import { Controller, useForm } from 'react-hook-form'
 import shared from 'stonehedge-shared'
 
 const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
-    const {
-        control,
-        handleSubmit,
-        getValues,
-        formState: { errors },
-    } = useForm({
+    const { control, getValues } = useForm({
         defaultValues: {
             fio: route.params.profileFio,
             phone: route.params.phoneNumber,
@@ -26,6 +21,7 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
     const sendChangesButtonPress = () => {
         setIsProgress(true)
         const values = getValues()
+
         editProfile({
             fio: values.fio.replace('"', '\\"'),
             phone: values.phone,
@@ -51,7 +47,7 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
                         rules={{
                             required: true,
                         }}
-                        render={({ field: { onChange, onBlur, value } }) => (
+                        render={({ field: { onChange, value } }) => (
                             <TextFieldNew
                                 placeholder="Фио"
                                 keyboardType="default"
@@ -67,8 +63,9 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
                         rules={{
                             required: true,
                         }}
-                        render={({ field: { onChange, onBlur, value } }) => (
+                        render={({ field: { onChange, value } }) => (
                             <TextFieldNew
+                                isPhoneMask
                                 placeholder="Телефон"
                                 keyboardType="phone-pad"
                                 value={value}
@@ -83,7 +80,7 @@ const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
                         rules={{
                             required: true,
                         }}
-                        render={({ field: { onChange, onBlur, value } }) => (
+                        render={({ field: { onChange, value } }) => (
                             <TextFieldNew
                                 placeholder="Электронная почта"
                                 keyboardType="email-address"
