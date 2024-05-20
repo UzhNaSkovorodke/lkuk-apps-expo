@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Image, Platform, StyleSheet, TouchableOpacity, View, Text } from 'react-native'
 
 import AppealsIcon from '../../assets/oldImg/Appeals.png'
 import BackArrowIcon from '../../assets/oldImg/BackArrow.png'
