@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import ModalRoot, { openAgreementModal } from '../components/custom/RootModalsComponent'
 import Spinner from '../components/custom/Spinner'
 
+import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import { downloadFile } from '../utils/Utils'
 import * as Print from 'expo-print'
 import WebView from 'react-native-webview'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     downloadButtonWrapper: {

@@ -2,12 +2,12 @@ import React from 'react'
 import { SectionList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import AppealsComponent from '../../components/custom/AppealsComponent'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
 import moment from 'moment'
-import shared from 'stonehedge-shared'
 
 const APPEAL_IN_PROCESSING = 1
 const APPEAL_IN_WORK = 2

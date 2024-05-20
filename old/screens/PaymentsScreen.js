@@ -7,10 +7,10 @@ import FilterAdditionalBills from '../components/custom/FilterAdditionalBills'
 import PaymentComponent from '../components/custom/PaymentComponent'
 import Spinner from '../components/custom/Spinner'
 
+import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import moment from 'moment'
-import shared from 'stonehedge-shared'
 
 const colorText1Styles = '#747E90'
 const styles = StyleSheet.create({

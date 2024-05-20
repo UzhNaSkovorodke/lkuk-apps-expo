@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Platform } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../store/index'
 import WebView from 'react-native-webview'
-import shared from 'stonehedge-shared'
 
 const NewsScreen = ({ route, fetchNews }) => {
     const generateAssetsFontCss = (fontFileName, fileFormat = 'ttf') => {

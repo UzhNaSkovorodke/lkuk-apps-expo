@@ -18,12 +18,11 @@ import TaxiIcon from '../../assets/oldImg/Taxi.png'
 import ButtonWithIcon from '../components/buttons/ButtonWithIcon'
 import SplitLine from '../components/custom/SplitLine'
 
+import shared from '../../store/index'
 import { APPEAL_SELECTION_TYPES } from '../constants/AppealTypes'
 import commonStyles from '../styles/CommonStyles'
 import { Fonts } from '../utils/Fonts'
 import { useNavigation } from '@react-navigation/native'
-import shared from 'stonehedge-shared'
-import { fetchAllNews } from 'stonehedge-shared/src/api'
 
 const styles = StyleSheet.create({
     scrollView: {},
@@ -119,7 +118,8 @@ const HomeScreen = ({}) => {
     const navigation = useNavigation()
 
     const getAllNews = async (isUpdateNews = false, count = 10) => {
-        await fetchAllNews({ page: (count / 10).toFixed(0) - 1, size: 10 }) // page = 1, size = 10
+        await shared.actions
+            .fetchAllNews({ page: (count / 10).toFixed(0) - 1, size: 10 }) // page = 1, size = 10
             .then((resp) => {
                 setNews(resp.data.getNews.news)
             })

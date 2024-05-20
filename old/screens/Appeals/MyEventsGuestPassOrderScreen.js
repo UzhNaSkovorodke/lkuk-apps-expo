@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import CalendarButton from '../../components/buttons/CalendarButton'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import Chat from '../../components/custom/Chat'
@@ -12,7 +13,6 @@ import SplitLine from '../../components/custom/SplitLine'
 import { Fonts } from '../../utils/Fonts'
 import { APPEAL_STATE_TYPES } from '../../utils/Utils'
 import moment from 'moment'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     label: {

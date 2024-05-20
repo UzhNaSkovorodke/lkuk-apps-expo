@@ -17,11 +17,11 @@ import DownloadIcon from '../../assets/oldImg/DownloadIcon.png'
 import ModalRoot, { openAgreementModal } from '../components/custom/RootModalsComponent'
 import SplitLine from '../components/custom/SplitLine'
 
+import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import { downloadFile } from '../utils/Utils'
 import { useNavigation } from '@react-navigation/native'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     cell: {

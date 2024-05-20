@@ -4,11 +4,11 @@ import { Provider } from 'react-redux'
 
 import ModalRoot from './old/components/custom/RootModalsComponent'
 import AppNavigator from './old/navigation/AppNavigator'
+import shared from './store/index'
 
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import shared from 'stonehedge-shared'
 
 export default function App() {
     const [fontsLoaded, fontError] = useFonts({

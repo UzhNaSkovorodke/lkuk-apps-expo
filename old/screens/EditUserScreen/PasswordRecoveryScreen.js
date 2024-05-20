@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import TextFieldNew from '../../components/custom/TextFieldNew'
 import reportError from '../../utils/ReportError'
-import shared from 'stonehedge-shared'
 
 function PasswordRecoveryScreen({ resetPassword, setSuccess, navigation }) {
     const [value, setValue] = useState('')

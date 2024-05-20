@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import Spinner from '../components/custom/Spinner'
 
+import shared from '../../store/index'
 import WebView from 'react-native-webview'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     webView: {

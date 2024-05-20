@@ -9,11 +9,11 @@ import CommentLabel from '../components/custom/CommentLabel'
 import SplitLine from '../components/custom/SplitLine'
 import TextField from '../components/custom/TextField'
 
+import shared from '../../store/index'
 import commonStyles from '../styles/CommonStyles'
 import reportError from '../utils/ReportError'
 import { replaceSymbols } from '../utils/Utils'
 import moment from 'moment'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     buttonPressed: {

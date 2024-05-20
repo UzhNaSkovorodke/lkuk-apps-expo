@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import Spinner from '../../components/custom/Spinner'
 import reportError from '../../utils/ReportError'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
 
 const SwitcherScreen = ({ navigation, auth, fetchProfile }) => {
     useEffect(() => {

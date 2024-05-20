@@ -22,11 +22,11 @@ import SplitLine from './SplitLine'
 
 import ClipIcon from '../../../assets/oldImg/Clip.png'
 import SendIcon from '../../../assets/oldImg/Send.png'
+// import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker'
+import shared from '../../../store/index.js'
 import reportError from '../../utils/ReportError'
 import { downloadFile } from '../../utils/Utils'
 import moment from 'moment'
-// import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     profileImage: {

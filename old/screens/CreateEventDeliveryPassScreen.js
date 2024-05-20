@@ -10,12 +10,12 @@ import CommentLabel from '../components/custom/CommentLabel'
 import SplitLine from '../components/custom/SplitLine'
 import TextField from '../components/custom/TextField'
 
+import shared from '../../store/index'
 import commonStyles from '../styles/CommonStyles'
 import reportError from '../utils/ReportError'
 import moment from 'moment'
 // import DatePicker from 'react-native-date-picker'
 import Modal from 'react-native-modalbox'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     buttonPressed: {

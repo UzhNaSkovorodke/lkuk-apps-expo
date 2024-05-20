@@ -3,10 +3,10 @@ import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import Stone from '../../../assets/oldImg/Stnhdg.png'
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import { Fonts } from '../../utils/Fonts'
 import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     wrapper: {

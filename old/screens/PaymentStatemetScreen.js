@@ -7,11 +7,11 @@ import PositivePaymentIcon from '../../assets/oldImg/PositivePayment.png'
 
 import Spinner from '../components/custom/Spinner'
 
+import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import { normalizePrice } from '../utils/Utils'
 import moment from 'moment'
-import shared from 'stonehedge-shared'
 
 const colorText1Styles = '#747E90'
 const styles = StyleSheet.create({

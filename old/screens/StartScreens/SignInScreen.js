@@ -11,13 +11,13 @@ import {
 import { connect } from 'react-redux'
 
 import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import CircleCheckBox from '../../components/custom/CircleCheckBox'
 import ModalPrivacyPolicy from '../../components/custom/ModalPrivacyPolicy'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
 import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     container: {

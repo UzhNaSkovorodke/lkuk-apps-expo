@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 
 import Warning from '../../../assets/oldImg/Warning.png'
 import { version } from '../../../package.json'
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
-import shared from 'stonehedge-shared'
 
 const UpdateAppScreen = ({ fetchConfig, navigation }) => {
     const [config, setConfig] = useState(null)

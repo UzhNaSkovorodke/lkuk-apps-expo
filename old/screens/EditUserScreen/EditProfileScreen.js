@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import TextFieldNew from '../../components/custom/TextFieldNew'
 import { Controller, useForm } from 'react-hook-form'
-import shared from 'stonehedge-shared'
 
 const EditProfileScreen = ({ navigation, setSuccess, editProfile, route }) => {
     const { control, getValues } = useForm({

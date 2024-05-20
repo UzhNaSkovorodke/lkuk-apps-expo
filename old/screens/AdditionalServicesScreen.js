@@ -6,9 +6,9 @@ import Document from '../../assets/oldImg/Document.png'
 
 import SplitLine from '../components/custom/SplitLine'
 
+import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import { useNavigation } from '@react-navigation/native'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     sectionList: {

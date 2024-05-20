@@ -14,6 +14,11 @@ import {
 import { connect } from 'react-redux'
 
 import Clip from '../../../assets/oldImg/Clip.png'
+//import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker'
+//import RNFS from 'react-native-fs'
+//import ImagePicker from 'react-native-image-picker'
+//import ReactNativePickerModule from 'react-native-picker-module'
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import ResidenceButton from '../../components/buttons/ResidenceButton'
 import CommentLabel from '../../components/custom/CommentLabel'
@@ -22,11 +27,6 @@ import commonStyles from '../../styles/CommonStyles'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
 import { replaceSymbols } from '../../utils/Utils'
-//import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker'
-//import RNFS from 'react-native-fs'
-//import ImagePicker from 'react-native-image-picker'
-//import ReactNativePickerModule from 'react-native-picker-module'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     comment: {

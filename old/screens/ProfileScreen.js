@@ -9,11 +9,11 @@ import CommentLabel from '../components/custom/CommentLabel'
 import Spinner from '../components/custom/Spinner'
 import SplitLine from '../components/custom/SplitLine'
 
+import shared from '../../store/index'
 import uri from '../constants/Uri'
 import { Fonts } from '../utils/Fonts'
 import * as ImagePicker from 'expo-image-picker'
 import * as SecureStore from 'expo-secure-store'
-import shared from 'stonehedge-shared'
 
 const ProfileScreen = ({ navigation, profile, logoutProfile, editProfile, setError }) => {
     const [isAvatarLoading, setIsAvatarLoading] = useState(true)

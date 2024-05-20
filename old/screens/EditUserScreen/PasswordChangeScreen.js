@@ -2,13 +2,13 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
+import shared from '../../../store/index'
 import DefaultButton from '../../components/buttons/DefaultButton'
 import TextFieldNew from '../../components/custom/TextFieldNew'
 import commonStyles from '../../styles/CommonStyles'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
 import { Controller, useForm } from 'react-hook-form'
-import shared from 'stonehedge-shared'
 
 const PasswordChangeScreen = ({ changePassword, navigation, setError }) => {
     //TODO сделать валидацию сделать loading и сообщение, обработку ошибок

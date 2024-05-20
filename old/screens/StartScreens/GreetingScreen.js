@@ -3,11 +3,11 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import StoneHedge from '../../../assets/oldImg/StoneHedge.png'
+import shared from '../../../store/index'
 import Spinner from '../../components/custom/Spinner'
 import { Fonts } from '../../utils/Fonts'
 import reportError from '../../utils/ReportError'
 import { useFocusEffect } from '@react-navigation/native'
-import shared from 'stonehedge-shared'
 
 const styles = StyleSheet.create({
     container: {

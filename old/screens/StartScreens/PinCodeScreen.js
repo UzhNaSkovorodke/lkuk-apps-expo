@@ -13,11 +13,11 @@ import { connect } from 'react-redux'
 import DeleteImage from '../../../assets/oldImg/DeleteButton.png'
 import FaceIdIcon from '../../../assets/oldImg/FaceId.png'
 import TouchIdIcon from '../../../assets/oldImg/TouchIdIcon.png'
+import shared from '../../../store/index'
 import NumButton from '../../components/buttons/NumButton'
 import { Fonts } from '../../utils/Fonts'
 import * as SecureStore from 'expo-secure-store'
 import TouchId from 'react-native-touch-id'
-import shared from 'stonehedge-shared'
 
 const { width } = Dimensions.get('window')
 const buttonSize = width / 5.2

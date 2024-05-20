@@ -1,6 +1,6 @@
 import { PermissionsAndroid, Platform } from 'react-native'
-import actions from 'stonehedge-shared/src/actions'
-import store from 'stonehedge-shared/src/store'
+
+import shared from '../../store/index'
 
 export const invokePermissionWriteExternalStorageDialog = async () => {
     if (Platform.OS === 'ios') {
@@ -15,7 +15,7 @@ export const invokePermissionWriteExternalStorageDialog = async () => {
             }
         )
         if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-            store.dispatch(actions.error({ message: 'Разрешите доступ к памяти' }))
+            shared.store.dispatch(shared.actions.error({ message: 'Разрешите доступ к памяти' }))
         }
     } catch (err) {
         return false
