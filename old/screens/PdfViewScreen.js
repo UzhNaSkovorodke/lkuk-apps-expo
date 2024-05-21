@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import ModalRoot, { openAgreementModal } from '../components/custom/RootModalsComponent'
@@ -9,8 +9,7 @@ import shared from '../../store/index'
 import { Fonts } from '../utils/Fonts'
 import reportError from '../utils/ReportError'
 import { downloadFile } from '../utils/Utils'
-import * as Print from 'expo-print'
-import WebView from 'react-native-webview'
+import PDF from 'react-native-pdf'
 
 const styles = StyleSheet.create({
     downloadButtonWrapper: {
@@ -59,23 +58,30 @@ const styles = StyleSheet.create({
     },
 })
 
-const PdfViewScreen = ({ route, navigation, setError }) => {
-    const [file, setFile] = useState('')
-    const { isDownload = true } = route.params
-    const { fileLink, title } = route.params
-    if (!fileLink) navigation.goBack()
+class PdfViewScreen extends React.Component {
+    constructor(props) {
+        super(props)
 
-    useEffect(() => {
+        this.state = {
+            file: null,
+        }
+    }
+
+    componentDidMount() {
+        const { route, navigation, setError } = this.props
+        const { fileLink } = route.params
+
+        if (fileLink === null) {
+            navigation.goBack()
+            return
+        }
+
         fetch(String(fileLink).startsWith('https:') ? fileLink : `https:${fileLink}`)
             .then((response) => response.blob())
             .then((blob) => {
                 const fileReader = new FileReader()
                 fileReader.onload = (file) => {
-                    const base64 = file.target.result.replace(
-                        'application/octet-stream',
-                        'application/pdf'
-                    )
-                    setFile(base64)
+                    this.setState({ file })
                 }
                 fileReader.readAsDataURL(blob)
             })
@@ -84,41 +90,60 @@ const PdfViewScreen = ({ route, navigation, setError }) => {
                 setError([{ message: 'Извините, невозможно открыть данный файл.' }])
                 navigation.goBack()
             })
-    }, [])
+    }
 
-    const downloadFileHandler = () => {
+    downloadFile = () => {
+        const { fileLink, title } = this.props.route.params
+
         openAgreementModal(this.modalRootContext, {
             message: 'Сохранить файл?',
             onAcceptClicked: () => downloadFile({ fileLink, fileName: title }).catch(console.error),
         })
     }
 
-    if (!file) {
+    render() {
+        const { route, navigation, setError } = this.props
+        const { isDownload = true } = route.params
+        const { file } = this.state
+
+        if (!file) {
+            return (
+                <View style={styles.center}>
+                    <Spinner />
+                </View>
+            )
+        }
+
+        const base64 = file.target.result.replace('application/octet-stream', 'application/pdf')
+
         return (
-            <View style={styles.center}>
-                <Spinner />
-            </View>
+            <>
+                <ModalRoot.ModalRootContext.Consumer>
+                    {(context) => {
+                        this.modalRootContext = context
+                    }}
+                </ModalRoot.ModalRootContext.Consumer>
+                <PDF
+                    style={styles.pdf}
+                    source={{ uri: base64, cache: false }}
+                    onError={(error) => {
+                        reportError(error, 'PDFView/PDFViewRender')
+                        setError([{ message: 'Извините, произошла ошибка загрузки файла.' }])
+                        navigation.goBack()
+                    }}
+                />
+                {isDownload && (
+                    <View style={styles.shadowBoxButton}>
+                        <TouchableOpacity style={styles.downloadButton} onPress={this.downloadFile}>
+                            <View style={styles.downloadButtonWrapper}>
+                                <Text style={styles.downloadButtonText}>Скачать PDF</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                )}
+            </>
         )
     }
-    return (
-        <>
-            <ModalRoot.ModalRootContext.Consumer>
-                {(context) => {
-                    this.modalRootContext = context
-                }}
-            </ModalRoot.ModalRootContext.Consumer>
-
-            {isDownload && (
-                <View style={styles.shadowBoxButton}>
-                    <TouchableOpacity style={styles.downloadButton} onPress={downloadFileHandler}>
-                        <View style={styles.downloadButtonWrapper}>
-                            <Text style={styles.downloadButtonText}>Скачать PDF</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )}
-        </>
-    )
 }
 
 export default connect(null, {

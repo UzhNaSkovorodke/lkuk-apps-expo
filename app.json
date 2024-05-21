@@ -20,9 +20,10 @@
         "NSCameraUsageDescription": "This app uses the camera to change avatar profile.",
         "NSPhotoLibraryUsageDescription": "This app uses the library to change avatar profile."
       },
-      "bundleIdentifier": "com.stone"
+      "bundleIdentifier": "ru.stonehedge.mlk"
     },
     "android": {
+      "versionCode": 1,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
@@ -62,6 +63,8 @@
           ]
         }
       ],
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf",
       "expo-secure-store",
       "expo-image-picker",
       "expo-notifications"
